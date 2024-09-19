@@ -11,4 +11,4 @@ Node version - 22.9.0
 
 NPM version - 10.8.3
 
-Vite version - 5.4.1
+Vite version - 5.4.6
