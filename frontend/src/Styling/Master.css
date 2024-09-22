@@ -1,0 +1,85 @@
+.smallImage{
+    height: 40px;
+    width: 40px;
+}
+.mediumImage{
+    height: 80px;
+    width: 80px;
+}
+.bigImage{
+    height: 100px;
+    width: 100px;
+}
+
+.upper-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #D9D9D9;
+    padding: 10px 20px;
+    height: 78px;
+}
+
+.search-bar input {
+    padding: 8px;
+    border-radius: 9999px;
+    border: 1px solid #ccc;
+    width: 239px;
+}
+
+.logo h1 {
+    font-size: 35px;
+    color: black;
+    font-weight: bold;
+    margin: 0;
+}
+
+.logo span {
+    font-weight: normal;
+}
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.logout,
+.create,
+.login {
+    background-color: #D9D9D9;
+    border: none;
+    padding: 8px 15px;
+    margin-left: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.watchlist {
+    background-color: #9B9B9B;
+    border: none;
+    padding: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 50px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.notification-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.notification-icon img {
+    width: 44px;
+    height: 44px;
+}

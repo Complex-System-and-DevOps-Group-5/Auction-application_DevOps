@@ -1,0 +1,13 @@
+/*
+* NavigationMenu
+
+ */
+ul {
+    list-style-type: none;
+    padding: 20px;
+    background-color: transparent;
+}
+li {
+    margin-right: 40px;
+    float: left;
+}
