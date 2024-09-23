@@ -1,9 +1,7 @@
 import './App.css'
-import {NavigationMenu} from "./Components/NavigationMenu.tsx";
-import {SearchField} from "./Components/SearchField.tsx";
-import DefaultButton from "./Components/Button.tsx";
-import InputField from "./Components/InputField.tsx";
 import {UpperMenu} from "./Components/UpperMenu.tsx";
+import AuthPage from "./Pages/AuthPage.tsx";
+import {NavigationMenu} from "./Components/NavigationMenu.tsx";
 
 function App() {
   return (
@@ -14,9 +12,7 @@ function App() {
           <main>
               <UpperMenu/>
               <NavigationMenu/>
-              <DefaultButton text={"Hello World"} onClick={() => {}}/>
-
-              <InputField name="email" type="email" placeholder="Email"/>
+              <AuthPage/>
           </main>
 
       </>

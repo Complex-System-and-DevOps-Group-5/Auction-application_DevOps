@@ -1,6 +1,4 @@
 import {SearchField} from "./SearchField.tsx";
-import watchlistIcon from '../assets/watchlist-icon.png';
-import notificationIcon from '../assets/notification-icon.png'
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 
 export function UpperMenu() {
@@ -21,15 +19,14 @@ export function UpperMenu() {
             </div>
 
             <div className="user-actions">
-                {loggedIn !== true ? (
+                {loggedIn.loggedIn !== true ? (
                     <>
                         <button className="login"
-                                onClick={() => 
-                                    {
-                                        console.log('before' + loggedIn.loggedIn);
-                                        dispatch({type: "toggleLogin", payload: {toggle: true}});
-                                        console.log('after'+ loggedIn.loggedIn)
-                                    }
+                                onClick={() => {
+                                    console.log('before' + loggedIn.loggedIn);
+                                    dispatch({type: "toggleLogin", payload: {toggle: true}});
+                                    console.log('after'+ loggedIn.loggedIn)
+                                }
                                 }
                         >Login
                         </button>
