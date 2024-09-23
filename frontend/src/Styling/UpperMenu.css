@@ -1,0 +1,97 @@
+.upper-menu {
+    position: sticky;
+    top: 0;
+    align-items: center;
+    display: flex;
+    justify-items: right;
+    background-color: gainsboro;
+    margin: 0;
+    padding: 0 1300px 0 0;
+    height: 50px;
+}
+
+.search-bar {
+    font-size: large;
+    height: 50px;
+}
+
+.logo {
+    font-size: large;
+    color: black;
+    font-family: "Times New Roman", serif;
+    width: 100px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    padding-right: 400px;
+    padding-left: 400px;
+}
+.user-action {
+}
+.create {
+    height: 30px;
+    border-radius: 5px;
+    font-size: medium;
+    background-color: gray;
+    color: white;
+    padding: 0 20px;
+    margin: 0;
+    margin-top: 10px;
+
+}
+.logout {
+    font-size: medium;
+    padding: 0 20px;
+    margin: 20px;
+    width: 100px;
+}
+.login {
+    font-size: large;
+    color: black;
+    text-decoration: underline;
+    background-color: gainsboro;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    height: 50px;
+}
+
+.loggedIn {
+    display: flex;
+}
+
+.profile{
+    height: 50px;
+    width: 50px;
+    margin: auto;
+    align-items: revert;
+}
+.username {
+    font-size: large;
+    color: blue;
+    padding: 0;
+    padding-top: 15px;
+    padding-left: 33px;
+    margin-left: 0;
+    border-radius: 50px;
+    z-index: 1;
+}
+.dot {
+    padding: 0;
+    margin: 0;
+    margin-top: 3px;
+    height: 45px;
+    width: 45px;
+    background-color: gray;
+    border-radius: 50%;
+    top: 0;
+    position: absolute;
+    display: inline;
+    float: none;
+    z-index: 0;
+    opacity: 0.2;
+}
+
+.watchList {
+
+}
