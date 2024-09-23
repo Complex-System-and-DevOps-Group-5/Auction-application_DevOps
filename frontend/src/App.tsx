@@ -1,7 +1,7 @@
 import './App.css'
 import {UpperMenu} from "./Components/UpperMenu.tsx";
-import AuthPage from "./Pages/AuthPage.tsx";
 import {NavigationMenu} from "./Components/NavigationMenu.tsx";
+import {Outlet} from "react-router-dom";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
           <main>
               <UpperMenu/>
               <NavigationMenu/>
-              <AuthPage/>
+              <Outlet/>
           </main>
 
       </>

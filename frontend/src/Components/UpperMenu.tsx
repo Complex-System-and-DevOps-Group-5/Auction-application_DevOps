@@ -1,9 +1,12 @@
 import {SearchField} from "./SearchField.tsx";
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
+import {useNavigate} from "react-router-dom";
 
 export function UpperMenu() {
     const loggedIn = useLoginState()
     const dispatch = useLoginDispatch()
+
+    const navigate = useNavigate();
 
     const username = "AM";
     return(
@@ -23,9 +26,10 @@ export function UpperMenu() {
                     <>
                         <button className="login"
                                 onClick={() => {
-                                    console.log('before' + loggedIn.loggedIn);
+                                    /*console.log('before' + loggedIn.loggedIn);
                                     dispatch({type: "toggleLogin", payload: {toggle: true}});
-                                    console.log('after'+ loggedIn.loggedIn)
+                                    console.log('after'+ loggedIn.loggedIn)*/
+                                    navigate("/authentication");
                                 }
                                 }
                         >Login
