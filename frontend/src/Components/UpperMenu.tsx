@@ -1,5 +1,6 @@
 import {SearchField} from "./SearchField.tsx";
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
+import {DropDownMenu} from "./DropDownMenu.tsx";
 
 export function UpperMenu() {
     const loggedIn = useLoginState()
@@ -30,6 +31,7 @@ export function UpperMenu() {
                                 }
                         >Login
                         </button>
+                        <DropDownMenu title="Notification"/>
                     </>
                 ) : (
                     <>
