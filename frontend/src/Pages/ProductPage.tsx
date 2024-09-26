@@ -7,7 +7,7 @@ import DefaultButton from "../Components/DefaultButton.tsx";
 export default function ProductPage () {
     // most of these should be context
     const [watchtListed, setWatchlisted] = useState(false)
-    const [sold, setSold] = useState(true)
+    const [sold, setSold] = useState(false)
     const [bidPrice, setbidPrice] = useState(175)
     const [amountOfBids, setamountOfBids] = useState(12)
 

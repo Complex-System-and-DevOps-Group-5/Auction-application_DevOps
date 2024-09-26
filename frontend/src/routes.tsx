@@ -3,9 +3,11 @@ import App from "./App.tsx";
 import AuthPage from "./Pages/AuthPage.tsx";
 import {HomePage} from "./Pages/HomePage.tsx";
 import OngoingPage from "./Pages/OngoingPage.tsx";
-import HitListPage from "./Pages/HitlistPage.tsx";
+import TrendingPage from "./Pages/TrendingPage.tsx";
 import BiddingsHistoryPage from "./Pages/BiddingsHistoryPage.tsx";
 import AboutPage from "./Pages/AboutPage.tsx";
+import ProductPage from "./Pages/ProductPage.tsx";
+import CreatePost from "./Pages/CreatePost.tsx";
 
 
 export const routes: RouteObject[] = [
@@ -26,8 +28,8 @@ export const routes: RouteObject[] = [
                 element: <OngoingPage/>,
             },
             {
-                path: "/hitlist",
-                element: <HitListPage/>,
+                path: "/trending",
+                element: <TrendingPage/>,
             },
             {
                 path: "/biddingshistory",
@@ -37,6 +39,15 @@ export const routes: RouteObject[] = [
                 path: "/about",
                 element: <AboutPage/>,
             },
+            {
+                path: "/product",
+                element: <ProductPage/>,
+            },
+            {
+                path: "createPost",
+                element: <CreatePost/>,
+            },
+
         ],
     }
 ];

@@ -9,7 +9,7 @@ export function NavigationMenu() {
             <li>|</li>
             <li><a onClick={()=>navigate("/ongoing")}>Ongoing</a></li>
             <li>|</li>
-            <li><a onClick={()=>navigate("/hitlist")}>Hitlist</a></li>
+            <li><a onClick={()=>navigate("/trending")}>Trending</a></li>
             <li>|</li>
             <li><a onClick={()=>navigate("/biddingshistory")}>Biddings history</a></li>
             <li>|</li>
