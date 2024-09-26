@@ -24,7 +24,7 @@ const ProductList: React.FC<ProductListProps> = ({products}) => {
                 {products.map((product) => (
                     <div key={product.id} className={styles.productItem}>
                         <img src={product.imgUrl} alt={`Product ${product.id}`} className={styles.productImage}/>
-                        <div className="productInfo">
+                        <div className={styles.productInfo}>
                             <p className={styles.productTitle}>{product.title} </p>
                             <p className={styles.productPrice}>${product.price.toFixed(2)} </p>
                         </div>
