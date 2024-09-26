@@ -8,7 +8,7 @@ const initialLoginState: LoginState = {
     loggedIn: false
 };
 
-type LoginAction =
+export type LoginAction =
     | { type: 'toggleLogin', payload: { toggle: boolean }};
 
 const loginReducer = (state: LoginState, action: LoginAction) => {

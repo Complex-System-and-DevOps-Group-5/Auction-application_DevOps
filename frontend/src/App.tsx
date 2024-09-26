@@ -1,4 +1,5 @@
 import './App.css'
+import AuthPage from "./Pages/AuthPage.tsx";
 import UpperMenu from "./Components/UpperMenu.tsx";
 import ProductPage from "./Pages/ProductPage.tsx";
 import NavigationMenu from "./Components/NavigationMenu.tsx";
@@ -14,10 +15,10 @@ function App() {
           <main>
               <UpperMenu/>
               <NavigationMenu/>
+              <AuthPage/>
               <ProductPage/>
+              <ProductList products={productList}/>
           </main>
-                {<ProductList products={productList}/>}
-
       </>
   )
 }

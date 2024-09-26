@@ -8,7 +8,7 @@ export function UpperMenu() {
     const loggedIn = useLoginState()
     const dispatch = useLoginDispatch()
 
-    let username: string = "AM" as string;
+    let username: string = "AM";
     return(
 
         <h1 className="upper-menu">
@@ -35,6 +35,18 @@ export function UpperMenu() {
                 <div className='loggedIn'>
                     <button className="create">Create</button>
 
+            <div className="user-actions">
+                {loggedIn.loggedIn ? (
+                    <>
+                        <button className="login"
+                                onClick={() => {
+                                    dispatch({type: "toggleLogin", payload: {toggle: true}});
+                                }
+                 }
+                        >Login
+                        </button>
+                    </>
+                ) : (
                     {/* in the future use ProfilePicture component*/}
                     <div className='profile'>
                         <div className='username'>{username}</div>

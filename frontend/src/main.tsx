@@ -7,7 +7,7 @@ import {LoginProvider} from "./Context/LoginContext.tsx";
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <LoginProvider>
-    <App />
+            <App />
       </LoginProvider>
   </StrictMode>,
 )
