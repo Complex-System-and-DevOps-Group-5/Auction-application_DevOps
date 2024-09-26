@@ -1,9 +1,7 @@
 import './App.css'
-import {NavigationMenu} from "./Components/NavigationMenu.tsx";
-import {SearchField} from "./Components/SearchField.tsx";
-import DefaultButton from "./Components/DefaultButton.tsx";
-import InputField from "./Components/InputField.tsx";
-import {UpperMenu} from "./Components/UpperMenu.tsx";
+import UpperMenu from "./Components/UpperMenu.tsx";
+import ProductPage from "./Pages/ProductPage.tsx";
+import NavigationMenu from "./Components/NavigationMenu.tsx";
 import ProductList from "./Components/ProductList.tsx";
 import productList from './Mockdata/ProductListItems.json';
 
@@ -16,9 +14,7 @@ function App() {
           <main>
               <UpperMenu/>
               <NavigationMenu/>
-              <DefaultButton text={"Hello World"} onClick={() => {}}/>
-
-              <InputField name="email" type="email" placeholder="Email"/>
+              <ProductPage/>
           </main>
                 {<ProductList products={productList}/>}
 
