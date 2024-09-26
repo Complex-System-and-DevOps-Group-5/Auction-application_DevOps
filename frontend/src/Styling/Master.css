@@ -54,18 +54,6 @@
     font-size: 15px;
 }
 
-.watchlist {
-    background-color: #9B9B9B;
-    border: none;
-    padding: 8px;
-    border-radius: 12px;
-    cursor: pointer;
-    width: 50px;
-    height: 44px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .button-icon {
     width: 24px;
