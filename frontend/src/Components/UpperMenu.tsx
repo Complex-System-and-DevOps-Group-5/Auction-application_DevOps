@@ -3,10 +3,13 @@ import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import '../Styling/UpperMenu.css'
 import {Logo} from "./Logo.tsx";
 import {DropDownMenu} from "./DropDownMenu.tsx";
+import {useNavigate} from "react-router-dom";
 
 export function UpperMenu() {
     const loggedIn = useLoginState()
     const dispatch = useLoginDispatch()
+
+    const navigate = useNavigate();
 
     let username: string = "AM";
     return(
@@ -23,7 +26,8 @@ export function UpperMenu() {
                     <>
                         <button className="login"
                                 onClick={() => {
-                                    dispatch({type: "toggleLogin", payload: {toggle: true}});
+                                    navigate("/authentication");
+                                    //dispatch({type: "toggleLogin", payload: {toggle: true}});
                                 }
                         }
                         >Login
