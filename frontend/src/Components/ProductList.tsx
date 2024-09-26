@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import styles from '../Styling/ProductList.module.css';
-import DefaultButton from "./Button.tsx";
+import DefaultButton from "./DefaultButton.tsx";
 
 
 interface Product {
