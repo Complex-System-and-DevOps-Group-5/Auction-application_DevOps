@@ -7,7 +7,7 @@ import ProductList from "./Components/ProductList.tsx";
 import CreatePost from "./Pages/CreatePost.tsx";
 import HighlightedProduct from "./Components/HighlightedProduct.tsx";
 import highlightedProductList from "./MockData/HighlightedProductList.json";
-import productList from "./MockData/ProductList.json";
+import productList from "./MockData/ProductListItems.json";
 
 function App() {
   return (
