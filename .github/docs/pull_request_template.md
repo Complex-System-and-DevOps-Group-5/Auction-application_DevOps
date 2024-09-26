@@ -11,7 +11,7 @@
 
 ## Checklist
 Before submitting your PR, please ensure the following:
-- [x  I have performed a self-review of my own code.
+- [ ]  I have performed a self-review of my own code.
 - [ ] I have commented my code, particularly in hard-to-understand areas.
 - [ ] I have made corresponding changes to the documentation (if appropriate).
 - [ ] My changes generate no new warnings.
