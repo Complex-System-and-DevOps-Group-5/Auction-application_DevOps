@@ -4,6 +4,8 @@ import {SearchField} from "./Components/SearchField.tsx";
 import DefaultButton from "./Components/DefaultButton.tsx";
 import InputField from "./Components/InputField.tsx";
 import {UpperMenu} from "./Components/UpperMenu.tsx";
+import ProductList from "./Components/ProductList.tsx";
+import productList from './Mockdata/ProductListItems.json';
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
 
               <InputField name="email" type="email" placeholder="Email"/>
           </main>
+                {<ProductList products={productList}/>}
 
       </>
   )
