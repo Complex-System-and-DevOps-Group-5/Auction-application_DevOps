@@ -28,7 +28,7 @@ export const routes: RouteObject[] = [
                 element: <OngoingPage/>,
             },
             {
-                path: "/hitlist",
+                path: "/trending",
                 element: <TrendingPage/>,
             },
             {
