@@ -19,7 +19,7 @@ export function UpperMenu() {
             <div className="logo">
                 <Logo/>
             </div>
-                {loggedIn.loggedIn ? (
+                {loggedIn.loggedIn !== true ? (
                     <>
                         <button className="login"
                                 onClick={() => {
@@ -32,23 +32,25 @@ export function UpperMenu() {
                 ) : (
                     <div className="loggedIn">
                         <button className="create">Create</button>
-                    {/* in the future use ProfilePicture component*/}
+                        {/* in the future use ProfilePicture component*/}
                         <DropDownMenu title="Notification"/>
                         <div className='profile'>
                             <div className='username'>{username}</div>
-                            <span className='dot'></span> {/*make this a button instead of span when drop down menus are readu*/}
+                            <span
+                                className='dot'></span> {/*make this a button instead of span when drop down menus are readu*/}
                         </div>
                         <button className="logout"
-                                onClick={() =>
-                                {
+                                onClick={() => {
                                     dispatch({type: "toggleLogin", payload: {toggle: false}})
-                                    {console.log(loggedIn)}
+                                    {
+                                        console.log(loggedIn)
+                                    }
                                 }
                                 }
                         >Logout
                         </button>
 
-                </div>
+                    </div>
                 )}
         </h1>
     );

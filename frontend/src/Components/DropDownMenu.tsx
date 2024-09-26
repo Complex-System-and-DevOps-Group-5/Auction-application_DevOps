@@ -1,5 +1,5 @@
 import {useState} from "react";
-import DefaultButton from "./Button.tsx";
+import DefaultButton from "./DefaultButton.tsx";
 import "../Styling/DropDownMenu.css"
 interface DropDownMenu {
     title: string;
