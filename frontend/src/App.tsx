@@ -5,6 +5,8 @@ import ProductPage from "./Pages/ProductPage.tsx";
 import NavigationMenu from "./Components/NavigationMenu.tsx";
 import ProductList from "./Components/ProductList.tsx";
 import productList from './Mockdata/ProductListItems.json';
+import CreatePost from "./Pages/CreatePost.tsx";
+
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
               <AuthPage/>
               <ProductPage/>
               <ProductList products={productList}/>
+              <CreatePost/>
           </main>
       </>
   )

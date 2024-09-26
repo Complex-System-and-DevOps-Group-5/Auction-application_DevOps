@@ -4,7 +4,7 @@ import '../Styling/UpperMenu.css'
 import {Logo} from "./Logo.tsx";
 
 
-export function UpperMenu() {
+function UpperMenu() {
     const loggedIn = useLoginState()
     const dispatch = useLoginDispatch()
 
@@ -19,34 +19,19 @@ export function UpperMenu() {
             <div className="logo">
                 <Logo/>
             </div>
-            {loggedIn.loggedIn !== true ? (
-                <>
-                    <button className="login"
-                            onClick={() => {
-                                console.log('before' + loggedIn.loggedIn);
-                                dispatch({type: "toggleLogin", payload: {toggle: true}});
-                                console.log('after' + loggedIn.loggedIn)
-                            }
-                            }
-                    >Login
-                    </button>
-                </>
-            ) : (
-                <div className='loggedIn'>
-                    <button className="create">Create</button>
-
-            <div className="user-actions">
                 {loggedIn.loggedIn ? (
                     <>
                         <button className="login"
                                 onClick={() => {
                                     dispatch({type: "toggleLogin", payload: {toggle: true}});
                                 }
-                 }
+                        }
                         >Login
                         </button>
                     </>
                 ) : (
+                    <div className="loggedIn">
+                        <button className="create">Create</button>
                     {/* in the future use ProfilePicture component*/}
                     <div className='profile'>
                         <div className='username'>{username}</div>
@@ -55,7 +40,9 @@ export function UpperMenu() {
                     </div>
 
                 </div>
-            )}
+                )}
         </h1>
     );
 }
+
+export default UpperMenu;
