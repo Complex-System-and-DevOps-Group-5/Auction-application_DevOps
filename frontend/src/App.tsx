@@ -1,7 +1,14 @@
 import './App.css'
-import {UpperMenu} from "./Components/UpperMenu.tsx";
 import AuthPage from "./Pages/AuthPage.tsx";
-import {NavigationMenu} from "./Components/NavigationMenu.tsx";
+import UpperMenu from "./Components/UpperMenu.tsx";
+import ProductPage from "./Pages/ProductPage.tsx";
+import NavigationMenu from "./Components/NavigationMenu.tsx";
+import ProductList from "./Components/ProductList.tsx";
+import CreatePost from "./Pages/CreatePost.tsx";
+import HighlightedProduct from "./Components/HighlightedProduct.tsx";
+import highlightedProductList from "./MockData/HighlightedProductList.json";
+import productList from "./MockData/ProductListItems.json";
+import {SearchComponent} from "./Pages/SearchComponent.tsx";
 
 function App() {
   return (
@@ -12,7 +19,12 @@ function App() {
           <main>
               <UpperMenu/>
               <NavigationMenu/>
+              <SearchComponent />
               <AuthPage/>
+              <ProductPage/>
+              <HighlightedProduct products={highlightedProductList}/>
+              <ProductList products={productList}/>
+              <CreatePost/>
           </main>
 
       </>

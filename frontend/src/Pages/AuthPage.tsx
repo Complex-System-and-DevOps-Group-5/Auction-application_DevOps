@@ -1,6 +1,6 @@
 import "../Styling/AuthPage.css"
 import InputField from "../Components/InputField.tsx";
-import DefaultButton from "../Components/Button.tsx";
+import DefaultButton from "../Components/DefaultButton.tsx";
 import {useLoginDispatch} from "../Context/LoginContext.tsx";
 import {useState} from "react";
 

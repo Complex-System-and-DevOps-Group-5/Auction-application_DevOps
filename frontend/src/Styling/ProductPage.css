@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+}
+
+.images {
+    padding: 30px ;
+}
+
+.productInfo {
+
+}
+
+
+
+
+.watchList {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    margin: 0;
+}
+.bidSection {
+    display: flex;
+}
+
+p {
+    display: flex;
+    align-items: center;
+    font-size: large;
+    padding: 0;
+    margin: 0;
+}
+h2 {
+    display: flex;
+}
+
