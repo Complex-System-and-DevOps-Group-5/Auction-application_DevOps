@@ -2,9 +2,9 @@ import {SearchField} from "./SearchField.tsx";
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import '../Styling/UpperMenu.css'
 import {Logo} from "./Logo.tsx";
+import {DropDownMenu} from "./DropDownMenu.tsx";
 
-
-function UpperMenu() {
+export function UpperMenu() {
     const loggedIn = useLoginState()
     const dispatch = useLoginDispatch()
 
@@ -19,7 +19,7 @@ function UpperMenu() {
             <div className="logo">
                 <Logo/>
             </div>
-                {loggedIn.loggedIn ? (
+                {loggedIn.loggedIn !== true ? (
                     <>
                         <button className="login"
                                 onClick={() => {
@@ -32,14 +32,25 @@ function UpperMenu() {
                 ) : (
                     <div className="loggedIn">
                         <button className="create">Create</button>
-                    {/* in the future use ProfilePicture component*/}
-                    <div className='profile'>
-                        <div className='username'>{username}</div>
-                        <span
-                            className='dot'></span> {/*make this a button instead of span when drop down menus are readu*/}
-                    </div>
+                        {/* in the future use ProfilePicture component*/}
+                        <DropDownMenu title="Notification"/>
+                        <div className='profile'>
+                            <div className='username'>{username}</div>
+                            <span
+                                className='dot'></span> {/*make this a button instead of span when drop down menus are readu*/}
+                        </div>
+                        <button className="logout"
+                                onClick={() => {
+                                    dispatch({type: "toggleLogin", payload: {toggle: false}})
+                                    {
+                                        console.log(loggedIn)
+                                    }
+                                }
+                                }
+                        >Logout
+                        </button>
 
-                </div>
+                    </div>
                 )}
         </h1>
     );
