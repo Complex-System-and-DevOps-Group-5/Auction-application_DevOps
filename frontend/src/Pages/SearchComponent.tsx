@@ -1,4 +1,5 @@
-import { SearchField } from "../Components/SearchField";
+import { SearchField } from "../Components/SearchField.tsx";
+import "../Styling/searchComponent.css"
 
 export function SearchComponent() {
     return (
