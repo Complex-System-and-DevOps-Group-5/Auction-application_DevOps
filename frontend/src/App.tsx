@@ -8,6 +8,7 @@ import CreatePost from "./Pages/CreatePost.tsx";
 import HighlightedProduct from "./Components/HighlightedProduct.tsx";
 import highlightedProductList from "./MockData/HighlightedProductList.json";
 import productList from "./MockData/ProductListItems.json";
+import {SearchComponent} from "./Pages/SearchComponent.tsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <main>
               <UpperMenu/>
               <NavigationMenu/>
+              <SearchComponent />
               <AuthPage/>
               <ProductPage/>
               <HighlightedProduct products={highlightedProductList}/>
