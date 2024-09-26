@@ -1,5 +1,5 @@
 import { InputField } from '../Components/InputField';
-import DefaultButton from '../Components/Button';
+import DefaultButton from '../Components/DefaultButton';
 
 
 export function CreatePost() {
@@ -34,12 +34,12 @@ export function CreatePost() {
                     <InputField 
                         name="email"
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder="Email"
                     />
                     <InputField 
                         name="phone"
                         type="tel"
-                        placeholder="Enter your phone number"
+                        placeholder="Phone Number"
                     />
                 </div>
             </div>

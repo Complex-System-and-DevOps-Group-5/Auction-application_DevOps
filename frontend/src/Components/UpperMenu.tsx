@@ -21,7 +21,7 @@ export function UpperMenu() {
             </div>
 
             <div className="user-actions">
-                {loggedIn !== true ? (
+                {loggedIn.loggedIn !== true ? (
                     <>
                         <button className="login"
                                 onClick={() => 
