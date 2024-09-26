@@ -30,7 +30,7 @@ const ProductList: React.FC<ProductListProps> = ({products}) => {
                         </div>
                         <div className={styles.buttonContainer}>
                             <DefaultButton text={"View Item"} onClick={() => console.log("Left button clicked")}></DefaultButton>
-                            <DefaultButton text={"View Item"} onClick={() => console.log("Add to wishlist")}></DefaultButton>
+                            <DefaultButton text={"Add to watchlist"} onClick={() => console.log("Add to watchlist")}></DefaultButton>
                         </div>
                     </div>
                 ))}
