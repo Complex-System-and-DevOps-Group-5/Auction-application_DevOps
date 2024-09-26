@@ -1,8 +1,8 @@
 import { InputField } from '../Components/InputField';
-import DefaultButton from '../Components/Button';
+import DefaultButton from '../Components/DefaultButton';
 
 
-export function CreatePost() {
+export default function CreatePost() {
     return (
         <div className="create-post-container">
 
@@ -11,11 +11,13 @@ export function CreatePost() {
 
                 <div className="section-product-description">
                     <h2>Product description</h2>
-                    
-                    <DefaultButton className='add-images'
-                        text='Add Images'  
-                        onClick={() => console.log('Add Images clicked')} 
-                    />
+
+                    <div  className='add-images'>
+                        <DefaultButton
+                            text='Add Images'
+                            onClick={() => console.log('Add Images clicked')}
+                        />
+                    </div>
 
                     <InputField className='title-field'
                         name="title"
@@ -34,12 +36,12 @@ export function CreatePost() {
                     <InputField 
                         name="email"
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder="Email"
                     />
                     <InputField 
                         name="phone"
                         type="tel"
-                        placeholder="Enter your phone number"
+                        placeholder="Phone Number"
                     />
                 </div>
             </div>

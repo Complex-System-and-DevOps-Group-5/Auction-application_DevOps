@@ -1,8 +1,9 @@
 input {
     border-radius: 20px;
     padding: 6px;
-    border: none;
     margin-top: 8px;
     margin-right: 16px;
     font-size: 17px;
+    background-color: gainsboro;
+    outline-color: #1a1a1a;
 }

@@ -1,9 +1,13 @@
 import './App.css'
-import {NavigationMenu} from "./Components/NavigationMenu.tsx";
-import {SearchField} from "./Components/SearchField.tsx";
-import DefaultButton from "./Components/Button.tsx";
-import InputField from "./Components/InputField.tsx";
-import {UpperMenu} from "./Components/UpperMenu.tsx";
+import AuthPage from "./Pages/AuthPage.tsx";
+import UpperMenu from "./Components/UpperMenu.tsx";
+import ProductPage from "./Pages/ProductPage.tsx";
+import NavigationMenu from "./Components/NavigationMenu.tsx";
+import ProductList from "./Components/ProductList.tsx";
+import CreatePost from "./Pages/CreatePost.tsx";
+import HighlightedProduct from "./Components/HighlightedProduct.tsx";
+import highlightedProductList from "./MockData/HighlightedProductList.json";
+import productList from "./MockData/ProductListItems.json";
 
 function App() {
   return (
@@ -14,9 +18,11 @@ function App() {
           <main>
               <UpperMenu/>
               <NavigationMenu/>
-              <DefaultButton text={"Hello World"} onClick={() => {}}/>
-
-              <InputField name="email" type="email" placeholder="Email"/>
+              <AuthPage/>
+              <ProductPage/>
+              <HighlightedProduct products={highlightedProductList}/>
+              <ProductList products={productList}/>
+              <CreatePost/>
           </main>
 
       </>
