@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "title": "Skateboarding Skateboarding Skateboarding Skateboarding ",
+    "imgUrl": "https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb",
+    "price": 29.99,
+    "dateTime": "2025-09-26T17:00:00"
+  },
+  {
+    "id": 2,
+    "title": "Michael Jackson",
+    "imgUrl": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
+    "price": 19.99,
+    "dateTime": "2024-09-27T14:30:00"
+  },
+  {
+    "id": 3,
+    "title": "Night city",
+    "imgUrl": "https://images.unsplash.com/photo-1519608487953-e999c86e7455",
+    "price": 24.99,
+    "dateTime": "2024-09-28T19:00:00"
+  },
+  {
+    "id": 4,
+    "title": "Suprise",
+    "imgUrl": "https://images.unsplash.com/photo-1541698434281-fb9eafa9f480",
+    "price": 39.99,
+    "dateTime": "2024-09-29T08:45:00"
+  },
+  {
+    "id": 5,
+    "title": "Øresund",
+    "imgUrl": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29",
+    "price": 22.99,
+    "dateTime": "2024-09-30T16:15:00"
+  },
+  {
+    "id": 6,
+    "title": "MacBook",
+    "imgUrl": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
+    "price": 17.99,
+    "dateTime": "2024-09-26T17:30:00"
+  },
+  {
+    "id": 7,
+    "title": "Michael Jackson's brother",
+    "imgUrl": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
+    "price": 34.99,
+    "dateTime": "2024-09-28T11:00:00"
+  }
+]

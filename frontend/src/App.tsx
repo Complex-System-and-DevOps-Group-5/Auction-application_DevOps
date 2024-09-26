@@ -4,9 +4,10 @@ import UpperMenu from "./Components/UpperMenu.tsx";
 import ProductPage from "./Pages/ProductPage.tsx";
 import NavigationMenu from "./Components/NavigationMenu.tsx";
 import ProductList from "./Components/ProductList.tsx";
-import productList from './Mockdata/ProductListItems.json';
 import CreatePost from "./Pages/CreatePost.tsx";
-
+import HighlightedProduct from "./Components/HighlightedProduct.tsx";
+import highlightedProductList from "./MockData/HighlightedProductList.json";
+import productList from "./MockData/ProductListItems.json";
 
 function App() {
   return (
@@ -19,9 +20,11 @@ function App() {
               <NavigationMenu/>
               <AuthPage/>
               <ProductPage/>
+              <HighlightedProduct products={highlightedProductList}/>
               <ProductList products={productList}/>
               <CreatePost/>
           </main>
+
       </>
   )
 }
