@@ -35,7 +35,7 @@ export function UpperMenu() {
                     </>
                 ) : (
                     <div className="loggedIn">
-                        <button className="create">Create</button>
+                        <button className="create" onClick={() => navigate('/createPost')}>Create</button>
                         {/* in the future use ProfilePicture component*/}
                         <DropDownMenu title="Notification"/>
                         <div className='profile'>

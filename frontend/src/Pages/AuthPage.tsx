@@ -3,11 +3,12 @@ import InputField from "../Components/InputField.tsx";
 import DefaultButton from "../Components/DefaultButton.tsx";
 import {useLoginDispatch} from "../Context/LoginContext.tsx";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 export function AuthPage() {
     const dispatch = useLoginDispatch()
     const [isLoginPage, setIsLoginPage] = useState(true);
-    //const navigate = UseNavigate();
+    const navigate = useNavigate();
 
     return(
         <div className="authContainer">
@@ -26,8 +27,7 @@ export function AuthPage() {
                         <DefaultButton
                             onClick={() => {
                                 dispatch({type: "toggleLogin", payload: {toggle: true}})
-                                //TODO: Navigate to homePage page
-                                //navigate("/home");
+                                navigate("/");
                             }
                         }
                             text="Login"

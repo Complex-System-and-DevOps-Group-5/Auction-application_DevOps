@@ -8,6 +8,7 @@
     margin: 0;
     padding: 0 1300px 0 0;
     height: 50px;
+    z-index: 996;
 }
 
 .search-bar {
