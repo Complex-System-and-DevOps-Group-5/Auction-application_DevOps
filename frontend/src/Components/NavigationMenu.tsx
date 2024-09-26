@@ -1,6 +1,6 @@
 import '../Styling/NavigationMenu.css'
 
-export function NavigationMenu() {
+export default function NavigationMenu() {
     return (
         <ul>
             <li><a href="Home">Home</a></li>

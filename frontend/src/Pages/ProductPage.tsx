@@ -2,7 +2,7 @@ import '../Styling/ProductPage.css'
 import watchList from "../assets/watchlist-icon.png"
 import {useState} from "react";
 import InputField from "../Components/InputField.tsx";
-import DefaultButton from "../Components/Button.tsx";
+import DefaultButton from "../Components/DefaultButton.tsx";
 
 export default function ProductPage () {
     // most of these should be context
@@ -17,7 +17,7 @@ export default function ProductPage () {
                 <img src='../../VincentVanGogh00681.jpg'/>
             </div>
             <div className="productInfo">
-                <h2>Selv portræt af Vincent Van Gough</h2> {/*Context*/}
+                <h2>Self portrait of Vincent Van Gough</h2> {/*Context*/}
                 {watchtListed ? (
                         <p>
                             <img className="watchList" src={watchList} alt = "watch list icon"/>
