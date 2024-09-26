@@ -1,26 +1,28 @@
 import './App.css'
-import {NavigationMenu} from "./Components/NavigationMenu.tsx";
-import {SearchField} from "./Components/SearchField.tsx";
-import DefaultButton from "./Components/Button.tsx";
-import InputField from "./Components/InputField.tsx";
-import {UpperMenu} from "./Components/UpperMenu.tsx";
-
+import AuthPage from "./Pages/AuthPage.tsx";
+import UpperMenu from "./Components/UpperMenu.tsx";
+import ProductPage from "./Pages/ProductPage.tsx";
+import NavigationMenu from "./Components/NavigationMenu.tsx";
+import ProductList from "./Components/ProductList.tsx";
+import CreatePost from "./Pages/CreatePost.tsx";
 import HighlightedProduct from "./Components/HighlightedProduct.tsx";
-import productList from "./MockData/HighlightedProductList.json"
+import highlightedProductList from "./MockData/HighlightedProductList.json";
+import productList from "./MockData/ProductList.json";
 
 function App() {
   return (
       <>
           <header>
 
-            </header>
-            <main>
-                {/*<UpperMenu/>*/}
-                <NavigationMenu/>
-                {/*<DefaultButton text={"Hello World"} onClick={() => {}}/>*/}
-                <HighlightedProduct products={productList}/>
-
-              <InputField name="email" type="email" placeholder="Email"/>
+          </header>
+          <main>
+              <UpperMenu/>
+              <NavigationMenu/>
+              <AuthPage/>
+              <ProductPage/>
+              <HighlightedProduct products={highlightedProductList}/>
+              <ProductList products={productList}/>
+              <CreatePost/>
           </main>
 
       </>

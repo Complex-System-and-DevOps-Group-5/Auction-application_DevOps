@@ -1,62 +1,48 @@
 import {SearchField} from "./SearchField.tsx";
-import watchlistIcon from '../assets/watchlist-icon.png';
-import notificationIcon from '../assets/notification-icon.png'
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
+import '../Styling/UpperMenu.css'
+import {Logo} from "./Logo.tsx";
 
-export function UpperMenu() {
+
+function UpperMenu() {
     const loggedIn = useLoginState()
     const dispatch = useLoginDispatch()
 
-    const username = "AM";
+    let username: string = "AM";
     return(
-       
-        <nav className= "upper-menu">
 
-            <div className= "search-bar">
+        <h1 className="upper-menu">
+
+            <div className="search-bar">
                 <SearchField/>
             </div>
-
-            <div className= "logo">
-                <h1><span>AUC</span>TION</h1>
+            <div className="logo">
+                <Logo/>
             </div>
-
-            <div className="user-actions">
-                {loggedIn !== true ? (
+                {loggedIn.loggedIn ? (
                     <>
                         <button className="login"
-                                onClick={() => 
-                                    {
-                                        console.log('before' + loggedIn.loggedIn);
-                                        dispatch({type: "toggleLogin", payload: {toggle: true}});
-                                        console.log('after'+ loggedIn.loggedIn)
-                                    }
+                                onClick={() => {
+                                    dispatch({type: "toggleLogin", payload: {toggle: true}});
                                 }
+                        }
                         >Login
                         </button>
                     </>
                 ) : (
-                    <>
-                        {/*<div className="username"> {username}</div>
+                    <div className="loggedIn">
                         <button className="create">Create</button>
-                        <button className="watchlist">
-                            <img src={watchlistIcon} alt="Watchlist Icon" className="button-icon"/>
-                        </button>
-                        <button className="notification-icon">
-                            <img src={notificationIcon} alt="notifications"/>
-                        </button>
-*/}
-                        <button className="logout"
-                                onClick={() =>
-                                    {
-                                        dispatch({type: "toggleLogin", payload: {toggle: false}})
-                                         {console.log(loggedIn)}
-                                    }
-                                }
-                        >Logout
-                        </button>
-                    </>
+                    {/* in the future use ProfilePicture component*/}
+                    <div className='profile'>
+                        <div className='username'>{username}</div>
+                        <span
+                            className='dot'></span> {/*make this a button instead of span when drop down menus are readu*/}
+                    </div>
+
+                </div>
                 )}
-            </div>
-        </nav>
+        </h1>
     );
 }
+
+export default UpperMenu;
