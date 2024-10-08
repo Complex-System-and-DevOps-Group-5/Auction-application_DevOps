@@ -1,4 +1,4 @@
-interface Product {
+/*interface Product {
     id: string;
     title: string;
     startingPrice: number;
@@ -10,3 +10,5 @@ interface Product {
     currentlyListed: boolean;
     inwatchlist: boolean;
 }
+*/
+
