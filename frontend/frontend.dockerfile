@@ -13,7 +13,7 @@ COPY frontend/package*.json ./
 
 # Install node packages
 RUN npm install
-ç
+
 # Copy or project directory (locally) in the current directory of our docker image (/app)
 COPY frontend/ .
 
