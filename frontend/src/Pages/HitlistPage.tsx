@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Product, ProductListProps } from "../Components/Product.ts";
 import { useFetch } from "../Components/Fetch.ts";
 
-export function HomePage() {
+export function HitlistPage() {
     const productsUrl: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/improve/productList-component/frontend/src/Mockdata/ProductListItems.json';
     //const [products, setProducts] = useState<Product[] | null> (null);
     const [products, isLoading, hasError] = useFetch(productsUrl);
