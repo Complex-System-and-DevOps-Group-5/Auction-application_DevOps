@@ -11,7 +11,7 @@ const initialOngoingState: OngoingState = {
 
 type OngoingAction =
     | { type: 'addBid', payload: Product }
-    | { type: 'removeBid', payload: { id: string } };
+    | { type: 'removeBid', payload: { id: number } };
 
     const ongoingReducer = (state: OngoingState, action: OngoingAction) => {
         switch (action.type) {
