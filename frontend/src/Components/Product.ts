@@ -15,6 +15,7 @@ export interface Product {
     imgUrl?: string;
     price: number;
     views: number;
+    sold: boolean;
 }
 
 export interface ProductListProps {
