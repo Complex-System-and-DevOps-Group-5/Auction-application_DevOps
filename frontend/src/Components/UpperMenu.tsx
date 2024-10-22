@@ -25,7 +25,7 @@ export function UpperMenu() {
 
             {loggedIn.loggedIn == true ? (
                     <div className="loggedIn">
-                        <button className="create" onClick={() => navigate('/createPost')}>Create</button>
+                        <button className="create-button" onClick={() => navigate('/createPost')}>Create</button>
                         
                         <DropDownMenu title="Notification"/>
                         
@@ -37,7 +37,7 @@ export function UpperMenu() {
                             </span> {/*make this a button instead of span when drop down menus are readu*/}
                         </div>
 
-                        <button className="logout"
+                        <button className="logout-button"
                                 onClick={() => {
                                     dispatch({type: "toggleLogin", payload: {toggle: false}})
                                     {
@@ -49,7 +49,7 @@ export function UpperMenu() {
                         </button>
                     </div>
                 ) : (
-                    <button className="login"
+                    <button className="login-button"
                         onClick={() => {
                                 navigate("/authentication");
                             }
