@@ -6,6 +6,8 @@ ul {
     list-style-type: none;
     padding: 20px;
     background-color: transparent;
+    display: flex;
+    
 }
 li {
     margin-right: 40px;
