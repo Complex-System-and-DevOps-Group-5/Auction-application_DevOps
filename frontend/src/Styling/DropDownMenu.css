@@ -10,6 +10,12 @@
     position: absolute;
 }
 
+.button{
+    height: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 h3{
     color: white;
     text-align: left;

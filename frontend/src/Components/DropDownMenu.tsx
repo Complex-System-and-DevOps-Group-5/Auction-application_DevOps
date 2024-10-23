@@ -15,14 +15,16 @@ export function DropDownMenu({title}:DropDownMenu){
     return (
         <>
             {/*TODO: ADD NOTIFICATION BUTTON*/}
-            <DefaultButton
-                onClick={() =>
-                    toggleDropdown()
-                }
-                text={title}
-                color="#4E73F6"
-                size = 'small'
-            />
+            <div className="button">
+                <DefaultButton
+                    onClick={() =>
+                        toggleDropdown()
+                    }
+                    text={title}
+                    color="#4E73F6"
+                    fontSize = 'small'
+                />
+            </div>
 
             {isOpen && (
                 <div className="dropdown-container">
