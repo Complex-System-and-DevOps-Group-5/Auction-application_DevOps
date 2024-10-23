@@ -8,6 +8,7 @@ import BiddingsHistoryPage from "./Pages/BiddingsHistoryPage.tsx";
 import AboutPage from "./Pages/AboutPage.tsx";
 import ProductPage from "./Pages/ProductPage.tsx";
 import CreatePost from "./Pages/CreatePost.tsx";
+import { ProtectedRoute } from "./Components/protectedRoute.tsx";
 
 
 export const routes: RouteObject[] = [
@@ -25,15 +26,27 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "/ongoing",
-                element: <OngoingPage/>,
+                element: (
+                <ProtectedRoute>
+                    <OngoingPage/>
+                </ProtectedRoute>
+                ),
             },
             {
                 path: "/trending",
-                element: <TrendingPage/>,
+                element: (
+                    <ProtectedRoute>
+                        <TrendingPage />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/biddingshistory",
-                element: <BiddingsHistoryPage/>,
+                element: (
+                    <ProtectedRoute>
+                        <BiddingsHistoryPage/>
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/about",
@@ -45,7 +58,11 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "createPost",
-                element: <CreatePost/>,
+                element: (
+                    <ProtectedRoute>
+                        <CreatePost/>
+                    </ProtectedRoute>
+                ),
             },
 
         ],
