@@ -6,8 +6,14 @@ ul {
     list-style-type: none;
     padding: 20px;
     background-color: transparent;
+    display: flex;
+    justify-content: center;
+    margin-top: 0%;
+    
 }
 li {
     margin-right: 40px;
     float: left;
+    cursor: pointer;
+    color: black;
 }

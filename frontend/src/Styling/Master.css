@@ -11,16 +11,16 @@
     width: 100px;
 }
 
-.upper-menu {
+/*.upper-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #D9D9D9;
     padding: 10px 20px;
     height: 78px;
-}
+}*/
 
-.search-bar input {
+/*.search-bar input {
     padding: 8px;
     border-radius: 9999px;
     border: 1px solid #ccc;
@@ -70,4 +70,4 @@
 .notification-icon img {
     width: 44px;
     height: 44px;
-}
+}*/
