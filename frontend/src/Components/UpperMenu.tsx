@@ -31,7 +31,7 @@ export function UpperMenu() {
                         
                         {/* in the future use ProfilePicture component*/}
                         <div className='profile'>
-                            <div className='username'>{username}</div>
+                            <p className='username'>{username}</p>
                             <span
                                 className='dot'>
                             </span> {/*make this a button instead of span when drop down menus are readu*/}

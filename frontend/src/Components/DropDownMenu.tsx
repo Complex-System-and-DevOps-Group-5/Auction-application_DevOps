@@ -21,6 +21,7 @@ export function DropDownMenu({title}:DropDownMenu){
                 }
                 text={title}
                 color="#4E73F6"
+                size = 'small'
             />
 
             {isOpen && (
