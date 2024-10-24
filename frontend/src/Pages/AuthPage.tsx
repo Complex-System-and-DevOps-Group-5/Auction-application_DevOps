@@ -49,8 +49,8 @@ export function AuthPage() {
                 // Login form
                 <>
                     <div className={"input-field-placement"}>
-                        <InputField name="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        <InputField name="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <InputField name="email" type="email" placeholder="Email" /> 
+                        <InputField name="password" type="password" placeholder="Password"/> 
                     </div>
                     <div className="button-placement">
                         <DefaultButton
