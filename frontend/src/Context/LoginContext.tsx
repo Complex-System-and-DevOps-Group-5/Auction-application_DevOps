@@ -7,7 +7,7 @@ interface LoginState {
 
 const initialLoginState: LoginState = {
     loggedIn: false,
-    authToken: localStorage.getItem("authToken"),
+    authToken: null,
 };
 
 export type LoginAction =

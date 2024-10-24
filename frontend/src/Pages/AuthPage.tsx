@@ -49,6 +49,7 @@ export function AuthPage() {
                 // Login form
                 <>
                     <div className={"input-field-placement"}>
+                        // TODO : Use another component for input fields to use value and onChange
                         <InputField name="email" type="email" placeholder="Email" /> 
                         <InputField name="password" type="password" placeholder="Password"/> 
                     </div>
