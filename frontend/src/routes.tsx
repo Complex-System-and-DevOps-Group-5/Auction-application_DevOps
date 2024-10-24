@@ -25,15 +25,21 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "/ongoing",
-                element: <OngoingPage/>,
+                element: (
+                    <OngoingPage/>
+                ),
             },
             {
                 path: "/trending",
-                element: <TrendingPage/>,
+                element: (
+                        <TrendingPage />
+                ),
             },
             {
                 path: "/biddingshistory",
-                element: <BiddingsHistoryPage/>,
+                element: (
+                        <BiddingsHistoryPage/>
+                ),
             },
             {
                 path: "/about",
@@ -45,7 +51,9 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "createPost",
-                element: <CreatePost/>,
+                element: (
+                        <CreatePost/>
+                ),
             },
 
         ],
