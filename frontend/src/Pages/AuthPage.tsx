@@ -12,8 +12,10 @@ export function AuthPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
-    const handleLogin = aysnc () => {
+    const handleLogin = async () => {
+        setLoading(true);
         try {
             const response = await fetch("http://localhost:4000/login", {
                 method: "POST",
@@ -22,6 +24,7 @@ export function AuthPage() {
                 },
                 body: JSON.stringify({ username: email, password: password }),
             });
+            setLoading(false);
             if (response.ok) {
                 const token = await response.text(); // Assuming backend returns JWT token as plain text
                 localStorage.setItem("authToken", token); // Store token in localStorage
@@ -31,6 +34,7 @@ export function AuthPage() {
                 setError("Invalid credentials. Please try again.");
             }
         } catch (err) {
+            setLoading(false);
             setError("Something went wrong. Please try again.");
         }
     };
@@ -45,7 +49,7 @@ export function AuthPage() {
                 // Login form
                 <>
                     <div className={"input-field-placement"}>
-                        <InputField name="email" type="email" placeholder="Email" value={emai} onChange={(e) => setEmail(e.target.value)}/>
+                        <InputField name="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <InputField name="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                     <div className="button-placement">
