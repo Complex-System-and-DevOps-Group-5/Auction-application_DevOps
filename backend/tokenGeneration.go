@@ -15,47 +15,37 @@ type User struct {
     Password string `json:"password"`
 }
 
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
-    w.Header().Set("Content-Type", "application/json")
- 
+func LoginHandler(c *fiber.Ctx) error {
     var u User
-    json.NewDecoder(r.Body).Decode(&u)
-    fmt.Printf("The user request value %v\n", u)
-  
+    if err := c.BodyParser(&u); err != nil {
+        return c.Status(fiber.StatusBadRequest).SendString("Invalid request")
+    }
+
     if u.Username == "Chek" && u.Password == "123456" {
         tokenString, err := createToken(u.Username)
         if err != nil {
-            w.WriteHeader(http.StatusInternalServerError)
-            fmt.Fprint(w, "Error generating token")
-            return
+            return c.Status(fiber.StatusInternalServerError).SendString("Error generating token")
         }
-        w.WriteHeader(http.StatusOK)
-        fmt.Fprint(w, tokenString)
-        return
-    } else {
-        w.WriteHeader(http.StatusUnauthorized)
-        fmt.Fprint(w, "Invalid credentials")
+        return c.Status(fiber.StatusOK).SendString(tokenString)
     }
+
+    return c.Status(fiber.StatusUnauthorized).SendString("Invalid credentials")
 }
 
-func ProtectedHandler(w http.ResponseWriter, r *http.Request) {
-    w.Header().Set("Content-Type", "application/json")
-    authorizationHeader := r.Header.Get("Authorization")
+
+func ProtectedHandler(c *fiber.Ctx) error {
+    authorizationHeader := c.Get("Authorization")
     if authorizationHeader == "" || len(authorizationHeader) < 7 || authorizationHeader[:7] != "Bearer " {
-        w.WriteHeader(http.StatusUnauthorized)
-        fmt.Fprint(w, "Missing or malformed authorization header")
-        return
+        return c.Status(fiber.StatusUnauthorized).SendString("Missing or malformed authorization header")
     }
+
     tokenString := authorizationHeader[7:]
-  
     err := verifyToken(tokenString)
     if err != nil {
-        w.WriteHeader(http.StatusUnauthorized)
-        fmt.Fprint(w, "Invalid token")
-        return
+        return c.Status(fiber.StatusUnauthorized).SendString("Invalid token")
     }
-  
-    fmt.Fprint(w, "Welcome to the protected area")
+
+    return c.SendString("Welcome to the protected area")
 }
 
 func createToken(username string) (string, error) {
