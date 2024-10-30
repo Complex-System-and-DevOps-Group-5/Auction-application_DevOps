@@ -1,5 +1,5 @@
-interface Product {
-    id: string;
+export interface Product {
+    id: number;
     title: string;
     startingPrice: number;
     currentBidPrice: number;
