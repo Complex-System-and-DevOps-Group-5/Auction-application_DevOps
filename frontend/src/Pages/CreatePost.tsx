@@ -1,5 +1,5 @@
-import { InputField } from '../Components/InputField';
-import DefaultButton from '../Components/DefaultButton';
+import InputField from '../Components/InputField.tsx';
+import DefaultButton from '../Components/DefaultButton.tsx';
 
 
 export default function CreatePost() {
