@@ -7,10 +7,14 @@ export default function ProductPage () {
     const [watchtListed, setWatchlisted] = useState(false)
     const [bidAmount, setbidAmount] = useState(0)
     // from backend:
-    const [amountOfBids, setamountOfBids] = useState(1)
+    const [amountOfBids, setamountOfBids] = useState(2)
     const [winningBidAmount, setWinningBidAmount] = useState(999)
     const [sold, setSold] = useState(false)
     const [minBidAmount, setMinBidAmount] = useState(1)
+
+    // loading indicators
+    //const [fetching, setFetching] = useState(false)
+    const [submiting, setSubmitting] = useState(false)
 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +23,7 @@ export default function ProductPage () {
 
     async function handleBidSubmit(event: any){
         event.preventDefault();
+        setSubmitting(true);
         try {
             await submitBid(bidAmount)
         } catch(err) {
@@ -32,10 +37,12 @@ export default function ProductPage () {
                 // get winningBidAmount from backend this will determine if promise will be resolved or rejected
                 if (bid >= winningBidAmount + minBidAmount){
                     resolve(alert('A bit was sucessfully submitted: ' + bidAmount));
+                    setSubmitting(false);
                 } else {
                     reject(new Error('Backend did not approve your bid. Attempted to  submit: ' + bid));
+                    setSubmitting(false);
                 }
-            }, 1500);
+            }, 3000);
         })
     }
     useEffect(() => {
@@ -67,13 +74,21 @@ export default function ProductPage () {
                 ) : (
                     <div className="bidSection">
                         <form onSubmit={handleBidSubmit}>
-                            <input name="amount" type="number" value={bidAmount}
+                            <input name="amount" type="number"
                                    min={(winningBidAmount + minBidAmount).toString()}
                                    pattern="[0-9]"
                                    className="bidInput"
                                    onChange={handleChange}
+                                   disabled={submiting}
                             />
-                            <button id="button">Submit</button>
+                            {!submiting ? (<button>Submit</button>) :
+                            (<div className="lds-ring">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>)
+                            }
                         </form>
                     </div>
                 )}
