@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node_modules/.bin/vite",
-    "build": "node_modules/.bin/tsc -b && vite build",
-    "lint": "node_modules/.bin/eslint .",
-    "preview": "node_modules/.bin/vite preview",
-    "test": "node_modules/.bin/tsc && vitest --run --coverage && vite build"
+    "dev": "frontend/node_modules/.bin/vite",
+    "build": "frontend/node_modules/.bin/tsc -b && vite build",
+    "lint": "frontend/node_modules/.bin/eslint .",
+    "preview": "frontend/node_modules/.bin/vite preview",
+    "test": "frontend/node_modules/.bin/tsc && vitest --run --coverage && vite build"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
