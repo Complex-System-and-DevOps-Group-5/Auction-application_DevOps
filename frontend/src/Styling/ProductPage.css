@@ -51,10 +51,10 @@ h2 {
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 64px;
-    height: 64px;
+    width: 46px;
+    height: 46px;
     margin: 0px;
-    border: 8px solid currentColor;
+    border: 6px solid currentColor;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: currentColor transparent transparent transparent;
