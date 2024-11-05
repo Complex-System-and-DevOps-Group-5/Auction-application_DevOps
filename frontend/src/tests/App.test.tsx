@@ -1,20 +1,27 @@
 import {render} from "@testing-library/react";
 import App from "../App.tsx";
-import { describe, expect, it, vi, beforeEach } from "vitest";
-import {RouteObject} from "react-router-dom";
-
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import {LoginProvider} from "../Context/LoginContext.tsx";
 const mockedUsedNavigate = vi.fn();
-vi.mock('react-router-dom', () => ({
-    ...vi.importActual('react-router-dom') as RouteObject,
-    useNavigate: () => mockedUsedNavigate,
-}));
+
+vi.mock(import("react-router-dom"), async (importOriginal) => {
+    const actual = await importOriginal()
+    return {
+        ...actual,
+        useNavigate: () => mockedUsedNavigate
+    }
+})
 
 describe('AUCTION', () => {
     beforeEach(() => {
         vi.restoreAllMocks();
     })
     it("should render", () => {
-        const {getAllByText} = render(<App />);
-        expect(getAllByText('Auction').length).toBeGreaterThan(0)
+        const {getAllByText} = render(
+            <LoginProvider>
+                <App />
+            </LoginProvider>
+        );
+        expect(getAllByText('AUC').length).toBeGreaterThan(0)
     });
 });
