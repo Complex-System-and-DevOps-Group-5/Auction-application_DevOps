@@ -1,12 +1,12 @@
-interface Product {
+export interface Product {
     id: string;
     title: string;
     startingPrice: number;
-    currentBidPrice: number;
-    CurrentAmountOfBids: number,
+    winningBid: number;
+    amountOfBids: number,
     description: string;
     currency: string;
     quantity: number;
-    currentlyListed: boolean;
-    inwatchlist: boolean;
+    sold: boolean;
+    inWatchlist: boolean;
 }
