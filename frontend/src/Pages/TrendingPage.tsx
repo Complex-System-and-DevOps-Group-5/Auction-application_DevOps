@@ -1,6 +1,5 @@
 import styles from "../Styling/ProductList.module.css";
-import DefaultButton from "../Components/Button.tsx";
-import { useEffect, useState } from "react";
+import DefaultButton from "../Components/DefaultButton.tsx";
 import { Product, ProductListProps } from "../Components/Product.ts";
 import { useFetch } from "../Components/Fetch.ts";
 

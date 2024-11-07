@@ -1,62 +1,65 @@
 import {SearchField} from "./SearchField.tsx";
-import watchlistIcon from '../assets/watchlist-icon.png';
-import notificationIcon from '../assets/notification-icon.png'
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
+import '../Styling/UpperMenu.css'
+import {Logo} from "./Logo.tsx";
+import {DropDownMenu} from "./DropDownMenu.tsx";
+import {useNavigate} from "react-router-dom";
 
 export function UpperMenu() {
     const loggedIn = useLoginState()
     const dispatch = useLoginDispatch()
 
-    const username = "AM";
-    return(
-       
-        <nav className= "upper-menu">
+    const navigate = useNavigate();
 
-            <div className= "search-bar">
+    let username: string = "AM";
+    return(
+
+        <div className="upper-menu">
+            <div className="search-bar">
                 <SearchField/>
             </div>
 
-            <div className= "logo">
-                <h1><span>AUC</span>TION</h1>
+            <div className="logo">
+                <Logo/>
             </div>
 
-            <div className="user-actions">
-                {loggedIn !== true ? (
-                    <>
-                        <button className="login"
-                                onClick={() => 
+            {loggedIn.loggedIn == true ? (
+                    <div className="loggedIn">
+                        <button className="create-button" onClick={() => navigate('/createPost')}>Create</button>
+                        
+                        <DropDownMenu title="Notification"/>
+                        
+                        {/* in the future use ProfilePicture component*/}
+                        <div className='profile'>
+                            <p className='username'>{username}</p>
+                            <span
+                                className='dot'>
+                            </span> {/*make this a button instead of span when drop down menus are readu*/}
+                        </div>
+
+                        <button className="logout-button"
+                                onClick={() => {
+                                    dispatch({type: "toggleLogin", payload: {toggle: false}})
                                     {
-                                        console.log('before' + loggedIn.loggedIn);
-                                        dispatch({type: "toggleLogin", payload: {toggle: true}});
-                                        console.log('after'+ loggedIn.loggedIn)
+                                        console.log(loggedIn)
                                     }
                                 }
-                        >Login
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        {/*<div className="username"> {username}</div>
-                        <button className="create">Create</button>
-                        <button className="watchlist">
-                            <img src={watchlistIcon} alt="Watchlist Icon" className="button-icon"/>
-                        </button>
-                        <button className="notification-icon">
-                            <img src={notificationIcon} alt="notifications"/>
-                        </button>
-*/}
-                        <button className="logout"
-                                onClick={() =>
-                                    {
-                                        dispatch({type: "toggleLogin", payload: {toggle: false}})
-                                         {console.log(loggedIn)}
-                                    }
                                 }
                         >Logout
                         </button>
-                    </>
-                )}
-            </div>
-        </nav>
+                    </div>
+                ) : (
+                    <button className="login-button"
+                        onClick={() => {
+                                navigate("/authentication");
+                            }
+                        }
+                    >Login
+                    </button>
+                )
+            }
+        </div>
     );
 }
+
+export default UpperMenu;

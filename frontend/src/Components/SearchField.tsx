@@ -1,7 +1,16 @@
 import '../Styling/SearchField.css'
 
-export function SearchField(){
-    return(
-        <input type="text" placeholder="Search"/>
-    )
+
+interface SearchFieldProps {
+    className?: string;
+}
+
+export function SearchField({ className }: SearchFieldProps) {
+    return (
+        <input 
+            type="text" 
+            placeholder="Search" 
+            className={className} 
+        />
+    );
 }
