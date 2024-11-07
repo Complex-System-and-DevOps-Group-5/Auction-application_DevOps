@@ -2,10 +2,12 @@ import styles from "../Styling/ProductList.module.css";
 import DefaultButton from "../Components/DefaultButton.tsx";
 import { Product, ProductListProps } from "../Components/Product.ts";
 import { useFetch } from "../Components/Fetch.ts";
+import {useNavigate} from "react-router-dom";
 
 export function HomePage() {
     const productsUrl: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/ProductListItems.json';
     const [products, isLoading, hasError] = useFetch(productsUrl);
+
 
     const productBoxItems = products && products.map((product: Product) => (
         !hasError && products !== null && (
@@ -26,6 +28,7 @@ export function HomePage() {
 }
 
 function ProductItem({product}: ProductListProps) {
+    const navigate = useNavigate();
     return (
         <div key={product.id} className={styles.productItem} >
             <img src={product.imgUrl} alt={`Product ${product.id}`} className={styles.productImage}/>
@@ -34,7 +37,7 @@ function ProductItem({product}: ProductListProps) {
                 <p className={styles.productPrice}>${product.price.toFixed(2)} </p>
             </div>
             <div className={styles.buttonContainer}>
-                <DefaultButton text={"View Item"} onClick={() => console.log("Left button clicked")}
+                <DefaultButton text={"View Item"} onClick={()=>navigate("/product")}
                                color={"#dddddd"}></DefaultButton>
                 <DefaultButton text={"Add to watchlist"} onClick={() => console.log("Add to watchlist")}
                                color={"#4be68c"}></DefaultButton>
