@@ -2,7 +2,7 @@ import '../Styling/ProductPage.css'
 import watchList from "../assets/watchlist-icon.png"
 import {useEffect, useState} from "react";
 import {useAuctionDispatch, useAuctionState} from "../Context/AuctionContext.tsx";
-import {Product} from "../Interfaces/Product.ts";
+import {Auction} from "../Interfaces/Auction.ts";
 
 export default function ProductPage () {
     const baseURL: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/feature/submit-bit/frontend/vangoghauction.json';
@@ -18,7 +18,7 @@ export default function ProductPage () {
     const fetchAuction = async(url: string) => {
         try {
             const response = await fetch(url)
-            const fetchedAuction: Product[] = await response.json();
+            const fetchedAuction: Auction[] = await response.json();
             if (!response.ok) {
                 throw new Error('Network response was not ok, tried to access: ' + url);
             }
@@ -66,7 +66,7 @@ export default function ProductPage () {
     /*I'm not proud of the way I access the product and or auction info
     * I will find a better way for a ProductPage, however this method will be quite useful
     * on the front page*/
-    const InfoBox = product.map((auction:Product) => (
+    const InfoBox = product.map((auction:Auction) => (
         <div className="productInfo">
             <h2>{auction.title}</h2>
             {auction.inWatchlist ? (

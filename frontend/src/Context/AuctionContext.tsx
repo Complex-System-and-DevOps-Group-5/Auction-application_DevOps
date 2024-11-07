@@ -1,9 +1,9 @@
 // Type of state
 import {createContext, useContext, useReducer} from "react";
-import {Product} from "../Interfaces/Product.ts";
+import {Auction} from "../Interfaces/Auction.ts";
 
 interface AuctionState {
-    product: Product[];
+    product: Auction[];
     isProductLoading: boolean;
     productError: boolean;
 }
@@ -18,7 +18,7 @@ const initialAuctionState: AuctionState = {
 // Type of actions
 type AuctionAction =
     | { type: 'fetchingAuction' }
-    | { type: 'fetchedAuction', payload: { product: Product[] } }
+    | { type: 'fetchedAuction', payload: { product: Auction[] } }
     | { type: 'auctionError', payload: { failed: boolean } }
     | { type: 'update', payload: { auction: number } } // this only updates  thew winning bid.
     ;
