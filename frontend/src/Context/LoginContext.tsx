@@ -2,14 +2,17 @@ import {createContext, useContext, useReducer} from "react";
 
 interface LoginState {
     loggedIn: Boolean;
+    authToken: string | null;
 }
 
 const initialLoginState: LoginState = {
-    loggedIn: false
+    loggedIn: false,
+    authToken: null,
 };
 
 export type LoginAction =
-    | { type: 'toggleLogin', payload: { toggle: boolean }};
+    | { type: 'toggleLogin', payload: { toggle: boolean }}
+    | { type: 'setAuthToken', payload: { token: string | null }};
 
 const loginReducer = (state: LoginState, action: LoginAction) => {
     switch (action.type) {
@@ -18,6 +21,11 @@ const loginReducer = (state: LoginState, action: LoginAction) => {
                 ...state,
                 loggedIn: action.payload.toggle
             }
+        case 'setAuthToken':
+            return {
+                    ...state,
+                    authToken: action.payload.token
+            }    
         default:
             return state;
     }

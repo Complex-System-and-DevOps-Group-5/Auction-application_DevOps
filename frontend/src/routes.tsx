@@ -38,7 +38,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "/biddingshistory",
-                element: ( 
+                element: (
                     <ProtectedRoute>
                          <BiddingsHistoryPage/>
                     </ProtectedRoute>
@@ -54,7 +54,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "createPost",
-                element: ( 
+                element: (
                     <ProtectedRoute>
                          <CreatePost/>
                     </ProtectedRoute>
