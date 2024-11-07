@@ -1,4 +1,4 @@
-import {RouteObject} from "react-router-dom";
+import {RouteObject, Navigate} from "react-router-dom";
 import App from "./App.tsx";
 import AuthPage from "./Pages/AuthPage.tsx";
 import {HomePage} from "./Pages/HomePage.tsx";
@@ -8,6 +8,8 @@ import BiddingsHistoryPage from "./Pages/BiddingsHistoryPage.tsx";
 import AboutPage from "./Pages/AboutPage.tsx";
 import ProductPage from "./Pages/ProductPage.tsx";
 import CreatePost from "./Pages/CreatePost.tsx";
+import { useLoginState } from "./Context/LoginContext.tsx"
+
 
 
 export const routes: RouteObject[] = [
@@ -25,7 +27,10 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "/ongoing",
-                element: <OngoingPage/>,
+                element: (
+                    <ProtectedRoute>
+                        <OngoingPage/>
+                </ProtectedRoute>),
             },
             {
                 path: "/trending",
@@ -33,7 +38,11 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "/biddingshistory",
-                element: <BiddingsHistoryPage/>,
+                element: ( 
+                    <ProtectedRoute>
+                         <BiddingsHistoryPage/>
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/about",
@@ -45,9 +54,18 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "createPost",
-                element: <CreatePost/>,
+                element: ( 
+                    <ProtectedRoute>
+                         <CreatePost/>
+                    </ProtectedRoute>
+                ),
             },
 
         ],
     }
 ];
+
+function ProtectedRoute({ children }: { children: JSX.Element }) {
+    const  hasLoggedin = useLoginState();
+    return hasLoggedin.loggedIn ? children : <Navigate to="/authentication" />;
+}
