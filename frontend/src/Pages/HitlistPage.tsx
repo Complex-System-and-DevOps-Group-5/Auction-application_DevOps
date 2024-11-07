@@ -1,11 +1,10 @@
 import styles from "../Styling/ProductList.module.css";
-import DefaultButton from "../Components/Button.tsx";
-import { useEffect, useRef, useState } from "react";
+import DefaultButton from "../Components/DefaultButton.tsx";
 import { Product, ProductListProps } from "../Components/Product.ts";
 import { useFetch } from "../Components/Fetch.ts";
 
 export function HitlistPage() {
-    const productsUrl: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/improve/productList-component/frontend/src/Mockdata/ProductListItems.json';
+    const productsUrl: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/develop/frontend/src/Mockdata/ProductListItems.json';
     //const [products, setProducts] = useState<Product[] | null> (null);
     const [products, isLoading, hasError] = useFetch(productsUrl);
     //const [isLoading, setIsLoading] = useState(false);
