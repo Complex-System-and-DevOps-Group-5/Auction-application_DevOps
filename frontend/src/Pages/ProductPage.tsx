@@ -5,7 +5,7 @@ import {useAuctionDispatch, useAuctionState} from "../Context/AuctionContext.tsx
 import {Auction} from "../Interfaces/Auction.ts";
 
 export default function ProductPage () {
-    const baseURL: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/feature/submit-bit/frontend/vangoghauction.json';
+    const baseURL: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/vangoghauction.json';
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0)
     // from backend:
