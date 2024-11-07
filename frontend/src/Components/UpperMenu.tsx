@@ -14,36 +14,30 @@ export function UpperMenu() {
     let username: string = "AM";
     return(
 
-        <h1 className="upper-menu">
-
+        <div className="upper-menu">
             <div className="search-bar">
                 <SearchField/>
             </div>
+
             <div className="logo">
                 <Logo/>
             </div>
-                {loggedIn.loggedIn !== true ? (
-                    <>
-                        <button className="login"
-                                onClick={() => {
-                                    navigate("/authentication");
-                                    //dispatch({type: "toggleLogin", payload: {toggle: true}});
-                                }
-                        }
-                        >Login
-                        </button>
-                    </>
-                ) : (
+
+            {loggedIn.loggedIn == true ? (
                     <div className="loggedIn">
-                        <button className="create" onClick={() => navigate('/createPost')}>Create</button>
-                        {/* in the future use ProfilePicture component*/}
+                        <button className="create-button" onClick={() => navigate('/createPost')}>Create</button>
+                        
                         <DropDownMenu title="Notification"/>
+                        
+                        {/* in the future use ProfilePicture component*/}
                         <div className='profile'>
-                            <div className='username'>{username}</div>
+                            <p className='username'>{username}</p>
                             <span
-                                className='dot'></span> {/*make this a button instead of span when drop down menus are readu*/}
+                                className='dot'>
+                            </span> {/*make this a button instead of span when drop down menus are readu*/}
                         </div>
-                        <button className="logout"
+
+                        <button className="logout-button"
                                 onClick={() => {
                                     dispatch({type: "toggleLogin", payload: {toggle: false}})
                                     {
@@ -53,10 +47,18 @@ export function UpperMenu() {
                                 }
                         >Logout
                         </button>
-
                     </div>
-                )}
-        </h1>
+                ) : (
+                    <button className="login-button"
+                        onClick={() => {
+                                navigate("/authentication");
+                            }
+                        }
+                    >Login
+                    </button>
+                )
+            }
+        </div>
     );
 }
 
