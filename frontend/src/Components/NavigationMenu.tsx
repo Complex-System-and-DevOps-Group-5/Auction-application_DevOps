@@ -2,7 +2,7 @@ import '../Styling/NavigationMenu.css'
 import {useNavigate} from "react-router-dom";
 
 export function NavigationMenu() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return (
         <ul>
             <li><p onClick={()=>navigate("/")}>Home</p></li>
