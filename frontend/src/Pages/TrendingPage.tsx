@@ -3,8 +3,8 @@ import DefaultButton from "../Components/DefaultButton.tsx";
 import { Product, ProductListProps } from "../Components/Product.ts";
 import { useFetch } from "../Components/Fetch.ts";
 
-export function TrendingPage() {
-    const productsUrl: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/improve/productList-component/frontend/src/Mockdata/ProductListItems.json';
+export default function TrendingPage() {
+    const productsUrl: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/ProductListItems.json';
     const [products, isLoading, hasError] = useFetch(productsUrl);
 
     //First Sort for views and get the top 10 and then map products
@@ -17,7 +17,7 @@ export function TrendingPage() {
 
     return (
         <div className={styles.productList}>
-            <h1>Trending Products</h1>
+            {/*<h1>Trending Products</h1>*/}
             <div className={styles.productGrid}>
                 {hasError && <p>Error fetching products</p>}
                 {isLoading ? <div className="loading">Loading...</div> : trendingProducts}

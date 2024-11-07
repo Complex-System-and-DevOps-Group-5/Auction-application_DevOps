@@ -32,7 +32,7 @@ export function useFetch(url: string): [Product[], boolean, boolean] {
                 }
                 setIsLoading(false);
             });
-    }, []);
+    }, [url]);
 
     return [data as Product[], isLoading, hasError];
 }
