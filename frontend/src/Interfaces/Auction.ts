@@ -1,4 +1,4 @@
-export interface Product {
+export interface Auction {
     id: string;
     title: string;
     startingPrice: number;
