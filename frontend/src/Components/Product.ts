@@ -16,6 +16,7 @@ export interface Product {
     price: number;
     views: number;
     sold: boolean;
+    status: string;
 }
 
 export interface ProductListProps {
