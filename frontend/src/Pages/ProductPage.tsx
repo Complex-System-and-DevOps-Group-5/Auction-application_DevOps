@@ -3,6 +3,7 @@ import watchList from "../assets/watchlist-icon.png"
 import {useEffect, useState} from "react";
 import {useAuctionDispatch, useAuctionState} from "../Context/AuctionContext.tsx";
 import {Auction} from "../Interfaces/Auction.ts";
+import {fetchData} from "../Components/Fetch.ts";
 
 export default function ProductPage () {
     const baseURL: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/vangoghauction.json';
@@ -15,20 +16,11 @@ export default function ProductPage () {
 
     const dispatch = useAuctionDispatch();
 
-    const fetchAuction = async(url: string) => {
-        try {
-            const response = await fetch(url)
-            const fetchedAuction: Auction[] = await response.json();
-            if (!response.ok) {
-                throw new Error('Network response was not ok, tried to access: ' + url);
-            }
-            dispatch({ type: "fetchedAuction", payload: { product: fetchedAuction }});
-        } catch (error) {
-            dispatch({ type: "auctionError", payload: { failed: true } }); // Set error message
-        }
-    };
     useEffect(() => {
-        fetchAuction(baseURL)
+        fetchData(baseURL)
+            .then(fetchedData => {
+                dispatch({ type: "fetchedAuction", payload: { product: fetchedData }});
+            })
             .catch(() =>
                 dispatch({ type: "auctionError", payload: { failed: true } })
             );

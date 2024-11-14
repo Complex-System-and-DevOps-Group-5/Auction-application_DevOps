@@ -2,17 +2,15 @@ import {Product} from "./Product.ts";
 import {useEffect, useState} from "react";
 
 
-async function fetchData(url: string): Promise<Product[]> {
+export async function fetchData(url: string): Promise<any> {
     try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error('Network response was not ok, tried to access: ' + url);
         }
-        const data = await response.json();
-        return data as Product[];
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return [];
+        return await response.json();
+    } finally {
+        // catch later
     }
 }
 
@@ -25,13 +23,11 @@ export function useFetch(url: string): [Product[], boolean, boolean] {
         setIsLoading(true);
         fetchData(url)
             .then(fetchedData => {
-                if (fetchedData.length === 0) {
-                    setHasError(true);
-                } else {
-                    setData(fetchedData);
-                }
-                setIsLoading(false);
-            });
+                setData(fetchedData)
+                setIsLoading(false);})
+            .catch(() =>
+            setHasError(true)
+        );
     }, [url]);
 
     return [data as Product[], isLoading, hasError];
