@@ -1,14 +1,14 @@
 {
-  "name": "frontend",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@homiesexuals/frontend",
+  "version": "0.0.0-development",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "tsc && vitest --run --coverage && vite build"
+    "test": "tsc && vitest --run --coverage && vite build",
+    "semantic-release": "semantic-releaset"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -18,6 +18,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
+    "semantic-release": "^24.2.0",
     "vitest": "^2.1.4"
   },
   "devDependencies": {
