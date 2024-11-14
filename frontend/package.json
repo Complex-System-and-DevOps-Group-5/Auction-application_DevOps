@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "tsc && vitest --run --coverage && vite build",
-    "semantic-release": "semantic-releaset"
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
