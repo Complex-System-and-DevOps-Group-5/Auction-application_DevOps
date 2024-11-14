@@ -8,11 +8,11 @@ import {fetchData} from "../Components/Fetch.ts";
 export default function ProductPage () {
     const baseURL: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/vangoghauction.json';
     // from DOM:
-    const [bidAmount, setbidAmount] = useState(0)
+    const [bidAmount, setbidAmount] = useState(0);
     // from backend:
     const { product, isProductLoading, productError } = useAuctionState();
     // loading indicators
-    const [submiting, setSubmitting] = useState(false)
+    const [submitting, setSubmitting] = useState(false);
 
     const dispatch = useAuctionDispatch();
 
@@ -85,16 +85,15 @@ export default function ProductPage () {
                                pattern="[0-9]"
                                className="bidInput"
                                onChange={handleChange}
-                               disabled={submiting}
                         />
-                        {!submiting ? (<button>Submit</button>) :
-                            (<div className="lds-ring">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>)
-                        }
+                        {!submitting ? <button>Submit</button> : (
+                            <div className="lds-ring">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                            </div>
+                        )}
                     </form>
                 </div>
             )}
@@ -106,15 +105,21 @@ export default function ProductPage () {
         { !isProductLoading && !productError? (
             <div className="container">
                 <div className="images">
-                    <img  src='../../VincentVanGogh00681.jpg'
-                          role="presentation"/>
+                    <img src='../../VincentVanGogh00681.jpg'
+                         role="presentation"/>
+                    <div className="sub-imgs">
+                        {/*TODO*/}
+                        <img src="../../VincentVanGogh00681.jpg" alt="small"/>
+                        <img src="../../VincentVanGogh00681.jpg" alt="small"/>
+                        <div className="more-imgs">+14 Photos</div>
+                    </div>
                 </div>
-               {InfoBox}
+                {InfoBox}
             </div>
-            ) : (
+        ) : (
             <div className="container">
                 <div className="lazy-img">
-                Loading image!
+                    Loading image!
                 </div>
                 <div className="productInfo">
                     <h2>Fetching auction title</h2>
