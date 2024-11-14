@@ -2,18 +2,18 @@ import '../Styling/NavigationMenu.css'
 import {useNavigate} from "react-router-dom";
 
 export function NavigationMenu() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return (
         <ul>
-            <li><a onClick={()=>navigate("/")}>Home</a></li>
+            <li><p onClick={()=>navigate("/")}>Home</p></li>
             <li>|</li>
-            <li><a onClick={()=>navigate("/ongoing")}>Ongoing</a></li>
+            <li><p onClick={()=>navigate("/ongoing")}>Ongoing</p></li>
             <li>|</li>
-            <li><a onClick={()=>navigate("/trending")}>Trending</a></li>
+            <li><p onClick={()=>navigate("/trending")}>Trending</p></li>
             <li>|</li>
-            <li><a onClick={()=>navigate("/biddingshistory")}>Biddings history</a></li>
+            <li><p onClick={()=>navigate("/biddingshistory")}>Biddings history</p></li>
             <li>|</li>
-            <li><a onClick={()=>navigate("/about")}>About us</a></li>
+            <li><p onClick={()=>navigate("/about")}>About us</p></li>
         </ul>
 
     )

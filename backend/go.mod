@@ -4,7 +4,8 @@ go 1.23.1
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
-	github.com/gofiber/fiber/v2 v2.52.5 // indirect
+	github.com/gofiber/fiber/v2 v2.52.5 // direct
+	github.com/golang-jwt/jwt v3.2.2+incompatible // direct
 	github.com/google/uuid v1.5.0 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect

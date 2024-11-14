@@ -5,7 +5,7 @@ interface ButtonProps {
     text: string;
     onClick: () => void;
     color?: string;
-    size?: 'small' | 'medium' | 'large';
+    fontSize?: 'small' | 'medium' | 'large';
     disabled?: boolean;
     fullWidth?: boolean;
 }
@@ -15,14 +15,14 @@ const DefaultButton: React.FC<ButtonProps> = ({
                                                   onClick,
                                                   text,
                                                   color = '#868686',
-                                                  size = 'medium',
+                                                  fontSize = 'medium',
                                                   disabled = false,
                                                   fullWidth = false,
                                               }) => {
 
     const buttonClasses = [
         styles.defaultButton,
-        styles[size],
+        styles[fontSize],
         fullWidth ? styles.fullWidth : '',
     ].join(' ');
 
