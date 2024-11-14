@@ -20,8 +20,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - run: npm install semantic-release
+      - run: npm --prefix ./frontend install semantic-release
       - run: npm --prefix ./frontend ci
       - run: npm --prefix ./frontend run build
+      - run: npm --prefix ./frontend audit signatures
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
