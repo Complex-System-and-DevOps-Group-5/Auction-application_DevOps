@@ -1,5 +1,6 @@
 import { InputField } from '../Components/InputField';
 import DefaultButton from '../Components/DefaultButton';
+import '../Styling/CreatePost.css'
 
 
 export default function CreatePost() {
@@ -12,7 +13,7 @@ export default function CreatePost() {
                 <div className="section-product-description">
                     <h2>Product description</h2>
 
-                    <div  className='add-images'>
+                    <div className='add-images'>
                         <DefaultButton
                             text='Add Images'
                             onClick={() => console.log('Add Images clicked')}

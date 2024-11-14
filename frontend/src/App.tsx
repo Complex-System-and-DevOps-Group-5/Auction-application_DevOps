@@ -1,4 +1,3 @@
-import './App.css'
 import {UpperMenu} from "./Components/UpperMenu.tsx";
 import {NavigationMenu} from "./Components/NavigationMenu.tsx";
 import {Outlet} from "react-router-dom";
