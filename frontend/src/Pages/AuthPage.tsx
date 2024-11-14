@@ -4,6 +4,7 @@ import DefaultButton from "../Components/DefaultButton.tsx";
 import {useLoginDispatch} from "../Context/LoginContext.tsx";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import InputFieldToken from "../Components/InputField_Token.tsx";
 
 export function AuthPage() {
     const dispatch = useLoginDispatch()
@@ -38,7 +39,7 @@ export function AuthPage() {
             setError("Something went wrong. Please try again.");
         }
     };
-    
+
     return(
         <div className="authContainer">
             <div className="authHeader">
@@ -49,9 +50,9 @@ export function AuthPage() {
                 // Login form
                 <>
                     <div className={"input-field-placement"}>
-                        // TODO : Use another component for input fields to use value and onChange
-                        <InputField name="email" type="email" placeholder="Email" /> 
-                        <InputField name="password" type="password" placeholder="Password"/> 
+                        {/* TODO : Use another component for input fields to use value and onChange*/}
+                        <InputFieldToken name="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <InputFieldToken name="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                     <div className="button-placement">
                         <DefaultButton
@@ -64,7 +65,7 @@ export function AuthPage() {
                             color="#4E73F6"
                         />
                     </div>
-                    {error && <p className="error">{error}</p>} 
+                    {error && <p className="error">{error}</p>}
                     <p className="switchAuthType">
                         Don't have an account? <span onClick={() => setIsLoginPage(false)}>Sign up</span>
                     </p>
