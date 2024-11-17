@@ -1,0 +1,52 @@
+services:
+  postgres_db:
+    container_name: postgres_db    # Explicitly names the container instead of letting Docker generate a name
+    image: postgres:16.0          # Uses PostgreSQL version 16.0 from Docker Hub
+    restart: always               # Container will always restart if it stops
+    ports:
+      - "5433:5432"              # Maps host port 5433 to container port 5432 (changed from default to avoid conflicts)
+    environment:
+      # Database configuration environment variables
+      POSTGRES_USER: postgres     # Sets database user
+      POSTGRES_PASSWORD: postgres # Sets database password (consider using .env file for security)
+      POSTGRES_DB: AuctionDb     # Creates this database on startup
+    volumes:
+      # Persists database data even if container is removed
+      - pg-data:/var/lib/postgresql/data  # Maps named volume 'pg-data' to PostgreSQL data directory
+    healthcheck:
+        test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: backend.dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres_db:           # Waits for postgres_db to be ready before starting
+        condition: service_healthy
+    environment:
+        # Database configuration environment variables
+        DB_HOST: postgres_db
+        DB_PORT: 5432
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        DB_NAME: AuctionDb
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+        - backend
+    restart: unless-stopped
+
+volumes:
+  pg-data:                    # Defines the named volume used by postgres_db
+    driver: local            # Uses local driver for volume management
