@@ -19,6 +19,7 @@ jobs:
           node-version: "18"
       - run: npm --prefix ./frontend ci
       - run: npm --prefix ./frontend run test
+      - run: cd ./frontend/coverage && sudo chmod 777 coverage-final.json
       - run: cd ./frontend/coverage && ls -l
       - run: cd ./frontend && npx --from coverage/coverage-final.json -p check-code-coverage set-gh-status
         env:
