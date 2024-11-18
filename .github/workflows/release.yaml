@@ -28,15 +28,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm --prefix ./frontend run semantic-release
-  backend-release:
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-go@v4
-          with:
-            go-version: 1.19
-        - uses: go-semantic-release/action@v1
-          with:
-            hooks: goreleaser
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
