@@ -15,5 +15,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "18"
-      - run: npm ci
-      - run: npx vitest
+      - run: npm --prefix ./frontend ci
+      - run: npm --prefix ./frontend run test
