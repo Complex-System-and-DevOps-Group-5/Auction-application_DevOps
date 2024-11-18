@@ -6,10 +6,11 @@ on:
       - "feature/CICD"
 
 
+permissions: write-all
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions: read-all|write-all
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
