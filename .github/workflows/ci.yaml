@@ -19,6 +19,7 @@ jobs:
           node-version: "18"
       - run: npm --prefix ./frontend ci
       - run: npm --prefix ./frontend run test
-      - run: cd ./frontend && sudo npx --from coverage/coverage-final.json -p check-code-coverage set-gh-status
+      - run: cd ./frontend && find coverage -type f -exec chmod 777 {} && find coverage -type d -exec chmod 777 {}
+      - run: cd ./frontend && npx --from coverage/coverage-final.json -p check-code-coverage set-gh-status
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
