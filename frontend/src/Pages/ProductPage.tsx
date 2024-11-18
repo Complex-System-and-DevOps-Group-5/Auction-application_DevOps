@@ -39,7 +39,6 @@ export default function ProductPage () {
             console.log(err)
         }
     }
-// comment to trigger release
     function submitBid(bid: number) {
         //
         return new Promise((resolve, reject): void => {

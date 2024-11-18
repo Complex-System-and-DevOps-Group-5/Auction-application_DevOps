@@ -1,3 +1,3 @@
 module.exports = {
-    branches: ["feature/CICD"],
+    branches: ["main", {name: "feature/CICD", prerelease: true}],
 }
