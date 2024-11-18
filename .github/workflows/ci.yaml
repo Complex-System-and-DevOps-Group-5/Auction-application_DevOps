@@ -17,6 +17,6 @@ jobs:
           node-version: "18"
       - run: npm --prefix ./frontend ci
       - run: npm --prefix ./frontend run test
-      - run: npx -p check-code-coverage set-gh-status eslint
+      - run: npx --prefix ./frontend -p check-code-coverage set-gh-status
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
