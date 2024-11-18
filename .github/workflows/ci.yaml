@@ -5,6 +5,8 @@ on:
     branches:
       - "feature/CICD"
 
+permissions: read-all
+
 jobs:
   build:
     runs-on: ubuntu-latest
