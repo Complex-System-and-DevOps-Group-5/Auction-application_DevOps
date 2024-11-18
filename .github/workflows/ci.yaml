@@ -19,8 +19,6 @@ jobs:
           node-version: "18"
       - run: npm --prefix ./frontend ci
       - run: npm --prefix ./frontend run test
-      - run: cd ./frontend/coverage && sudo chmod 777 coverage-final.json
-      - run: cd ./frontend/coverage && ls -l
-      - run: cd ./frontend && npx --from coverage/coverage-final.json -p check-code-coverage set-gh-status
+      - run: percentage=$(grep -oP '^\s*\d+(,\d+)?%' index.html | head -n 1) percentage_float=$(echo "$percentage" | sed 's/%//g' | sed 's/,/./g') if (( $(echo "$percentage_float > 10" | bc -l) )); then echo "Percentage is above 10%"  else  echo "Percentage is below 10%"exit 1 fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
