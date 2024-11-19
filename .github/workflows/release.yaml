@@ -1,12 +1,10 @@
 name: Release
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
       - main
+      - 'release/v*'
 
 permissions:
   contents: write
@@ -32,6 +30,7 @@ jobs:
   backend-release:
     runs-on: ubuntu-latest
     steps:
+        - run: cd ./backend
         - uses: actions/checkout@v4
         - uses: actions/setup-go@v4
           with:

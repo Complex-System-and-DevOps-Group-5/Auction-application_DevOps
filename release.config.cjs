@@ -1,3 +1,3 @@
 module.exports = {
-    branches: ["test"],
+    branches: ["main", "release/v*"],
 }
