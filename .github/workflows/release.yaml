@@ -19,14 +19,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - run: npm --prefix ./frontend ci
-      - run: npm --prefix ./frontend run build
-      - run: npm --prefix ./frontend audit signatures
+      - run: cd ./frontend
+      - run: npm ci
+      - run: npm build
+      - run: npm audit signatures
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm --prefix ./frontend run semantic-release
+        run: npm run semantic-release
   backend-release:
     runs-on: ubuntu-latest
     steps:
