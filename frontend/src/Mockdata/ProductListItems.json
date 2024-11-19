@@ -3,112 +3,96 @@
     "id": 1,
     "title": "Skateboarding",
     "imgUrl": "https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb",
-    "price": 29.99,
-    "views": 0
+    "price": 29.99
   },
   {
     "id": 2,
     "title": "Michael Jackson",
     "imgUrl": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-    "price": 19.99,
-    "views": 10
+    "price": 19.99
   },
   {
     "id": 3,
     "title": "Night city",
     "imgUrl": "https://images.unsplash.com/photo-1519608487953-e999c86e7455",
-    "price": 24.99,
-    "views": 12
+    "price": 24.99
   },
   {
     "id": 4,
     "title": "Suprise",
-    "imgUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97",
-    "price": 39.99,
-    "views": 1300
+    "imgUrl": "https://images.unsplash.com/photo-1541698434281-fb9eafa9f480",
+    "price": 39.99
   },
   {
     "id": 5,
     "title": "Øresund",
     "imgUrl": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29",
-    "price": 22.99,
-    "views": 1568
+    "price": 22.99
   },
   {
     "id": 6,
     "title": "MacBook",
     "imgUrl": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
-    "price": 17.99,
-    "views": 346
+    "price": 17.99
   },
   {
     "id": 7,
     "title": "Michael Jackson's brother",
     "imgUrl": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-    "price": 34.99,
-    "views": 12467
+    "price": 34.99
   },
   {
     "id": 8,
     "title": "White door",
     "imgUrl": "https://images.unsplash.com/photo-1481277542470-605612bd2d61",
-    "price": 31.99,
-    "views": 458
+    "price": 31.99
   },
   {
     "id": 9,
     "title": "MacBook Pro",
     "imgUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97",
-    "price": 27.99,
-    "views": 15
+    "price": 27.99
   },
   {
     "id": 10,
     "title": "Michael Jackson's Cousin",
     "imgUrl": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-    "price": 18.99,
-    "views": 983
+    "price": 18.99
   },
   {
     "id": 11,
     "title": "Galaxy Watch",
     "imgUrl": "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
-    "price": 25.99,
-    "views": 677
+    "price": 25.99
   },
   {
     "id": 12,
     "title": "Very light gray door",
     "imgUrl": "https://images.unsplash.com/photo-1481277542470-605612bd2d61",
-    "price": 33.99,
-    "views": 348
+    "price": 33.99
   },
   {
     "id": 13,
     "title": "Very Dark white door",
     "imgUrl": "https://images.unsplash.com/photo-1481277542470-605612bd2d61",
-    "price": 29.49,
-    "views": 232
+    "price": 29.49
   },
   {
     "id": 14,
     "title": "Michael Jackson's cousin's father",
     "imgUrl": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-    "price": 21.99,
-    "views": 123
+    "price": 21.99
   },
   {
     "id": 15,
     "title": "MacBook Pro Max",
     "imgUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97",
-    "price": 26.99,
-    "views": 1234
+    "price": 26.99
   },
   {
     "id": 16,
     "title": "Michael Jackson's cousin's father's nephew",
     "imgUrl": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-    "price": 32.99,
-    "views": 832
+    "price": 32.99
   }
 ]
