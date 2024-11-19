@@ -1,11 +1,9 @@
 name: Release
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
-      - feature/CICD
-
+      - test
 
 permissions:
   contents: write
