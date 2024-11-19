@@ -30,11 +30,11 @@ jobs:
   backend-release:
     runs-on: ubuntu-latest
     steps:
-        - run: cd ./backend
         - uses: actions/checkout@v4
         - uses: actions/setup-go@v4
           with:
             go-version: 1.19
+        - run: cd ./backend
         - uses: go-semantic-release/action@v1
           with:
             hooks: goreleaser
