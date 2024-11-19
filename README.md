@@ -1,7 +1,11 @@
 # Auction-application_DevOps
 62582 Complex systems and devops
 
+# frontend
 
+```bash
+npm install @test124124521/my-first-package
+```
 
 # Software
 

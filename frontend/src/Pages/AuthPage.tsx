@@ -11,10 +11,10 @@ export function AuthPage() {
     const [isLoginPage, setIsLoginPage] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState<string | null>(null);
+    const [error, /*setError*/] = useState<string | null>(null);
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-
+    //const [loading, setLoading] = useState(false);
+/*
     const handleLogin = async () => {
         setLoading(true);
         try {
@@ -39,7 +39,7 @@ export function AuthPage() {
             setError("Something went wrong. Please try again.");
         }
     };
-
+*/
     return(
         <div className="authContainer">
             <div className="authHeader">
