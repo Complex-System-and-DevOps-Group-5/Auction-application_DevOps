@@ -3,10 +3,10 @@ name: Release
 on:
   pull_request:
     branches:
-      - test
+      - main
   push:
     branches:
-      - test
+      - main
 
 permissions:
   contents: write
