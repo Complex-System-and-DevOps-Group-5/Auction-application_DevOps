@@ -1,6 +1,6 @@
 module github.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps
 
-go 1.23.1
+go 1.19
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.5 // direct

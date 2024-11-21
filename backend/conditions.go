@@ -15,7 +15,7 @@ type equalityCondition[T any] struct {
 }
 
 func (c equalityCondition[T]) ToString() string {
-	return fmt.Sprintf("%s=%v", c.Column, c.Value)
+	return fmt.Sprintf("%s='%v'", c.Column, c.Value)
 }
 
 type rangeCondition[T any] struct {
@@ -25,7 +25,7 @@ type rangeCondition[T any] struct {
 }
 
 func (c rangeCondition[T]) ToString() string {
-	return fmt.Sprintf("%s BETWEEN %v AND %v", c.Column, c.Start, c.End)
+	return fmt.Sprintf("%s BETWEEN '%v' AND '%v'", c.Column, c.Start, c.End)
 }
 
 type multiCondition struct {

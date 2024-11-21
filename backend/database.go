@@ -1,18 +1,23 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"log"
 	"reflect"
-	"strconv"
 	"strings"
 
 	"github.com/jmoiron/sqlx"
 )
 
+const (
+	user     = "auctionserver"
+	password = "NogetForNu42"
+	dbname   = "AuctionDb"
+)
+
 var db *sqlx.DB
 
-func getColumns[T any](object T) []string {
+func getColumnsOf[T any](object T) []string {
 	reflection := reflect.TypeOf(object)
 
 	columns := make([]string, reflection.NumField())
@@ -31,48 +36,34 @@ func getColumns[T any](object T) []string {
 	return columns
 }
 
-func getValues[T any](object T) []string {
-	reflection := reflect.ValueOf(object)
-
-	values := make([]string, reflection.NumField())
-	for i := 0; i < reflection.NumField(); i++ {
-		field := reflection.Field(i)
-		var value string
-
-		switch field.Kind() {
-		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			value = strconv.FormatInt(field.Int(), 10)
-		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			value = strconv.FormatUint(field.Uint(), 10)
-		case reflect.String:
-			value = "'" + field.String() + "'"
-		default:
-			value = fmt.Sprintf("[Unknown/%s]", field.Kind())
-		}
-
-		values[i] = value
-	}
-
-	return values
-}
-
 func ConnectToDatabase() {
 	var err error
-	db, err = sqlx.Connect("", "")
+	connStr := fmt.Sprintf(
+		"user=%s password=%s dbname=%s sslmode=disable",
+		user,
+		password,
+		dbname)
+	db, err = sqlx.Connect("postgres", connStr)
 	if err != nil {
-		log.Fatalf("Could not connect to the database:\n%s\n", err)
+		panic(err)
 	}
 }
 
 func InsertSingle[T any](tableName string, object T) error {
-	queryString := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s);", tableName, strings.Join(getColumns(object), ", "), strings.Join(getValues(object), ", "))
+	columns := getColumnsOf(object)
+	namedColumns := make([]string, len(columns))
 
-	fmt.Println(queryString)
+	for i, column := range columns {
+		namedColumns[i] = ":" + column
+	}
+
+	queryString := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s);", tableName, strings.Join(columns, ", "), strings.Join(namedColumns, ", "))
+	db.NamedExec(queryString, object)
 
 	return nil
 }
 
-func InsertMultiple[T any](tableName string, objects []T) error {
+func InsertMultiple[T any](tableName string, objects ...T) error {
 	// TODO: It's likely possible to optimize it to a single query
 
 	for _, obj := range objects {
@@ -87,7 +78,19 @@ func InsertMultiple[T any](tableName string, objects []T) error {
 }
 
 func GetSingle[T any](tableName string, condition Condition) (*T, error) {
-	return nil, nil
+	candidates, err := GetMultiple[T](tableName, condition)
+	if err != nil {
+		return nil, err
+	}
+
+	switch len(candidates) {
+	case 0:
+		return nil, errors.New("no elements matching the condition")
+	case 1:
+		return &candidates[0], nil
+	default:
+		return nil, errors.New("more than one element matching the condition")
+	}
 }
 
 func GetMultiple[T any](tableName string, condition Condition) ([]T, error) {
