@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"time"
 
@@ -21,32 +22,33 @@ type Image struct {
 }
 
 type Test struct {
-	Id   int       `db:"id" no-db:"insert"`
-	Name string    `db:"name"  no-db:"insert,select"`
-	Time time.Time `db:"time" no-db:"select"`
+	Id    sql.NullInt32 `db:"id" no-db:"insert"`
+	Name  string        `db:"name"`
+	Time  sql.NullTime  `db:"time" no-db:"insert"`
+	Extra uint
 }
 
 func main() {
 	ConnectToDatabase()
-	//	t1 := Test{Id: 4, Name: "Zaid", Time: time.Now()}
-	//	t2 := Test{Id: 5, Name: "Zach", Time: time.Now()}
+	t1 := Test{Id: sql.NullInt32{Int32: 6, Valid: true}, Name: "Ali", Time: sql.NullTime{Time: time.Now(), Valid: true}, Extra: 10}
+	// t2 := Test{Id: 5, Name: "Zach", Time: time.Now()}
 
 	//	println("Inserting...")
-	//	InsertMultiple("test", t1, t2)
+	InsertSingle("test", t1)
 	//	println("Inserted!")
 
 	// Perform a sample query
 	perfect, _ := GetSingle[Test]("test", EqualityCondition("name", "Daniel"))
 	if perfect != nil {
-		fmt.Printf("[SINGLE] ID: %d, Name: %s, Timestamp: %v\n", perfect.Id, perfect.Name, perfect.Time)
+		fmt.Printf("[SINGLE] ID: %v, Name: %s, Timestamp: %v, Extra: %v\n", perfect.Id, perfect.Name, perfect.Time, perfect.Extra)
 	} else {
 		fmt.Println("GetSingle didn't work")
 	}
 
-	existing, _ := GetMultiple[Test]("test", RangeCondition("id", 3, 5))
+	existing, _ := GetAll[Test]("test")
 
 	// Iterate through the results
 	for _, e := range existing {
-		fmt.Printf("ID: %d, Name: %s, Timestamp: %v\n", e.Id, e.Name, e.Time)
+		fmt.Printf("ID: %v, Name: %s, Timestamp: %v, Extra: %v\n", e.Id, e.Name, e.Time, e.Extra)
 	}
 }

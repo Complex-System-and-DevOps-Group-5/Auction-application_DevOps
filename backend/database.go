@@ -17,23 +17,30 @@ const (
 
 var db *sqlx.DB
 
-func getColumnsOf[T any](object T) []string {
+func getColumnsOf[T any](object T, exclude string) []string {
 	reflection := reflect.TypeOf(object)
 
 	columns := make([]string, reflection.NumField())
+	columnIndex := 0
 	for i := 0; i < reflection.NumField(); i++ {
 		field := reflection.Field(i)
-		var columnName string
 
-		columnName = field.Tag.Get("db")
+		columnName := field.Tag.Get("db")
 		if columnName == "" {
-			columnName = field.Name
+			continue
 		}
 
-		columns[i] = strings.ToLower(columnName)
+		tagValue, hasTag := field.Tag.Lookup("no-db")
+		if hasTag && strings.Contains(tagValue, exclude) {
+			fmt.Printf("Skipped '%s' because of [%s]\n", field.Name, exclude)
+			continue
+		}
+
+		columns[columnIndex] = strings.ToLower(columnName)
+		columnIndex++
 	}
 
-	return columns
+	return columns[:columnIndex]
 }
 
 func ConnectToDatabase() {
@@ -50,9 +57,9 @@ func ConnectToDatabase() {
 }
 
 func InsertSingle[T any](tableName string, object T) error {
-	columns := getColumnsOf(object)
-	namedColumns := make([]string, len(columns))
+	columns := getColumnsOf(object, "insert")
 
+	namedColumns := make([]string, len(columns))
 	for i, column := range columns {
 		namedColumns[i] = ":" + column
 	}
@@ -94,7 +101,7 @@ func GetSingle[T any](tableName string, condition Condition) (*T, error) {
 }
 
 func GetMultiple[T any](tableName string, condition Condition) ([]T, error) {
-	queryString := fmt.Sprintf("SELECT * FROM %s WHERE %s", tableName, condition.ToString())
+	queryString := fmt.Sprintf("SELECT * FROM %s WHERE %s;", tableName, condition.ToString())
 
 	values := []T{}
 	err := db.Select(&values, queryString)
