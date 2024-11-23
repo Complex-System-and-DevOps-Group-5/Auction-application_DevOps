@@ -9,4 +9,5 @@ export interface Auction {
     quantity: number;
     sold: boolean;
     inWatchlist: boolean;
+    imgUrl: string;
 }
