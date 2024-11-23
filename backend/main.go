@@ -38,10 +38,20 @@ func main() {
 		auction, err := GetSingle[AuctionDb]("auction_post", EqualityCondition("id", c.QueryInt("id", -1)))
 
 		if err != nil {
-			return c.Status(fiber.ErrBadRequest.Code).SendString("Invalid Id")
+			return c.Status(fiber.StatusBadRequest).SendString("Invalid Id")
 		}
 
-		return c.JSON(auction)
+		return c.Status(fiber.StatusAccepted).JSON(auction)
+	})
+
+	app.Get("/user/:id", func(c *fiber.Ctx) error {
+		user, err := GetSingle[UserDb]("users", EqualityCondition("id", c.QueryInt("id", -1)))
+
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString("Invalid Id")
+		}
+
+		return c.Status(fiber.StatusAccepted).JSON(user)
 	})
 
 	log.Fatal(app.Listen(":4000"))
