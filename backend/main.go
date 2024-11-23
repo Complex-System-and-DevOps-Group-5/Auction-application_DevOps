@@ -30,7 +30,7 @@ type Test struct {
 
 func main() {
 	ConnectToDatabase()
-	InsertSingle("auction_post", AuctionDb{Id: 1, Title: "Michael Jackson", Description: "This is Michael Jackson", Location: "Unknown", Status: 0, CreationTime: time.Now(), EndingTime: time.Now().Add(time.Hour * 48), ViewCount: 0, InitialPrice: 1999, MinimumBidIncrement: 100, CurrentBid: 1999, AutoAcceptThreshold: 3000, CategoryId: 1, SellerId: 1, ImageId: 1})
+	InsertMultiple("auction_post", AuctionDb{Id: 1, Title: "Michael Jackson", Description: "This is Michael Jackson", Location: "Unknown", Status: 0, CreationTime: time.Now(), EndingTime: time.Now().Add(time.Hour * 48), ViewCount: 0, InitialPrice: 1999, MinimumBidIncrement: 100, CurrentBid: 1999, AutoAcceptThreshold: 3000, CategoryId: 1, SellerId: 1, ImageId: 1})
 	fmt.Println("Done")
 	return
 
