@@ -4,7 +4,12 @@ import {useEffect, useState} from "react";
 
 export async function fetchData(url: string): Promise<any> {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            mode: "cors",
+            headers: {
+                'Access-Control-Allow-Origin':'*'
+            }
+        });
         if (!response.ok) {
             throw new Error('Network response was not ok, tried to access: ' + url);
         }

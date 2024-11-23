@@ -4,14 +4,21 @@ import {useEffect, useState} from "react";
 import {useAuctionDispatch, useAuctionState} from "../Context/AuctionContext.tsx";
 import {Auction} from "../Interfaces/Auction.ts";
 import {fetchData} from "../Components/Fetch.ts";
+import {useLoginState} from "../Context/LoginContext.tsx";
+import Bid from "../Interfaces/Bid.ts";
+import {postBidRequest} from "../Components/Post.ts";
+import {useParams} from "react-router-dom";
 
 export default function ProductPage () {
-    const baseURL: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/vangoghauction.json';
+    const {id} = useParams();
+    const baseURL: string = 'http://130.225.170.52:10101/api/product' + id
     let imageURL: string = ''
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
+
     // from backend:
     const { product, isProductLoading, productError } = useAuctionState();
+    const { loggedIn, username } = useLoginState()
     // loading indicators
     const [submitting, setSubmitting] = useState(false);
 
@@ -41,16 +48,22 @@ export default function ProductPage () {
         }
     }
 
-    function submitBid(bid: number) {
+    function submitBid(amount: number) {
         //
+        const submitData: Bid = {
+            id: 1,
+            bidder: username,
+            amount: amount,
+        }
         return new Promise((resolve, reject): void => {
+            postBidRequest('backendpostendpoint.suckmyballs/whatever', submitData)
             setTimeout(() => {
                 // get winningBidAmount from backend this will determine if promise will be resolved or rejected
-                if (bid >= 100 + 0.10) {
+                if (amount >= 100 + 0.10) {
                     resolve(alert('A bit was sucessfully submitted: ' + bidAmount));
                     setSubmitting(false);
                 } else {
-                    reject(new Error('Backend did not approve your bid. Attempted to  submit: ' + bid));
+                    reject(new Error('Backend did not approve your bid. Attempted to  submit: ' + amount));
                     setSubmitting(false);
                 }
             }, 3000);
@@ -87,7 +100,7 @@ export default function ProductPage () {
                                className="bidInput"
                                onChange={handleChange}
                         />
-                        {!submitting ? <button>Submit</button> : (
+                        {!submitting && loggedIn ? <button>Submit</button> : (
                             <div className="lds-ring">
                                     <div></div>
                                     <div></div>

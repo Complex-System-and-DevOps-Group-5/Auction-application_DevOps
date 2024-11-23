@@ -4,14 +4,24 @@ import '../Styling/UpperMenu.css'
 import {Logo} from "./Logo.tsx";
 import {DropDownMenu} from "./DropDownMenu.tsx";
 import {useNavigate} from "react-router-dom";
+//import {useEffect} from "react";
+//import {fetchData} from "./Fetch.ts";
 
 export function UpperMenu() {
-    const loggedIn = useLoginState()
+    const { loggedIn, username } = useLoginState()
     const dispatch = useLoginDispatch()
 
     const navigate = useNavigate();
-
-    let username: string = "AM";
+    // useEffect(() => {
+    //     fetchData('')
+    //         .then(fetchedData => {
+    //             dispatch({ type: "toggleLogin", payload: { toggle: true }});
+    //             dispatch({ type: "setUsername", payload: { username: fetchedData.username }});
+    //         })
+    //         .catch(() =>
+    //             dispatch({ type: "setUserError", payload: { failed: true } })
+    //         );
+    // }, []);
     return(
 
         <div className="upper-menu">
@@ -23,7 +33,7 @@ export function UpperMenu() {
                 <Logo/>
             </div>
 
-            {loggedIn.loggedIn == true ? (
+            {loggedIn ? (
                     <div className="loggedIn">
                         <button className="create-button" onClick={() => navigate('/createPost')}>Create</button>
                         

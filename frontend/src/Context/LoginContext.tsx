@@ -2,17 +2,27 @@ import {createContext, useContext, useReducer} from "react";
 
 interface LoginState {
     loggedIn: Boolean;
+    username: string;
     authToken: string | null;
+    isUserLoading: boolean;
+    userError: boolean;
 }
 
 const initialLoginState: LoginState = {
     loggedIn: false,
+    username: '',
     authToken: null,
+    isUserLoading: true,
+    userError: false,
 };
 
 export type LoginAction =
     | { type: 'toggleLogin', payload: { toggle: boolean }}
-    | { type: 'setAuthToken', payload: { token: string | null }};
+    | { type: 'setAuthToken', payload: { token: string | null }}
+    | { type: 'setUsername', payload: { username: string }}
+    | { type: 'setIsUserLoading', payload: { loading: boolean }}
+    | { type: 'setUserError', payload: { failed: boolean }
+};
 
 const loginReducer = (state: LoginState, action: LoginAction) => {
     switch (action.type) {
@@ -25,7 +35,22 @@ const loginReducer = (state: LoginState, action: LoginAction) => {
             return {
                     ...state,
                     authToken: action.payload.token
-            }    
+            }
+        case 'setUsername':
+            return {
+                ...state,
+                username: action.payload.username
+            }
+        case 'setIsUserLoading':
+            return {
+                ...state,
+                isUserLoading: action.payload.loading
+            }
+        case 'setUserError':
+            return {
+                ...state,
+                userError: action.payload.failed
+            }
         default:
             return state;
     }
@@ -61,7 +86,7 @@ export function LoginProvider({children, state: explicitState}: LoginProviderPro
 export function useLoginState() {
     const state = useContext(LoginContext);
     if (state === null) {
-        throw new Error("Unexpected useLoginState without parent <LoginProvider>");
+        throw new Error("Unexpected <useLoginStat></useLoginStat>e without parent <LoginProvider>");
     }
     return state;
 }

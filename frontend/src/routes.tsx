@@ -49,8 +49,8 @@ export const routes: RouteObject[] = [
                 element: <AboutPage/>,
             },
             {
-                path: "/product",
-                element: <ProductPage/>,
+                path: "/product/:id",
+                element: <ProductPage />,
             },
             {
                 path: "createPost",

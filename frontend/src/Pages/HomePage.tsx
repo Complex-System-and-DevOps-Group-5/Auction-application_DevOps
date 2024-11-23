@@ -5,7 +5,7 @@ import { useFetch } from "../Components/Fetch.ts";
 import {useNavigate} from "react-router-dom";
 
 export function HomePage() {
-    const productsUrl: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/ProductListItems.json';
+    const productsUrl: string = 'http://130.225.170.52:10101/api/frontpag';
     const [products, isLoading, hasError] = useFetch(productsUrl);
 
 
@@ -37,7 +37,7 @@ function ProductItem({product}: ProductListProps) {
                 <p className={styles.productPrice}>${product.price.toFixed(2)} </p>
             </div>
             <div className={styles.buttonContainer}>
-                <DefaultButton text={"View Item"} onClick={()=>navigate("/product")}
+                <DefaultButton text={"View Item"} onClick={()=>navigate("/product/" + product.id)}
                                color={"#dddddd"}></DefaultButton>
                 <DefaultButton text={"Add to watchlist"} onClick={() => console.log("Add to watchlist")}
                                color={"#4be68c"}></DefaultButton>
