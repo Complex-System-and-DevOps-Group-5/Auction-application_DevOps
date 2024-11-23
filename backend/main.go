@@ -30,17 +30,9 @@ type Test struct {
 
 func main() {
 	ConnectToDatabase()
-	// InsertMultiple("category", CategoryDb{Id: 1, Name: "testing"})
-	InsertMultiple("users", UserDb{Id: 1, Name: "Felix", Email: "felix@felix.com", PasswordHash: "password1", Role: 0, Verified: false}, UserDb{Id: 1, Name: "Daniel", Email: "daniel@daniel.com", PasswordHash: "password1", Role: 0, Verified: true})
-	// InsertMultiple("image", ImageDb{Id: 1, Url: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0"})
+	InsertSingle("auction_post", AuctionDb{Id: 1, Title: "Michael Jackson", Description: "This is Michael Jackson", Location: "Unknown", Status: 0, CreationTime: time.Now(), EndingTime: time.Now().Add(time.Hour * 48), ViewCount: 0, InitialPrice: 1999, MinimumBidIncrement: 100, CurrentBid: 1999, AutoAcceptThreshold: 3000, CategoryId: 1, SellerId: 1, ImageId: 1})
+	fmt.Println("Done")
 	return
-
-	t1 := Test{Id: sql.NullInt32{Int32: 6, Valid: true}, Name: "Ali", Time: sql.NullTime{Time: time.Now(), Valid: true}, Extra: 10}
-	// t2 := Test{Id: 5, Name: "Zach", Time: time.Now()}
-
-	//	println("Inserting...")
-	InsertSingle("test", t1)
-	//	println("Inserted!")
 
 	// Perform a sample query
 	perfect, _ := GetSingle[Test]("test", EqualityCondition("name", "Daniel"))
