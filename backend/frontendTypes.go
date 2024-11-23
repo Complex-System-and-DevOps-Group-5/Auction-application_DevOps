@@ -81,7 +81,7 @@ type AuctionPost struct {
 	EndingTime          time.Time `json:"endingTime"`
 	ViewCount           int       `json:"viewCount"`
 	MinimumBidIncrement int       `json:"minimumBidIncrement"`
-	CurrentBid          int       `json:"currentBid"`
+	CurrentBid          float64   `json:"currentBid"`
 	CategoryId          int       `json:"categoryId"`
 	SellerId            int       `json:"sellerId"`
 	ImageUrl            string    `json:"imageUrl"`
@@ -97,7 +97,7 @@ func GetPost(id int) *AuctionPost {
 	imageUrl := ""
 
 	image, err := GetSingle[ImageDb]("image", EqualityCondition("id", auction.ImageId))
-	if err != nil {
+	if err == nil {
 		imageUrl = image.Url
 	}
 
@@ -113,7 +113,7 @@ func GetPost(id int) *AuctionPost {
 		EndingTime:          auction.EndingTime,
 		ViewCount:           auction.ViewCount,
 		MinimumBidIncrement: auction.MinimumBidIncrement,
-		CurrentBid:          auction.CurrentBid,
+		CurrentBid:          float64(auction.CurrentBid) / 100,
 		CategoryId:          auction.CategoryId,
 		SellerId:            auction.SellerId,
 		ImageUrl:            imageUrl,
