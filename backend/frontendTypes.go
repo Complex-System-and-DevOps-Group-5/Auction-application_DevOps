@@ -84,7 +84,7 @@ type AuctionPost struct {
 	CurrentBid          float64   `json:"currentBid"`
 	CategoryId          int       `json:"categoryId"`
 	SellerId            int       `json:"sellerId"`
-	ImageUrl            string    `json:"imageUrl"`
+	ImageUrl            string    `json:"imgUrl"`
 }
 
 func GetPost(id int) *AuctionPost {
