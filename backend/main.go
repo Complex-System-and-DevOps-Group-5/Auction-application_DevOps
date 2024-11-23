@@ -8,29 +8,39 @@ import (
 )
 
 func main() {
-	ConnectToDatabase()
+	// ConnectToDatabase()
 
 	app := fiber.New()
 
 	app.Get("/product/:id", func(c *fiber.Ctx) error {
-		auction, err := GetSingle[AuctionDb]("auction_post", EqualityCondition("id", c.QueryInt("id", -1)))
-
+		id, err := c.ParamsInt("id", -1)
 		if err != nil {
-			return c.Status(fiber.StatusBadRequest).SendString("Invalid Id")
+			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		return c.Status(fiber.StatusAccepted).JSON(auction)
+		post, err := GetSingle[AuctionDb]("auction_posts", EqualityCondition("id", id))
+
+		if err != nil {
+			return c.SendStatus(fiber.StatusNotFound)
+		}
+
+		return c.Status(fiber.StatusAccepted).JSON(post)
 	})
 
 	app.Get("/user/:id", func(c *fiber.Ctx) error {
-		user, err := GetSingle[UserDb]("users", EqualityCondition("id", c.QueryInt("id", -1)))
+		id, err := c.ParamsInt("id", -1)
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
+		user, err := GetSingle[UserDb]("users", EqualityCondition("id", id))
 
 		if err != nil {
-			return c.Status(fiber.StatusBadRequest).SendString("Invalid Id")
+			return c.SendStatus(fiber.StatusNotFound)
 		}
 
 		return c.Status(fiber.StatusAccepted).JSON(user)
 	})
 
-	log.Fatal(app.Listen(":443"))
+	log.Fatal(app.Listen(":4000"))
 }
