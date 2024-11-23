@@ -42,5 +42,11 @@ func main() {
 		return c.Status(fiber.StatusAccepted).JSON(user)
 	})
 
+	app.Get("/frontpage", func(c *fiber.Ctx) error {
+		previews := GetFrontPageAuctions(16, 0)
+
+		return c.JSON(previews)
+	})
+
 	log.Fatal(app.Listen(":4000"))
 }
