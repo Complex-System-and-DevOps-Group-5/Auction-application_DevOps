@@ -3,12 +3,12 @@ package main
 import "time"
 
 type CategoryDb struct {
-	Id   int `db:"id"`
+	Id   int `db:"id" no-db:"insert"`
 	Name int `db:"name"`
 }
 
 type UserDb struct {
-	Id           int    `db:"id"`
+	Id           int    `db:"id" no-db:"insert"`
 	Name         string `db:"name"`
 	Email        string `db:"email"`
 	PasswordHash string `db:"password_hash"`
@@ -17,12 +17,12 @@ type UserDb struct {
 }
 
 type ImageDb struct {
-	Id  int    `db:"id"`
+	Id  int    `db:"id" no-db:"insert"`
 	Url string `db:"string_url"`
 }
 
 type AuctionDb struct {
-	Id                  int       `db:"id"`
+	Id                  int       `db:"id" no-db:"insert"`
 	Title               string    `db:"title"`
 	Description         string    `db:"description"`
 	Location            string    `db:"location"`
@@ -40,7 +40,7 @@ type AuctionDb struct {
 }
 
 type ChatDb struct {
-	Id           int       `db:"id"`
+	Id           int       `db:"id" no-db:"insert"`
 	CreationTime time.Time `db:"time"`
 	SellerId     int       `db:"seller_id"`
 	BuyerId      int       `db:"buyer_id"`
