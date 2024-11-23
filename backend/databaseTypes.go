@@ -33,7 +33,7 @@ type AuctionDb struct {
 	InitialPrice        int       `db:"initial_price"`
 	MinimumBidIncrement int       `db:"minimum_bid_increment"`
 	CurrentBid          int       `db:"current_bid"`
-	AutoAcceptThreshold int       `db:"auto_accept_threshold"`
+	AutoAcceptThreshold int       `db:"auto_accept_bid_threshold"`
 	CategoryId          int       `db:"category_id"`
 	SellerId            int       `db:"seller_id"`
 	ImageId             int       `db:"image_id"`
