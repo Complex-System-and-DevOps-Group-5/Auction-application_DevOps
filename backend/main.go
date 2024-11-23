@@ -2,9 +2,10 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
 	"time"
 
+	"github.com/gofiber/fiber/v2"
 	_ "github.com/lib/pq"
 )
 
@@ -30,22 +31,18 @@ type Test struct {
 
 func main() {
 	ConnectToDatabase()
-	InsertMultiple("auction_post", AuctionDb{Id: 1, Title: "Michael Jackson", Description: "This is Michael Jackson", Location: "Unknown", Status: 0, CreationTime: time.Now(), EndingTime: time.Now().Add(time.Hour * 48), ViewCount: 0, InitialPrice: 1999, MinimumBidIncrement: 100, CurrentBid: 1999, AutoAcceptThreshold: 3000, CategoryId: 1, SellerId: 1, ImageId: 1})
-	fmt.Println("Done")
-	return
 
-	// Perform a sample query
-	perfect, _ := GetSingle[Test]("test", EqualityCondition("name", "Daniel"))
-	if perfect != nil {
-		fmt.Printf("[SINGLE] ID: %v, Name: %s, Timestamp: %v, Extra: %v\n", perfect.Id, perfect.Name, perfect.Time, perfect.Extra)
-	} else {
-		fmt.Println("GetSingle didn't work")
-	}
+	app := fiber.New()
 
-	existing, _ := GetAll[Test]("test")
+	app.Get("/product/:id", func(c *fiber.Ctx) error {
+		auction, err := GetSingle[AuctionDb]("auction_post", EqualityCondition("id", c.QueryInt("id", -1)))
 
-	// Iterate through the results
-	for _, e := range existing {
-		fmt.Printf("ID: %v, Name: %s, Timestamp: %v, Extra: %v\n", e.Id, e.Name, e.Time, e.Extra)
-	}
+		if err != nil {
+			return c.Status(fiber.ErrBadRequest.Code).SendString("Invalid Id")
+		}
+
+		return c.JSON(auction)
+	})
+
+	log.Fatal(app.Listen(":4000"))
 }
