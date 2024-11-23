@@ -13,13 +13,12 @@ export default function ProductPage () {
     const {id} = useParams();
     const baseURL: string = 'http://130.225.170.52:10101/api/product/' + id
     console.log(baseURL)
-    let imageURL: string = ''
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
 
     // from backend:
     const { product, isProductLoading, productError } = useAuctionState();
-    const { loggedIn, username } = useLoginState()
+    const { username } = useLoginState()
     // loading indicators
     const [submitting, setSubmitting] = useState(false);
 
@@ -89,7 +88,7 @@ export default function ProductPage () {
             )
             }
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
-            <p>$ {auction.winningBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>
+            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>
             {auction.sold ? ( /* auction date time thing*/
                 <span style={{color: "red", display: "flex", paddingTop: 10}}>Expired</span>
             ) : (
@@ -101,7 +100,7 @@ export default function ProductPage () {
                                className="bidInput"
                                onChange={handleChange}
                         />
-                        {!submitting && loggedIn ? <button>Submit</button> : (
+                        {!submitting ? <button>Submit</button> : (
                             <div className="lds-ring">
                                     <div></div>
                                     <div></div>
@@ -114,24 +113,29 @@ export default function ProductPage () {
             )}
         </div>
     ));
+    const imageBox = product.map((auction:Auction) => (
 
-    return (
-        <>
-        { imageURL = product.map((auction: Auction) => (auction.imgUrl)).toString() }
-        { !isProductLoading && !productError? (
             <div className="container">
                 <div className="images">
-                    <img src={imageURL}
+                    <img src={auction.imgUrl}
                          role="presentation"/>
                     <div className="sub-imgs">
                         {/*TODO*/}
-                        <img src={imageURL} alt="small"/>
-                        <img src={imageURL} alt="small"/>
+                        <img src={auction.imgUrl} alt="small"/>
+                        <img src={auction.imgUrl} alt="small"/>
                         <div className="more-imgs">+14 Photos</div>
                     </div>
                 </div>
-                {InfoBox}
             </div>
+    ))
+
+    return (
+        <>
+        { !isProductLoading && !productError? (
+                <div>
+                {imageBox}
+                {InfoBox}
+                </div>
         ) : (
             <div className="container">
                 <div className="lazy-img">
