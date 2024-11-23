@@ -64,7 +64,12 @@ func InsertSingle[T any](tableName string, object T) error {
 	}
 
 	queryString := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s);", tableName, strings.Join(columns, ", "), strings.Join(namedColumns, ", "))
-	db.NamedExec(queryString, object)
+	_, err := db.NamedExec(queryString, object)
+
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+		return err
+	}
 
 	return nil
 }
@@ -76,7 +81,6 @@ func InsertMultiple[T any](tableName string, objects ...T) error {
 		err := InsertSingle(tableName, obj)
 
 		if err != nil {
-			fmt.Printf("err: %v\n", err)
 			return err
 		}
 	}
