@@ -7,6 +7,7 @@ import {fetchData} from "../Components/Fetch.ts";
 
 export default function ProductPage () {
     const baseURL: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/vangoghauction.json';
+    let imageURL: string = ''
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
     // from backend:
@@ -102,15 +103,16 @@ export default function ProductPage () {
 
     return (
         <>
+        { imageURL = product.map((auction: Auction) => (auction.imgUrl)).toString() }
         { !isProductLoading && !productError? (
             <div className="container">
                 <div className="images">
-                    <img src='../../VincentVanGogh00681.jpg'
+                    <img src={imageURL}
                          role="presentation"/>
                     <div className="sub-imgs">
                         {/*TODO*/}
-                        <img src="../../VincentVanGogh00681.jpg" alt="small"/>
-                        <img src="../../VincentVanGogh00681.jpg" alt="small"/>
+                        <img src={imageURL} alt="small"/>
+                        <img src={imageURL} alt="small"/>
                         <div className="more-imgs">+14 Photos</div>
                     </div>
                 </div>
