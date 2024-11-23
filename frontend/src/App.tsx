@@ -1,6 +1,6 @@
 import {UpperMenu} from "./Components/UpperMenu.tsx";
 import {NavigationMenu} from "./Components/NavigationMenu.tsx";
-import {Outlet} from "react-router-dom";
+import { YourBidsPage } from "./Pages/YourBidsPage.tsx";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
           <main>
               <UpperMenu/>
               <NavigationMenu/>
-              <Outlet/>
+              <YourBidsPage/>
           </main>
 
       </>
