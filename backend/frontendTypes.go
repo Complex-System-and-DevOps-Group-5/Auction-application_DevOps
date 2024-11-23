@@ -43,7 +43,7 @@ type AuctionPreview struct {
 }
 
 func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
-	auctions, err := GetAmount[AuctionDb]("auction_posts", amount, offset)
+	auctions, err := GetAmount[AuctionDb]("auction_post", amount, offset)
 	if err != nil {
 		return nil
 	}

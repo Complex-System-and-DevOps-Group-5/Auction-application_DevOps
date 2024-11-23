@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	// ConnectToDatabase()
+	ConnectToDatabase()
 
 	app := fiber.New()
 
