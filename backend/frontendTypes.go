@@ -80,7 +80,7 @@ type AuctionPost struct {
 	CreationTime        time.Time `json:"creationTime"`
 	EndingTime          time.Time `json:"endingTime"`
 	ViewCount           int       `json:"viewCount"`
-	MinimumBidIncrement int       `json:"minimumBidIncrement"`
+	MinimumBidIncrement float64   `json:"minimumBidIncrement"`
 	CurrentBid          float64   `json:"currentBid"`
 	CategoryId          int       `json:"categoryId"`
 	SellerId            int       `json:"sellerId"`
@@ -112,7 +112,7 @@ func GetPost(id int) *AuctionPost {
 		CreationTime:        auction.CreationTime,
 		EndingTime:          auction.EndingTime,
 		ViewCount:           auction.ViewCount,
-		MinimumBidIncrement: auction.MinimumBidIncrement,
+		MinimumBidIncrement: float64(auction.MinimumBidIncrement) / 100,
 		CurrentBid:          float64(auction.CurrentBid) / 100,
 		CategoryId:          auction.CategoryId,
 		SellerId:            auction.SellerId,
