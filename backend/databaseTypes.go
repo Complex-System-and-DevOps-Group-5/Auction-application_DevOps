@@ -3,8 +3,8 @@ package main
 import "time"
 
 type CategoryDb struct {
-	Id   int `db:"id" no-db:"insert"`
-	Name int `db:"name"`
+	Id   int    `db:"id" no-db:"insert"`
+	Name string `db:"name"`
 }
 
 type UserDb struct {
