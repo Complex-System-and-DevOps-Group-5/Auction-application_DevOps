@@ -128,6 +128,18 @@ func GetAll[T any](tableName string) ([]T, error) {
 	return values, nil
 }
 
+func GetAmount[T any](tableName string, amount int, offset int) ([]T, error) {
+	queryString := fmt.Sprintf("SELECT * FROM %s LIMIT %d OFFSET %d", tableName, amount, offset)
+
+	values := []T{}
+	err := db.Select(&values, queryString)
+	if err != nil {
+		return nil, err
+	}
+
+	return values, nil
+}
+
 // Update
 
 // Delete

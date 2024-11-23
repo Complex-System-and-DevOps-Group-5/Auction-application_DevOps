@@ -11,7 +11,7 @@ type UserDb struct {
 	Id           int    `db:"id" no-db:"insert" json:"id"`
 	Name         string `db:"name" json:"name"`
 	Email        string `db:"email" json:"email"`
-	PasswordHash string `db:"password_hash" json:"password"`
+	PasswordHash string `db:"password_hash" json:"password_hash"`
 	Role         int    `db:"role" json:"role"`
 	Verified     bool   `db:"verified" json:"verified"`
 }
