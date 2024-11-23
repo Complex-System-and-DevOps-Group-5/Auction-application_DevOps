@@ -18,13 +18,12 @@ func main() {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		post, err := GetSingle[AuctionDb]("auction_posts", EqualityCondition("id", id))
+		post := GetPost(id)
 
-		if err != nil {
-			return c.SendStatus(fiber.StatusNotFound)
-		}
+		posts := make([]AuctionPost, 1)
+		posts[0] = *post
 
-		return c.Status(fiber.StatusAccepted).JSON(post)
+		return c.Status(fiber.StatusAccepted).JSON(posts)
 	})
 
 	app.Get("/user/:id", func(c *fiber.Ctx) error {
