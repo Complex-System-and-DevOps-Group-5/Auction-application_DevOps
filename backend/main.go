@@ -30,9 +30,9 @@ type Test struct {
 
 func main() {
 	ConnectToDatabase()
-	InsertMultiple("category", CategoryDb{Id: 1, Name: "testing"})
+	// InsertMultiple("category", CategoryDb{Id: 1, Name: "testing"})
 	InsertMultiple("users", UserDb{Id: 1, Name: "Felix", Email: "felix@felix.com", PasswordHash: "password1", Role: 0, Verified: false}, UserDb{Id: 1, Name: "Daniel", Email: "daniel@daniel.com", PasswordHash: "password1", Role: 0, Verified: true})
-	InsertMultiple("image", ImageDb{Id: 1, Url: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0"})
+	// InsertMultiple("image", ImageDb{Id: 1, Url: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0"})
 	return
 
 	t1 := Test{Id: sql.NullInt32{Int32: 6, Valid: true}, Name: "Ali", Time: sql.NullTime{Time: time.Now(), Valid: true}, Extra: 10}

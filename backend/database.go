@@ -32,7 +32,6 @@ func getColumnsOf[T any](object T, exclude string) []string {
 
 		tagValue, hasTag := field.Tag.Lookup("no-db")
 		if hasTag && strings.Contains(tagValue, exclude) {
-			fmt.Printf("Skipped '%s' because of [%s]\n", field.Name, exclude)
 			continue
 		}
 
@@ -77,6 +76,7 @@ func InsertMultiple[T any](tableName string, objects ...T) error {
 		err := InsertSingle(tableName, obj)
 
 		if err != nil {
+			fmt.Printf("err: %v\n", err)
 			return err
 		}
 	}
