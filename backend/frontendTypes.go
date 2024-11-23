@@ -75,21 +75,30 @@ type AuctionPost struct {
 	Description         string    `json:"description"`
 	Location            string    `json:"location"`
 	Status              int       `json:"status"` // TODO: should probably be a more human-friendly format
-	CreationTime        time.Time `json:"creation_time"`
-	EndingTime          time.Time `json:"ending_time"`
-	ViewCount           int       `json:"view_count"`
-	MinimumBidIncrement int       `json:"minimum_bid_increment"`
-	CurrentBid          int       `json:"current_bid"`
-	CategoryId          int       `json:"category_id"`
-	SellerId            int       `json:"seller_id"`
-	ImageId             int       `json:"image_id"`
+	Sold                bool      `json:"sold"`
+	InWatchList         bool      `json:"inWatchList"`
+	CreationTime        time.Time `json:"creationTime"`
+	EndingTime          time.Time `json:"endingTime"`
+	ViewCount           int       `json:"viewCount"`
+	MinimumBidIncrement int       `json:"minimumBidIncrement"`
+	CurrentBid          int       `json:"currentBid"`
+	CategoryId          int       `json:"categoryId"`
+	SellerId            int       `json:"sellerId"`
+	ImageUrl            string    `json:"imageUrl"`
 }
 
 func GetPost(id int) *AuctionPost {
-	auction, err := GetSingle[AuctionDb]("auction_posts", EqualityCondition("id", id))
+	auction, err := GetSingle[AuctionDb]("auction_post", EqualityCondition("id", id))
 
 	if err != nil {
 		return nil
+	}
+
+	imageUrl := ""
+
+	image, err := GetSingle[ImageDb]("image", EqualityCondition("id", auction.ImageId))
+	if err != nil {
+		imageUrl = image.Url
 	}
 
 	return &AuctionPost{
@@ -98,6 +107,8 @@ func GetPost(id int) *AuctionPost {
 		Description:         auction.Description,
 		Location:            auction.Location,
 		Status:              auction.Status,
+		Sold:                (auction.Status%2 == 1),
+		InWatchList:         false, // TODO figure it out
 		CreationTime:        auction.CreationTime,
 		EndingTime:          auction.EndingTime,
 		ViewCount:           auction.ViewCount,
@@ -105,6 +116,6 @@ func GetPost(id int) *AuctionPost {
 		CurrentBid:          auction.CurrentBid,
 		CategoryId:          auction.CategoryId,
 		SellerId:            auction.SellerId,
-		ImageId:             auction.ImageId,
+		ImageUrl:            imageUrl,
 	}
 }
