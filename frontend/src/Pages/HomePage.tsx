@@ -5,7 +5,7 @@ import { useFetch } from "../Components/Fetch.ts";
 import {useNavigate} from "react-router-dom";
 
 export function HomePage() {
-    const productsUrl: string = 'http://130.225.170.52:10101/api/frontpag';
+    const productsUrl: string = 'http://130.225.170.52:10101/api/frontpage';
     const [products, isLoading, hasError] = useFetch(productsUrl);
 
 

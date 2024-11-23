@@ -11,7 +11,8 @@ import {useParams} from "react-router-dom";
 
 export default function ProductPage () {
     const {id} = useParams();
-    const baseURL: string = 'http://130.225.170.52:10101/api/product' + id
+    const baseURL: string = 'http://130.225.170.52:10101/api/product/' + id
+    console.log(baseURL)
     let imageURL: string = ''
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
