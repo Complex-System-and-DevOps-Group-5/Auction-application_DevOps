@@ -89,14 +89,14 @@ export default function ProductPage () {
             )
             }
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
-            <p>$ {auction.winningBid}&nbsp;<span style={{color: "gray"}}>{auction.amountOfBids} bids</span></p>
+            <p>$ {auction.winningBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>
             {auction.sold ? ( /* auction date time thing*/
                 <span style={{color: "red", display: "flex", paddingTop: 10}}>Expired</span>
             ) : (
                 <div className="bidSection">
                     <form onSubmit={handleBidSubmit}>
                         <input name="amount" type="number"
-                               min={(auction.winningBid + auction.startingPrice * 0.10).toString()}
+                               min={(auction.minimumBidIncrement).toString()}
                                pattern="[0-9]"
                                className="bidInput"
                                onChange={handleChange}
