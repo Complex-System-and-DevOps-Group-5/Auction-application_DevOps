@@ -47,5 +47,27 @@ func main() {
 		return c.JSON(previews)
 	})
 
+	app.Post("/login", func(c *fiber.Ctx) error {
+		var login Login
+		err := c.BodyParser(&login)
+
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
+		user, err := GetSingle[UserDb](EqualityCondition("name", login.Username))
+		if err != nil || user == nil {
+			return c.SendStatus(fiber.StatusNotFound)
+		}
+
+		// TODO: Hash the password
+		hashed := login.Password
+		if user.PasswordHash != hashed {
+			return c.SendStatus(fiber.StatusForbidden)
+		}
+
+		return c.Status(fiber.StatusOK).SendString("token")
+	})
+
 	log.Fatal(app.Listen(":4000"))
 }
