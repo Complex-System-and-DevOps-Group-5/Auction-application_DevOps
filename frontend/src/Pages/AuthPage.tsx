@@ -31,7 +31,7 @@ export function AuthPage() {
         try {
             console.log('trying to submit the following data: ' + user.username + ' ' + user.password);
             const response = await postLoginRequest('130.255.170.52/api/login', user)
-            if(response.ok){
+            if(response.status === 200){
                dispatch({type: "setUsername", payload: {username: response.data.username}});
                console.log("Response from server was okay and the username context/global state has been updated");
             }
