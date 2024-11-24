@@ -5,7 +5,7 @@ interface LoginState {
     username: string;
     authToken: string;
     isUserLoading: boolean;
-    userError: boolean;
+    userError: string;
 }
 
 const initialLoginState: LoginState = {
@@ -13,7 +13,7 @@ const initialLoginState: LoginState = {
     username: '',
     authToken: '',
     isUserLoading: true,
-    userError: false,
+    userError: '',
 };
 
 export type LoginAction =
@@ -21,7 +21,7 @@ export type LoginAction =
     | { type: 'setAuthToken', payload: { token: string}}
     | { type: 'setUsername', payload: { username: string }}
     | { type: 'setIsUserLoading', payload: { loading: boolean }}
-    | { type: 'setUserError', payload: { failed: boolean }
+    | { type: 'setUserError', payload: { failed: string }
 };
 
 const loginReducer = (state: LoginState, action: LoginAction) => {

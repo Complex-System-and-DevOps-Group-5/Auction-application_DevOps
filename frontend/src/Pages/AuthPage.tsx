@@ -40,9 +40,9 @@ export function AuthPage() {
                 })
                 .catch(error =>{
                     console.log(error)
-                    dispatch({type: "setUserError", payload: {failed: true}})
+                    dispatch({type: "setUserError", payload: {failed: error.message}});
                     setSubmitting(false);
-                    reject(error)
+                    reject(alert('Backend denied acces :' + error.message));
                 }
                 );
         });
@@ -66,6 +66,12 @@ export function AuthPage() {
             event.preventDefault();
         }
     }
+    /*
+    TODO
+    Hide password input
+    Hide form after successful login
+    Make custom error css based on server response
+     */
 
     return(
             <div className="authContainer">
