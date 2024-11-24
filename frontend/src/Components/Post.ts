@@ -28,6 +28,7 @@ export async function postLoginRequest(url: string, user: User) : Promise<any> {
                 "Content-type": "application/json",
             }
         });
+        console.log(response);
         if (!response.ok) {
             throw new Error(response.statusText);
         }

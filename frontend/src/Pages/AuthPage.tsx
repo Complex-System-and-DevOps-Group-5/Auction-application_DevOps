@@ -33,8 +33,10 @@ export function AuthPage() {
                 .then(response => {
                     dispatch({type: "setUsername", payload: {username: response.data.username}});
                 })
-                .catch(() =>
+                .catch(error =>{
+                    console.log(error)
                     dispatch({type: "setUserError", payload: {failed: true}})
+                }
                 );
         }, []);
         setSubmitting(false);
