@@ -18,6 +18,7 @@ const initialAuctionState: AuctionState = {
 // Type of actions
 type AuctionAction =
     | { type: 'fetchingAuction' }
+    | { type: 'updateCurrentBid', payload: { amount: number } }
     | { type: 'fetchedAuction', payload: { product: Auction[] } }
     | { type: 'auctionError', payload: { failed: boolean } }
     | { type: 'update', payload: { auction: number } } // this only updates  thew winning bid.
@@ -32,6 +33,14 @@ const auctionReducer = (state: AuctionState, action: AuctionAction) => {
                 isProductsLoading: true,
                 productsError: false
             };
+        case 'updateCurrentBid':
+            return {
+                ...state,
+                product: {
+                    ...state.product,
+                    currentBid: action.payload.amount,
+                }
+            }
         case 'fetchedAuction':
             return {
                 ...state,

@@ -18,7 +18,7 @@ export default function ProductPage () {
 
     // from backend:
     const { product, isProductLoading, productError } = useAuctionState();
-    const { username } = useLoginState()
+    const { username, loggedIn } = useLoginState()
     // loading indicators
     const [submitting, setSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState(false);
@@ -29,6 +29,7 @@ export default function ProductPage () {
         fetchData(baseURL)
             .then(fetchedData => {
                 dispatch({ type: "fetchedAuction", payload: { product: fetchedData }});
+                dispatch({ type: "auctionError", payload: { failed: false } })
             })
             .catch(() =>
                 dispatch({ type: "auctionError", payload: { failed: true } })
@@ -47,6 +48,7 @@ export default function ProductPage () {
         } catch (err) {
             console.log(err)
         }
+        setSubmitting(false);
     }
 
     async function submitBid(amount: number) {
@@ -60,6 +62,8 @@ export default function ProductPage () {
            const response = await postBidRequest('/api/post', submitData)
             if (response.ok) {
                 alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
+                setSubmitError(false)
+               dispatch({type: "updateCurrentBid", payload: { amount: amount }})
             }
         } catch (err){
             console.log(err)
@@ -92,8 +96,8 @@ export default function ProductPage () {
             }
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
             <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>
-            {auction.sold ? ( /* auction date time thing*/
-                <span style={{color: "red", display: "flex", paddingTop: 10}}>Expired</span>
+            { !loggedIn ? ( /* auction date time thing*/
+                <span style={{color: "red", display: "flex", paddingTop: 10}}>Login to submit a bit</span>
             ) : (
                 <div className="bidSection">
                     <form onSubmit={handleBidSubmit} onKeyDown={handleKeyPress}>
@@ -111,7 +115,7 @@ export default function ProductPage () {
                                     <div></div>
                             </div>
                         )}
-                        {submitError && <p>Error submitting bid XXXX</p>}
+                        {submitError && <p>Error submitting bid</p>}
                     </form>
                 </div>
             )}
