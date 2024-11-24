@@ -57,7 +57,7 @@ export default function ProductPage () {
             amount: amount,
         }
         try {
-           const response = await postBidRequest('fefe.com', submitData)
+           const response = await postBidRequest('/api/post', submitData)
             if (response.ok) {
                 alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
             }
