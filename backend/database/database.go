@@ -55,28 +55,7 @@ func Connect() {
 	}
 }
 
-func InsertSingle[T DatabaseObject](object T) error {
-	tableName := object.TableName()
-
-	columns := getColumnsOf(object, "insert")
-
-	namedColumns := make([]string, len(columns))
-	for i, column := range columns {
-		namedColumns[i] = ":" + column
-	}
-
-	queryString := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s);", tableName, strings.Join(columns, ", "), strings.Join(namedColumns, ", "))
-	_, err := db.NamedExec(queryString, object)
-
-	if err != nil {
-		fmt.Printf("err: %v\n", err)
-		return err
-	}
-
-	return nil
-}
-
-func InsertMultiple[T DatabaseObject](objects ...T) error {
+func Insert[T DatabaseObject](objects ...T) error {
 	tableName := objects[0].TableName()
 
 	columns := getColumnsOf(objects[0], "insert")

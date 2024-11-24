@@ -108,7 +108,7 @@ func main() {
 			BuyerId:      bidder.Id,
 		}
 
-		err = database.InsertMultiple(bidDb)
+		err = database.Insert(bidDb)
 		if err != nil {
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
