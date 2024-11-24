@@ -77,14 +77,21 @@ func InsertSingle[T DatabaseObject](object T) error {
 }
 
 func InsertMultiple[T DatabaseObject](objects ...T) error {
-	// TODO: It's likely possible to optimize it to a single query
+	tableName := objects[0].TableName()
 
-	for _, obj := range objects {
-		err := InsertSingle(obj)
+	columns := getColumnsOf(objects[0], "insert")
 
-		if err != nil {
-			return err
-		}
+	namedColumns := make([]string, len(columns))
+	for i, column := range columns {
+		namedColumns[i] = ":" + column
+	}
+
+	queryString := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s);", tableName, strings.Join(columns, ", "), strings.Join(namedColumns, ", "))
+	_, err := db.NamedExec(queryString, objects)
+
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+		return err
 	}
 
 	return nil
