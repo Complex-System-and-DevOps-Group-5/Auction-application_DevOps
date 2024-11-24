@@ -28,19 +28,16 @@ export function AuthPage() {
             username: input1.trim(),
             password: input2.trim(), // here we can also hash
         }
-        try {
-            console.log('trying to submit the following data: ' + user.username + ' ' + user.password);
-            const response = await postLoginRequest('api/login', user)
-            if(response.status === 200){
-               dispatch({type: "setUsername", payload: {username: user.username}});
-               console.log("Response from server was okay and the username context/global state has been updated");
-            }
-        } catch (err){
-            console.log(err)
-            dispatch({type: "setUserError", payload: {failed: true}})
-        } finally {
-            setSubmitting(false);
-        }
+        useEffect(() => {
+            postLoginRequest('api/login', user)
+                .then(response => {
+                    dispatch({type: "setUsername", payload: {username: response.data.username}});
+                })
+                .catch(() =>
+                    dispatch({type: "setUserError", payload: {failed: true}})
+                );
+        }, []);
+        setSubmitting(false);
     }
 
     const userNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
