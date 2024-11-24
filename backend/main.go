@@ -69,7 +69,8 @@ func main() {
 			return c.SendStatus(fiber.StatusForbidden)
 		}
 
-		return c.Status(fiber.StatusOK).SendString("token")
+		// TODO: Send only a token back
+		return c.Status(fiber.StatusOK).JSON(user)
 	})
 
 	log.Fatal(app.Listen(":4000"))
