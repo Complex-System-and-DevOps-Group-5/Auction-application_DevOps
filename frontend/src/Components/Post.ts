@@ -26,6 +26,12 @@ export async function postLoginRequest(url: string, user: User) : Promise<any> {
         headers: {
             "Content-type": "application/json",
         }
+    }).then(res => {
+        if (!res.ok) {
+            throw new Error( 'Network respond was not ok'
+            )
+        }
+        return res.json();
     });
 
 }

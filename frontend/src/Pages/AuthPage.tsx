@@ -32,7 +32,7 @@ export function AuthPage() {
             console.log('trying to submit the following data: ' + user.username + ' ' + user.password);
             const response = await postLoginRequest('130.255.170.52/api/login', user)
             if(response.status === 200){
-               dispatch({type: "setUsername", payload: {username: response.data.username}});
+               dispatch({type: "setUsername", payload: {username: user.username}});
                console.log("Response from server was okay and the username context/global state has been updated");
             }
         } catch (err){
@@ -64,7 +64,7 @@ export function AuthPage() {
     return(
             <div className="authContainer">
                 <div className="authHeader">
-                    <h2> Login </h2>
+                    <h2> {loggedIn ? "Welcome " + username : "Login" } </h2>
                     <div id="line"/>
                 </div>
                         <form onSubmit={handleLoginSubmit} onKeyPress={handleKeyPress}>
