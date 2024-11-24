@@ -3,7 +3,7 @@ import User from "../Interfaces/User.ts";
 
 
 export async function postBidRequest(url: string, bid: Bid) :Promise<any> {
-    fetch(url, {
+    await fetch(url, {
         method: 'POST',
         body: JSON.stringify({
             id: bid.id,
@@ -17,7 +17,7 @@ export async function postBidRequest(url: string, bid: Bid) :Promise<any> {
 }
 
 export async function postLoginRequest(url: string, user: User) : Promise<any> {
-    fetch(url, {
+    await fetch(url, {
         method: 'POST',
         body: JSON.stringify({
             username: user.username,

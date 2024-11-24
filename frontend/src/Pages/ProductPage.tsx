@@ -21,6 +21,7 @@ export default function ProductPage () {
     const { username } = useLoginState()
     // loading indicators
     const [submitting, setSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
 
     const dispatch = useAuctionDispatch();
 
@@ -32,7 +33,7 @@ export default function ProductPage () {
             .catch(() =>
                 dispatch({ type: "auctionError", payload: { failed: true } })
             );
-        }, []);
+        }, [submitting]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setbidAmount(Number(event.target.value));  // Number() uhmm skriv bedre kode pls
@@ -48,27 +49,29 @@ export default function ProductPage () {
         }
     }
 
-    function submitBid(amount: number) {
+    async function submitBid(amount: number) {
         //
         const submitData: Bid = {
             id: 1,
             bidder: username,
             amount: amount,
         }
-        return new Promise((resolve, reject): void => {
-            postBidRequest('backendpostendpoint.suckmyballs/whatever', submitData)
-            setTimeout(() => {
-                // get winningBidAmount from backend this will determine if promise will be resolved or rejected
-                if (amount >= 100 + 0.10) {
-                    resolve(alert('A bit was sucessfully submitted: ' + bidAmount));
-                    setSubmitting(false);
-                } else {
-                    reject(new Error('Backend did not approve your bid. Attempted to  submit: ' + amount));
-                    setSubmitting(false);
-                }
-            }, 3000);
-        })
+        try {
+           const response = await postBidRequest('fefe.com', submitData)
+            if (response.ok) {
+                alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
+            }
+        } catch (err){
+            console.log(err)
+            setSubmitError(true)
+        }
     }
+    const handleKeyPress = (event: React.KeyboardEvent) => {
+        if (event.keyCode === 13){
+            event.preventDefault();
+        }
+    }
+
     /*I'm not proud of the way I access the product and or auction info
     * I will find a better way for a ProductPage, however this method will be quite useful
     * on the front page*/
@@ -93,7 +96,7 @@ export default function ProductPage () {
                 <span style={{color: "red", display: "flex", paddingTop: 10}}>Expired</span>
             ) : (
                 <div className="bidSection">
-                    <form onSubmit={handleBidSubmit}>
+                    <form onSubmit={handleBidSubmit} onKeyDown={handleKeyPress}>
                         <input name="amount" type="number"
                                min={(auction.minimumBidIncrement).toString()}
                                pattern="[0-9]"
@@ -108,6 +111,7 @@ export default function ProductPage () {
                                     <div></div>
                             </div>
                         )}
+                        {submitError && <p>Error submitting bid XXXX</p>}
                     </form>
                 </div>
             )}
@@ -132,9 +136,9 @@ export default function ProductPage () {
     return (
         <>
         { !isProductLoading && !productError? (
-                <div>
-                {imageBox}
-                {InfoBox}
+                <div className="container">
+                    {imageBox}
+                    {InfoBox}
                 </div>
         ) : (
             <div className="container">
