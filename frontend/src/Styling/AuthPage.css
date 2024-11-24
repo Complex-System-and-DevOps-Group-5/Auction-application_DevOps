@@ -46,3 +46,32 @@ h2{
     grid-row: 3;
 }
 
+
+input[type=text]:focus :user-invalid {
+    border: 3px solid #555;
+    background-color: darkgray;
+    width: 90%;
+}
+input[type=password]:focus :user-invalid{
+    border: 3px solid #555;
+    background-color: darkgray;
+    width: 90%;
+}
+button {
+    width: 100%;
+    align-self: center;
+    margin-top: 10px;
+
+}
+
+.NotFound{
+
+}
+
+.Forbidden{
+
+}
+
+.Ok{
+
+}

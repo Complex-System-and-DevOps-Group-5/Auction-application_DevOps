@@ -34,15 +34,16 @@ export function AuthPage() {
                     dispatch({type: "setUsername", payload: {username: response.username}});
                     dispatch({type: "setAuthToken", payload: {token: response.token}});
                     dispatch({type: "toggleLogin", payload: {toggle: true}});
+                    dispatch({type: "setUserError", payload: {failed: response.message}});
                     setSubmitting(false);
                     console.log('resolving promise, the username is now: ' + username);
                     resolve(response)
                 })
                 .catch(error =>{
-                    console.log(error)
-                    dispatch({type: "setUserError", payload: {failed: error.message}});
+                    console.log('error name that will be used for css class: ' + error.message.replace(/\s/g,''))
+                    dispatch({type: "setUserError", payload: {failed: error.message.replace(/\s/g,'')}});
                     setSubmitting(false);
-                    reject(alert('Backend denied acces :' + error.message));
+                    reject(error.message);
                 }
                 );
         });
@@ -71,6 +72,8 @@ export function AuthPage() {
     Hide password input
     Hide form after successful login
     Make custom error css based on server response
+        - if username/password pair is wrong  --> 404 not found
+        - if username is correct but incorrect password --> 403 forbidden
      */
 
     return(
@@ -79,19 +82,27 @@ export function AuthPage() {
                     <h2> {loggedIn ? "Welcome " + username : "Login" } </h2>
                     <div id="line"/>
                 </div>
+                { !loggedIn &&
                         <form onSubmit={handleLoginSubmit} onKeyPress={handleKeyPress}>
                             <input name= "username" type="text"
                                    value={input1}
+                                   placeholder="Username"
                                    onChange = {userNameChange}
+                                   className= {userError}
                            />
-                            <input name= "password" type="text"
+                            <input name= "password" type="password"
                                    value={input2}
+                                   placeholder="Password"
                                    onChange = {userPasswordChange}
+                                   className= {userError}
                             />
-                            {!submitting ? <button>Submit</button> : <p>Submitting...</p>}
+                            {userError === 'NotFound' && <p>Username does not exist</p>}
+                            {userError === 'Forbidden' && <p>Username does not exist</p>}
+                            {userError === '' && <p> </p>}
+                            {loggedIn && <p>loggedIn is true and hello {username}</p>}
+                            {!submitting ? <button>Enter</button> : <p>Login in...</p>}
                         </form>
-                {userError && <p>Try again!</p>}
-                {loggedIn && <p>loggedIn is true and hello {username}</p>}
+                }
             </div>
 
         );
