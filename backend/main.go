@@ -93,7 +93,7 @@ func main() {
 
 		bidder, err := database.GetSingle[database.User](database.EqualityCondition("name", bid.BidderUsername))
 		if err != nil {
-			return c.SendStatus(fiber.StatusBadRequest)
+			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 
 		bidDb := database.Bid{
