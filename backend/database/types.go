@@ -6,16 +6,16 @@ type DatabaseObject interface {
 	TableName() string
 }
 
-type CategoryDb struct {
+type Category struct {
 	Id   int    `db:"id" no-db:"insert"`
 	Name string `db:"name"`
 }
 
-func (d CategoryDb) TableName() string {
+func (d Category) TableName() string {
 	return "category"
 }
 
-type UserDb struct {
+type User struct {
 	Id           int    `db:"id" no-db:"insert" json:"id"`
 	Name         string `db:"name" json:"name"`
 	Email        string `db:"email" json:"email"`
@@ -24,20 +24,20 @@ type UserDb struct {
 	Verified     bool   `db:"verified" json:"verified"`
 }
 
-func (d UserDb) TableName() string {
+func (d User) TableName() string {
 	return "users"
 }
 
-type ImageDb struct {
+type Image struct {
 	Id  int    `db:"id" no-db:"insert"`
 	Url string `db:"string_url"`
 }
 
-func (d ImageDb) TableName() string {
+func (d Image) TableName() string {
 	return "image"
 }
 
-type AuctionDb struct {
+type Auction struct {
 	Id                  int       `db:"id" no-db:"insert" json:"id"`
 	Title               string    `db:"title" json:"title"`
 	Description         string    `db:"description" json:"description"`
@@ -55,11 +55,11 @@ type AuctionDb struct {
 	ImageId             int       `db:"image_id" json:"image_id"`
 }
 
-func (d AuctionDb) TableName() string {
+func (d Auction) TableName() string {
 	return "auction_post"
 }
 
-type ChatDb struct {
+type Chat struct {
 	Id           int       `db:"id" no-db:"insert"`
 	CreationTime time.Time `db:"time"`
 	SellerId     int       `db:"seller_id"`
@@ -67,11 +67,11 @@ type ChatDb struct {
 	AuctionId    int       `db:"auction_id"`
 }
 
-func (d ChatDb) TableName() string {
+func (d Chat) TableName() string {
 	return "chat"
 }
 
-type BidDb struct {
+type Bid struct {
 	CreationTime time.Time `db:"creation_time"`
 	Amount       int       `db:"amount"`
 	Status       int       `db:"status"`
@@ -79,25 +79,25 @@ type BidDb struct {
 	BuyerId      int       `db:"buyer_id"`
 }
 
-func (d BidDb) TableName() string {
+func (d Bid) TableName() string {
 	return "bid"
 }
 
-type WatchlistDb struct {
+type Watchlist struct {
 	AuctionId int `db:"auction_id"`
 	UserId    int `db:"user_id"`
 }
 
-func (d WatchlistDb) TableName() string {
+func (d Watchlist) TableName() string {
 	return "watchlist"
 }
 
-type MessageDb struct {
+type Message struct {
 	Id           int       `db:"message_id"`
 	ChatId       int       `db:"chat_id"`
 	CreationTime time.Time `db:"creation_time"`
 }
 
-func (d MessageDb) TableName() string {
+func (d Message) TableName() string {
 	return "messages"
 }

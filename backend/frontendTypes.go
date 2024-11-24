@@ -7,12 +7,12 @@ import (
 )
 
 // Simple aliases
-type Category = database.CategoryDb
-type Image = database.ImageDb
-type Chat = database.ChatDb
-type Bid = database.BidDb
-type WatchlistItem = database.WatchlistDb
-type ChatMessage = database.MessageDb
+type Category = database.Category
+type Image = database.Image
+type Chat = database.Chat
+type Bid = database.Bid
+type WatchlistItem = database.Watchlist
+type ChatMessage = database.Message
 
 type User struct {
 	Id       int    `json:"id"`
@@ -23,7 +23,7 @@ type User struct {
 }
 
 func GetUser(id int) *User {
-	user, err := database.GetSingle[database.UserDb](database.EqualityCondition("id", id))
+	user, err := database.GetSingle[database.User](database.EqualityCondition("id", id))
 
 	if err != nil {
 		return nil
@@ -47,7 +47,7 @@ type AuctionPreview struct {
 }
 
 func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
-	auctions, err := database.GetAmount[database.AuctionDb](amount, offset)
+	auctions, err := database.GetAmount[database.Auction](amount, offset)
 	if err != nil {
 		return nil
 	}
@@ -56,7 +56,7 @@ func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
 	for i, auction := range auctions {
 		imageUrl := ""
 
-		image, err := database.GetSingle[database.ImageDb](database.EqualityCondition("id", auction.ImageId))
+		image, err := database.GetSingle[database.Image](database.EqualityCondition("id", auction.ImageId))
 		if err != nil {
 			imageUrl = image.Url
 		}
@@ -92,7 +92,7 @@ type AuctionPost struct {
 }
 
 func GetPost(id int) *AuctionPost {
-	auction, err := database.GetSingle[database.AuctionDb](database.EqualityCondition("id", id))
+	auction, err := database.GetSingle[database.Auction](database.EqualityCondition("id", id))
 
 	if err != nil {
 		return nil
@@ -100,7 +100,7 @@ func GetPost(id int) *AuctionPost {
 
 	imageUrl := ""
 
-	image, err := database.GetSingle[database.ImageDb](database.EqualityCondition("id", auction.ImageId))
+	image, err := database.GetSingle[database.Image](database.EqualityCondition("id", auction.ImageId))
 	if err == nil {
 		imageUrl = image.Url
 	}

@@ -17,7 +17,7 @@ func (e InvalidPassword) Error() string {
 }
 
 func AuthenticateLogin(login Login) (string, error) {
-	user, err := database.GetSingle[database.UserDb](database.EqualityCondition("name", login.Username))
+	user, err := database.GetSingle[database.User](database.EqualityCondition("name", login.Username))
 
 	if err != nil || user == nil {
 		return "", UserNotFound{}
