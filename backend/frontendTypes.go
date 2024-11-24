@@ -1,14 +1,18 @@
 package main
 
-import "time"
+import (
+	"time"
+
+	"DevOps/database"
+)
 
 // Simple aliases
-type Category = CategoryDb
-type Image = ImageDb
-type Chat = ChatDb
-type Bid = BidDb
-type WatchlistItem = WatchlistDb
-type ChatMessage = MessageDb
+type Category = database.CategoryDb
+type Image = database.ImageDb
+type Chat = database.ChatDb
+type Bid = database.BidDb
+type WatchlistItem = database.WatchlistDb
+type ChatMessage = database.MessageDb
 
 type User struct {
 	Id       int    `json:"id"`
@@ -19,7 +23,7 @@ type User struct {
 }
 
 func GetUser(id int) *User {
-	user, err := GetSingle[UserDb](EqualityCondition("id", id))
+	user, err := database.GetSingle[database.UserDb](database.EqualityCondition("id", id))
 
 	if err != nil {
 		return nil
@@ -43,7 +47,7 @@ type AuctionPreview struct {
 }
 
 func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
-	auctions, err := GetAmount[AuctionDb](amount, offset)
+	auctions, err := database.GetAmount[database.AuctionDb](amount, offset)
 	if err != nil {
 		return nil
 	}
@@ -52,7 +56,7 @@ func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
 	for i, auction := range auctions {
 		imageUrl := ""
 
-		image, err := GetSingle[ImageDb](EqualityCondition("id", auction.ImageId))
+		image, err := database.GetSingle[database.ImageDb](database.EqualityCondition("id", auction.ImageId))
 		if err != nil {
 			imageUrl = image.Url
 		}
@@ -88,7 +92,7 @@ type AuctionPost struct {
 }
 
 func GetPost(id int) *AuctionPost {
-	auction, err := GetSingle[AuctionDb](EqualityCondition("id", id))
+	auction, err := database.GetSingle[database.AuctionDb](database.EqualityCondition("id", id))
 
 	if err != nil {
 		return nil
@@ -96,7 +100,7 @@ func GetPost(id int) *AuctionPost {
 
 	imageUrl := ""
 
-	image, err := GetSingle[ImageDb](EqualityCondition("id", auction.ImageId))
+	image, err := database.GetSingle[database.ImageDb](database.EqualityCondition("id", auction.ImageId))
 	if err == nil {
 		imageUrl = image.Url
 	}

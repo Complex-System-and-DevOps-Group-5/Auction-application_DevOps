@@ -1,4 +1,4 @@
-package main
+package database
 
 import (
 	"errors"
@@ -42,7 +42,7 @@ func getColumnsOf[T DatabaseObject](object T, exclude string) []string {
 	return columns[:columnIndex]
 }
 
-func ConnectToDatabase() {
+func Connect() {
 	var err error
 	connStr := fmt.Sprintf(
 		"user=%s password=%s dbname=%s sslmode=disable",

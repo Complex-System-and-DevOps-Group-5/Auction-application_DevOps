@@ -1,5 +1,9 @@
 package main
 
+import (
+	"DevOps/database"
+)
+
 type UserNotFound struct{}
 
 func (e UserNotFound) Error() string {
@@ -13,7 +17,7 @@ func (e InvalidPassword) Error() string {
 }
 
 func AuthenticateLogin(login Login) (string, error) {
-	user, err := GetSingle[UserDb](EqualityCondition("name", login.Username))
+	user, err := database.GetSingle[database.UserDb](database.EqualityCondition("name", login.Username))
 
 	if err != nil || user == nil {
 		return "", UserNotFound{}

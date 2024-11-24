@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"log"
 
+	"DevOps/database"
+
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	ConnectToDatabase()
+	database.Connect()
 
 	app := fiber.New()
 
@@ -34,7 +36,7 @@ func main() {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		user, err := GetSingle[UserDb](EqualityCondition("id", id))
+		user, err := database.GetSingle[database.UserDb](database.EqualityCondition("id", id))
 
 		if err != nil {
 			return c.SendStatus(fiber.StatusNotFound)
