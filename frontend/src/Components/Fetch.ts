@@ -7,7 +7,8 @@ export async function fetchData(url: string): Promise<any> {
         const response = await fetch(url, {
             mode: "cors",
             headers: {
-                'Access-Control-Allow-Origin':'*'
+                'Access-Control-Allow-Origin':'*',
+                'Authorization': 'Bearer '+ localStorage.getItem("token")
             }
         });
         if (!response.ok) {
