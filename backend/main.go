@@ -2,8 +2,8 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"log"
+	"time"
 
 	"DevOps/database"
 
@@ -52,8 +52,6 @@ func main() {
 	})
 
 	app.Post("/login", func(c *fiber.Ctx) error {
-		fmt.Println("Someone is trying to log in...")
-
 		var login Login
 		err := c.BodyParser(&login)
 
@@ -83,6 +81,35 @@ func main() {
 		}{Username: login.Username, Token: token}
 
 		return c.Status(fiber.StatusOK).JSON(response)
+	})
+
+	app.Post("/post", func(c *fiber.Ctx) error {
+		var bid Bid
+		err := c.BodyParser(&bid)
+
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
+		bidder, err := database.GetSingle[database.User](database.EqualityCondition("name", bid.BidderUsername))
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
+		bidDb := database.Bid{
+			CreationTime: time.Now(),
+			Amount:       int(bid.Amount * 100),
+			Status:       0,
+			AuctionId:    bid.AuctionId,
+			BuyerId:      bidder.Id,
+		}
+
+		err = database.InsertMultiple(bidDb)
+		if err != nil {
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+
+		return c.SendStatus(fiber.StatusOK)
 	})
 
 	log.Fatal(app.Listen(":4000"))

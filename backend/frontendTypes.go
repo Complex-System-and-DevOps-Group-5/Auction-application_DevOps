@@ -10,9 +10,14 @@ import (
 type Category = database.Category
 type Image = database.Image
 type Chat = database.Chat
-type Bid = database.Bid
 type WatchlistItem = database.Watchlist
 type ChatMessage = database.Message
+
+type Bid struct {
+	AuctionId      int     `json:"auctionId"`
+	BidderUsername string  `json:"bidderUsername"`
+	Amount         float64 `json:"amount"`
+}
 
 type User struct {
 	Id       int    `json:"id"`
