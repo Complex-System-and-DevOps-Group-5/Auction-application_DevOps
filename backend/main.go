@@ -75,7 +75,12 @@ func main() {
 			return c.SendStatus(errorStatus)
 		}
 
-		return c.Status(fiber.StatusOK).SendString(token)
+		response := struct {
+			Username string `json:"username"`
+			Token    string `json:"token"`
+		}{Username: login.Username, Token: token}
+
+		return c.Status(fiber.StatusOK).JSON(response)
 	})
 
 	log.Fatal(app.Listen(":4000"))
