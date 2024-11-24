@@ -21,25 +21,28 @@ export function AuthPage() {
 
     //const navigate = useNavigate();
 
-    async function handleLoginSubmit(event: any) {
+    function handleLoginSubmit(event: any) {
         event.preventDefault();
         setSubmitting(true);
         const user: UserData = {
             username: input1.trim(),
             password: input2.trim(), // here we can also hash
         }
-        useEffect(() => {
+        return new Promise((resolve, reject): void => {
             postLoginRequest('api/login', user)
                 .then(response => {
                     dispatch({type: "setUsername", payload: {username: response.data.username}});
+                    setSubmitting(false);
+                    resolve(response)
                 })
                 .catch(error =>{
                     console.log(error)
                     dispatch({type: "setUserError", payload: {failed: true}})
+                    setSubmitting(false);
+                    reject(error)
                 }
                 );
-        }, []);
-        setSubmitting(false);
+        });
     }
 
     const userNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
