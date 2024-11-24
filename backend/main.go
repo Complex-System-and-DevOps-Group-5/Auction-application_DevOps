@@ -32,7 +32,7 @@ func main() {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		user, err := GetSingle[UserDb]("users", EqualityCondition("id", id))
+		user, err := GetSingle[UserDb](EqualityCondition("id", id))
 
 		if err != nil {
 			return c.SendStatus(fiber.StatusNotFound)

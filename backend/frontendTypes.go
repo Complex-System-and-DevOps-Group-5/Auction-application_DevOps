@@ -19,7 +19,7 @@ type User struct {
 }
 
 func GetUser(id int) *User {
-	user, err := GetSingle[UserDb]("users", EqualityCondition("id", id))
+	user, err := GetSingle[UserDb](EqualityCondition("id", id))
 
 	if err != nil {
 		return nil
@@ -43,7 +43,7 @@ type AuctionPreview struct {
 }
 
 func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
-	auctions, err := GetAmount[AuctionDb]("auction_post", amount, offset)
+	auctions, err := GetAmount[AuctionDb](amount, offset)
 	if err != nil {
 		return nil
 	}
@@ -52,7 +52,7 @@ func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
 	for i, auction := range auctions {
 		imageUrl := ""
 
-		image, err := GetSingle[ImageDb]("image", EqualityCondition("id", auction.ImageId))
+		image, err := GetSingle[ImageDb](EqualityCondition("id", auction.ImageId))
 		if err != nil {
 			imageUrl = image.Url
 		}
@@ -88,7 +88,7 @@ type AuctionPost struct {
 }
 
 func GetPost(id int) *AuctionPost {
-	auction, err := GetSingle[AuctionDb]("auction_post", EqualityCondition("id", id))
+	auction, err := GetSingle[AuctionDb](EqualityCondition("id", id))
 
 	if err != nil {
 		return nil
@@ -96,7 +96,7 @@ func GetPost(id int) *AuctionPost {
 
 	imageUrl := ""
 
-	image, err := GetSingle[ImageDb]("image", EqualityCondition("id", auction.ImageId))
+	image, err := GetSingle[ImageDb](EqualityCondition("id", auction.ImageId))
 	if err == nil {
 		imageUrl = image.Url
 	}

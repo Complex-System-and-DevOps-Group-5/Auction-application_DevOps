@@ -2,9 +2,17 @@ package main
 
 import "time"
 
+type DatabaseObject interface {
+	TableName() string
+}
+
 type CategoryDb struct {
 	Id   int    `db:"id" no-db:"insert"`
 	Name string `db:"name"`
+}
+
+func (d CategoryDb) TableName() string {
+	return "category"
 }
 
 type UserDb struct {
@@ -16,9 +24,17 @@ type UserDb struct {
 	Verified     bool   `db:"verified" json:"verified"`
 }
 
+func (d UserDb) TableName() string {
+	return "users"
+}
+
 type ImageDb struct {
 	Id  int    `db:"id" no-db:"insert"`
 	Url string `db:"string_url"`
+}
+
+func (d ImageDb) TableName() string {
+	return "image"
 }
 
 type AuctionDb struct {
@@ -39,12 +55,20 @@ type AuctionDb struct {
 	ImageId             int       `db:"image_id" json:"image_id"`
 }
 
+func (d AuctionDb) TableName() string {
+	return "auction_post"
+}
+
 type ChatDb struct {
 	Id           int       `db:"id" no-db:"insert"`
 	CreationTime time.Time `db:"time"`
 	SellerId     int       `db:"seller_id"`
 	BuyerId      int       `db:"buyer_id"`
 	AuctionId    int       `db:"auction_id"`
+}
+
+func (d ChatDb) TableName() string {
+	return "chat"
 }
 
 type BidDb struct {
@@ -55,13 +79,25 @@ type BidDb struct {
 	BuyerId      int       `db:"buyer_id"`
 }
 
+func (d BidDb) TableName() string {
+	return "bid"
+}
+
 type WatchlistDb struct {
 	AuctionId int `db:"auction_id"`
 	UserId    int `db:"user_id"`
+}
+
+func (d WatchlistDb) TableName() string {
+	return "watchlist"
 }
 
 type MessageDb struct {
 	Id           int       `db:"message_id"`
 	ChatId       int       `db:"chat_id"`
 	CreationTime time.Time `db:"creation_time"`
+}
+
+func (d MessageDb) TableName() string {
+	return "messages"
 }

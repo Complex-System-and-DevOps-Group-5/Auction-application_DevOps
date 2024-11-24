@@ -17,7 +17,7 @@ const (
 
 var db *sqlx.DB
 
-func getColumnsOf[T any](object T, exclude string) []string {
+func getColumnsOf[T DatabaseObject](object T, exclude string) []string {
 	reflection := reflect.TypeOf(object)
 
 	columns := make([]string, reflection.NumField())
@@ -55,7 +55,9 @@ func ConnectToDatabase() {
 	}
 }
 
-func InsertSingle[T any](tableName string, object T) error {
+func InsertSingle[T DatabaseObject](object T) error {
+	tableName := object.TableName()
+
 	columns := getColumnsOf(object, "insert")
 
 	namedColumns := make([]string, len(columns))
@@ -74,11 +76,11 @@ func InsertSingle[T any](tableName string, object T) error {
 	return nil
 }
 
-func InsertMultiple[T any](tableName string, objects ...T) error {
+func InsertMultiple[T DatabaseObject](objects ...T) error {
 	// TODO: It's likely possible to optimize it to a single query
 
 	for _, obj := range objects {
-		err := InsertSingle(tableName, obj)
+		err := InsertSingle(obj)
 
 		if err != nil {
 			return err
@@ -88,8 +90,8 @@ func InsertMultiple[T any](tableName string, objects ...T) error {
 	return nil
 }
 
-func GetSingle[T any](tableName string, condition Condition) (*T, error) {
-	candidates, err := GetMultiple[T](tableName, condition)
+func GetSingle[T DatabaseObject](condition Condition) (*T, error) {
+	candidates, err := GetMultiple[T](condition)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +106,11 @@ func GetSingle[T any](tableName string, condition Condition) (*T, error) {
 	}
 }
 
-func GetMultiple[T any](tableName string, condition Condition) ([]T, error) {
+func GetMultiple[T DatabaseObject](condition Condition) ([]T, error) {
+	// only used for getting the tablename
+	var a T
+	tableName := a.TableName()
+
 	queryString := fmt.Sprintf("SELECT * FROM %s WHERE %s;", tableName, condition.ToString())
 
 	values := []T{}
@@ -116,7 +122,11 @@ func GetMultiple[T any](tableName string, condition Condition) ([]T, error) {
 	return values, nil
 }
 
-func GetAll[T any](tableName string) ([]T, error) {
+func GetAll[T DatabaseObject]() ([]T, error) {
+	// only used for getting the tablename
+	var a T
+	tableName := a.TableName()
+
 	queryString := fmt.Sprintf("SELECT * FROM %s", tableName)
 
 	values := []T{}
@@ -128,7 +138,11 @@ func GetAll[T any](tableName string) ([]T, error) {
 	return values, nil
 }
 
-func GetAmount[T any](tableName string, amount int, offset int) ([]T, error) {
+func GetAmount[T DatabaseObject](amount int, offset int) ([]T, error) {
+	// only used for getting the tablename
+	var a T
+	tableName := a.TableName()
+
 	queryString := fmt.Sprintf("SELECT * FROM %s LIMIT %d OFFSET %d", tableName, amount, offset)
 
 	values := []T{}
