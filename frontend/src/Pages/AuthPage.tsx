@@ -31,7 +31,7 @@ export function AuthPage() {
         return new Promise((resolve, reject): void => {
             postLoginRequest('api/login', user)
                 .then(response => {
-                    dispatch({type: "setUsername", payload: {username: response.data.username}});
+                    dispatch({type: "setUsername", payload: {username: user.username}});
                     setSubmitting(false);
                     resolve(response)
                 })
@@ -81,7 +81,7 @@ export function AuthPage() {
                             {!submitting ? <button>Submit</button> : <p>Submitting...</p>}
                         </form>
                 {userError && <p>Try again!</p>}
-                {loggedIn && <p>loggedIn is true</p>}
+                {loggedIn && <p>loggedIn is true and hello {username}</p>}
             </div>
 
         );
