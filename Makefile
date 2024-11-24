@@ -1,6 +1,6 @@
 
 
-.PHONY: all frontend backend
+.PHONY: all frontend
 
 all:
 	@echo "Specify a task to do"
