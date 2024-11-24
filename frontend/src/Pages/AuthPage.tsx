@@ -64,10 +64,10 @@ export function AuthPage() {
     return(
             <div className="authContainer">
                 <div className="authHeader">
-                    <h2>{ !loggedIn ? "Login" : "Signup"}</h2>
+                    <h2> Login </h2>
                     <div id="line"/>
                 </div>
-                        <form onSubmit={handleLoginSubmit} onKeyDown={handleKeyPress}>
+                        <form onSubmit={handleLoginSubmit} onKeyPress={handleKeyPress}>
                             <input name= "username" type="text"
                                    value={input1}
                                    onChange = {userNameChange}
@@ -76,9 +76,10 @@ export function AuthPage() {
                                    value={input2}
                                    onChange = {userPasswordChange}
                             />
-                            {!submitting && loggedIn ? <button>Submit</button> : <p>Loading...</p>}
+                            {!submitting ? <button>Submit</button> : <p>Submitting...</p>}
                         </form>
                 {userError && <p>Try again!</p>}
+                {loggedIn && <p>loggedIn is true</p>}
             </div>
 
         );
