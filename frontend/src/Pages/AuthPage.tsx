@@ -8,7 +8,7 @@ import {postLoginRequest} from "../Components/Post.ts";
 export function AuthPage() {
 
     //from backend
-    const { loggedIn, username, userError } = useLoginState()
+    const { loggedIn, username, authToken, userError } = useLoginState()
     //from DOM
     const [input1, setInput1] = useState('')
     const [input2, setInput2] = useState('')
@@ -31,8 +31,11 @@ export function AuthPage() {
         return new Promise((resolve, reject): void => {
             postLoginRequest('api/login', user)
                 .then(response => {
-                    dispatch({type: "setUsername", payload: {username: user.username}});
+                    dispatch({type: "setUsername", payload: {username: response.data.username}});
+                    dispatch({type: "setAuthToken", payload: {token: response.data.token}});
+                    dispatch({type: "toggleLogin", payload: {toggle: true}});
                     setSubmitting(false);
+                    console.log('resolving promise, the username is now: ' + username);
                     resolve(response)
                 })
                 .catch(error =>{
@@ -55,7 +58,8 @@ export function AuthPage() {
         // storing username in localstorage because to keep it as session state if context state fails
         // might be a bit overkill
         localStorage.setItem("username", username);
-    }, [username]);
+        localStorage.setItem("authToken", authToken);
+    }, [username, authToken]);
 
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (submitting){

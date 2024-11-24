@@ -3,7 +3,7 @@ import {createContext, useContext, useReducer} from "react";
 interface LoginState {
     loggedIn: Boolean;
     username: string;
-    authToken: string | null;
+    authToken: string;
     isUserLoading: boolean;
     userError: boolean;
 }
@@ -11,14 +11,14 @@ interface LoginState {
 const initialLoginState: LoginState = {
     loggedIn: false,
     username: '',
-    authToken: null,
+    authToken: '',
     isUserLoading: true,
     userError: false,
 };
 
 export type LoginAction =
     | { type: 'toggleLogin', payload: { toggle: boolean }}
-    | { type: 'setAuthToken', payload: { token: string | null }}
+    | { type: 'setAuthToken', payload: { token: string}}
     | { type: 'setUsername', payload: { username: string }}
     | { type: 'setIsUserLoading', payload: { loading: boolean }}
     | { type: 'setUserError', payload: { failed: boolean }
