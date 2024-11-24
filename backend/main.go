@@ -16,6 +16,10 @@ func main() {
 
 	app := fiber.New()
 
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendFile("frontend/cursed.png")
+	})
+
 	app.Get("/product/:id", func(c *fiber.Ctx) error {
 		id, err := c.ParamsInt("id", -1)
 		if err != nil {
