@@ -7,8 +7,8 @@ export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
         const response = await fetch(url, {
             method: 'POST',
             body: JSON.stringify({
-                id: bid.id,
-                bidder: bid.bidder,
+                auctionId: bid.auctionId,
+                bidderUserName: bid.bidderUserName,
                 amount: bid.amount
             }),
             headers: {

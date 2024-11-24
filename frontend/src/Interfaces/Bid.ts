@@ -1,5 +1,5 @@
 export default interface Bid {
-    id: number,
-    bidder: string,
+    auctionId: number,
+    bidderUserName: string,
     amount: number
 }

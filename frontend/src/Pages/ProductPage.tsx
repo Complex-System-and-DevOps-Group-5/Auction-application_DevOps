@@ -52,8 +52,8 @@ export default function ProductPage () {
     async function submitBid(amount: number) {
         //
         const submitData: Bid = {
-            id: 1,
-            bidder: username,
+            auctionId: 1,
+            bidderUserName: username,
             amount: amount,
         }
         try {
