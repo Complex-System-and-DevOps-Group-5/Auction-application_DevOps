@@ -31,8 +31,8 @@ export function AuthPage() {
         return new Promise((resolve, reject): void => {
             postLoginRequest('api/login', user)
                 .then(response => {
-                    dispatch({type: "setUsername", payload: {username: response.data.username}});
-                    dispatch({type: "setAuthToken", payload: {token: response.data.token}});
+                    dispatch({type: "setUsername", payload: {username: response.username}});
+                    dispatch({type: "setAuthToken", payload: {token: response.token}});
                     dispatch({type: "toggleLogin", payload: {toggle: true}});
                     setSubmitting(false);
                     console.log('resolving promise, the username is now: ' + username);
