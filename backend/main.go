@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -48,6 +49,8 @@ func main() {
 	})
 
 	app.Post("/login", func(c *fiber.Ctx) error {
+		fmt.Println("Someone is trying to log in...")
+
 		var login Login
 		err := c.BodyParser(&login)
 
