@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 
@@ -58,19 +59,23 @@ func main() {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		user, err := GetSingle[UserDb](EqualityCondition("name", login.Username))
-		if err != nil || user == nil {
-			return c.SendStatus(fiber.StatusNotFound)
+		token, err := AuthenticateLogin(login)
+
+		if err != nil {
+			var errorStatus int
+
+			if errors.Is(err, UserNotFound{}) {
+				errorStatus = fiber.StatusNotFound
+			} else if errors.Is(err, InvalidPassword{}) {
+				errorStatus = fiber.StatusForbidden
+			} else {
+				errorStatus = fiber.StatusInternalServerError
+			}
+
+			return c.SendStatus(errorStatus)
 		}
 
-		// TODO: Hash the password
-		hashed := login.Password
-		if user.PasswordHash != hashed {
-			return c.SendStatus(fiber.StatusForbidden)
-		}
-
-		// TODO: Send only a token back
-		return c.Status(fiber.StatusOK).JSON(user)
+		return c.Status(fiber.StatusOK).SendString(token)
 	})
 
 	log.Fatal(app.Listen(":4000"))
