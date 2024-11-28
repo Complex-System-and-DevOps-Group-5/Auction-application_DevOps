@@ -1,6 +1,7 @@
 import Bid from "../Interfaces/Bid.ts";
 import User from "../Interfaces/User.ts";
 import CreateAuction from "../Interfaces/CreateAuction.ts";
+import RegisterData from "../Interfaces/RegisterData.ts";
 
 
 export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
@@ -25,6 +26,7 @@ export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
         // catch later
     }
 }
+  
 
 export async function postLoginRequest(url: string, user: User) : Promise<any> {
     try {
@@ -77,11 +79,15 @@ export async function postCreateRequest(url: string, auctionData: CreateAuction)
     }
 }
 
-export async function postUploadImage(url: string, image: File) : Promise<any> {
+export async function postRegisterRequest(url: string, register: RegisterData) : Promise<any> {
     try {
         const response = await fetch(url, {
             method: 'POST',
-            body: image,
+            body: JSON.stringify({
+                email: register.email,
+                username: register.username,
+                password: register.password,
+            }),
             headers: {
                 "Content-type": "application/json",
                 'Authorization': 'Bearer '+ localStorage.getItem("token")
@@ -90,7 +96,7 @@ export async function postUploadImage(url: string, image: File) : Promise<any> {
         if (!response.ok) {
             throw new Error(response.statusText);
         }
-        return Number(response.statusText)
+        return await response.json();
     } finally {
         // catch later
     }

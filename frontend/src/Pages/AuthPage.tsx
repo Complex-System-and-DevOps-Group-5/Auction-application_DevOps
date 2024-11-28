@@ -101,6 +101,7 @@ export function AuthPage() {
                             {userError === '' && <p> </p>}
                             {loggedIn && <p>loggedIn is true and hello {username}</p>}
                             {!submitting ? <button>Enter</button> : <p>Login in...</p>}
+                            Register <a href="register">here</a>
                         </form>
                 }
             </div>
