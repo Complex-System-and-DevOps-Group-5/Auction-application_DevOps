@@ -21,6 +21,7 @@ export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
         if (!response.ok) {
             throw new Error(response.statusText);
         }
+        console.log('The response inside postBidReqeust ' + response.statusText);
         return await response.json();
     } finally {
         // catch later
