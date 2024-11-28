@@ -1,21 +1,21 @@
 import styles from "../Styling/ProductList.module.css";
 import DefaultButton from "../Components/DefaultButton.tsx";
-import { useFetch } from "../Components/Fetch.ts";
+import { useProductFetch } from "../Components/Fetch.ts";
 import {useNavigate} from "react-router-dom";
-import {Auction} from "../Interfaces/Auction.ts";
+import {Product} from "../Components/Product.ts";
 
 export function HomePage() {
     const productsUrl: string = 'http://130.225.170.52:10101/api/frontpage';
-    const [products, isLoading, hasError] = useFetch(productsUrl);
+    const [products, isLoading, hasError] = useProductFetch(productsUrl);
     const navigate = useNavigate();
 
-    const productBoxItems = products && products.map((product: Auction) => (
+    const productBoxItems = products && products.map((product: Product) => (
         !hasError && products !== null && (
             <div key={product.id} className={styles.productItem}>
                 <img src={product.imgUrl} alt={`Product ${product.id}`} className={styles.productImage}/>
                 <div className="productInfo">
                     <p className={styles.productTitle}>{product.title} </p>
-                    <p className={styles.productPrice}>${product.currentBid.toFixed(2)} </p>
+                    <p className={styles.productPrice}>${product.price.toFixed(2)} </p>
                 </div>
                 <div className={styles.buttonContainer}>
                     <DefaultButton text={"View Item"} onClick={() => navigate("/product/" + product.id)}
