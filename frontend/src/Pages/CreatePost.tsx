@@ -1,7 +1,7 @@
 import '../Styling/CreatePost.css'
 import { useState } from "react";
 import { useLoginState } from "../Context/LoginContext.tsx";
-import { postCreateRequest, postUploadImage } from '../Components/Post.ts';
+import { postCreateRequest } from '../Components/Post.ts';
 import CreateAuctionData from "../Interfaces/CreateAuction.ts";
 
 
