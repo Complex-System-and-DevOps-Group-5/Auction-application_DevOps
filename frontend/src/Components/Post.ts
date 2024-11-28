@@ -47,13 +47,10 @@ export async function postLoginRequest(url: string, user: User) : Promise<any> {
     }
 }
 
-export async function getSearchReqeuest(url: string, query: string) : Promise<any> {
+export async function getSearchReqeuest(url: string) : Promise<any> {
     try {
         const response = await fetch(url, {
             method: 'GET',
-            body: JSON.stringify({
-                name: query,
-            }),
             headers: {
                 "Content-type": "application/json",
                 'Authorization': 'Bearer '+ localStorage.getItem("token")

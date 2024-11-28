@@ -20,7 +20,7 @@ export function SearchComponent() {
     async function submitSearch() {
         //
         try {
-            const response = await getSearchReqeuest('/api/post', query)
+            const response = await getSearchReqeuest(`/api/search?q=` + query)
             if (response.ok) {
                 alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
             }
