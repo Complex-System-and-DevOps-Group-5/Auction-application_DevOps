@@ -96,21 +96,21 @@ export default function CreatePost() {
                     <input name= "initialPrice" type="number"
                         value={initialPrice}
                         placeholder="Initial Price"
-                        onChange = {(event) => setInitialPrice(event.target.valueAsNumber)}
+                        onChange = {(event) => setInitialPrice(Number(event.target.valueAsNumber.toFixed()))}
                     />
 
                     <h2>Minimum Bid Increment</h2>
                     <input name= "minimumIncrement" type="number"
                         value={minimumIncrement}
                         placeholder="Minimum Increment"
-                        onChange = {(event) => setMinimumIncrement(event.target.valueAsNumber)}
+                        onChange = {(event) => setMinimumIncrement(Number(event.target.valueAsNumber.toFixed()))}
                     />
 
                     <h2>Auto Accept Threshold (Optional)</h2>
                     <input name= "autoAccept" type="number"
                         value={autoAcceptThreshold}
                         placeholder="Auto Accept Threshold"
-                        onChange = {(event) => setAcceptThreshold(event.target.valueAsNumber)}
+                        onChange = {(event) => setAcceptThreshold(Number(event.target.valueAsNumber.toFixed()))}
                     />
 
                     <h2>Product Image</h2>

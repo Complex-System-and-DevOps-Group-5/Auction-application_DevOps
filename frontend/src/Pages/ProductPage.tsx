@@ -37,7 +37,7 @@ export default function ProductPage () {
         }, [submitting]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setbidAmount(Number(event.target.value));  // Number() uhmm skriv bedre kode pls
+        setbidAmount(Number(event.target.valueAsNumber.toFixed()));  // Number() uhmm skriv bedre kode pls
     }
 
     async function handleBidSubmit(event: any) {
