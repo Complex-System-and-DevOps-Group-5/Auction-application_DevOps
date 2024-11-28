@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"log"
 	"time"
 
@@ -56,38 +55,6 @@ func main() {
 		return c.JSON(previews)
 	})
 
-	app.Post("/login", func(c *fiber.Ctx) error {
-		var login user.Login
-		err := c.BodyParser(&login)
-
-		if err != nil {
-			return c.SendStatus(fiber.StatusBadRequest)
-		}
-
-		token, err := user.AuthenticateLogin(login)
-
-		if err != nil {
-			var errorStatus int
-
-			if errors.Is(err, user.UserNotFound{}) {
-				errorStatus = fiber.StatusNotFound
-			} else if errors.Is(err, user.InvalidPassword{}) {
-				errorStatus = fiber.StatusForbidden
-			} else {
-				errorStatus = fiber.StatusInternalServerError
-			}
-
-			return c.SendStatus(errorStatus)
-		}
-
-		response := struct {
-			Username string `json:"username"`
-			Token    string `json:"token"`
-		}{Username: login.Username, Token: token}
-
-		return c.Status(fiber.StatusOK).JSON(response)
-	})
-
 	app.Post("/post", func(c *fiber.Ctx) error {
 		var bid Bid
 		err := c.BodyParser(&bid)
@@ -116,6 +83,9 @@ func main() {
 
 		return c.SendStatus(fiber.StatusOK)
 	})
+
+	app.Post("/login", user.LoginHandler)
+	app.Post("/register", user.RegisterHandler)
 
 	log.Fatal(app.Listen(":4000"))
 }
