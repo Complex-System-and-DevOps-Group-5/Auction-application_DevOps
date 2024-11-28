@@ -2,6 +2,7 @@ package user
 
 import (
 	"DevOps/database"
+	"DevOps/endpoint"
 	"crypto/sha256"
 	"encoding/base64"
 	"errors"
@@ -9,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func LoginHandler(c *fiber.Ctx) error {
+func loginHandler(c *fiber.Ctx) error {
 	var login Login
 	err := c.BodyParser(&login)
 
@@ -41,7 +42,7 @@ func LoginHandler(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(response)
 }
 
-func RegisterHandler(c *fiber.Ctx) error {
+func registerHandler(c *fiber.Ctx) error {
 	var newUserRequest struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
@@ -78,4 +79,13 @@ func RegisterHandler(c *fiber.Ctx) error {
 	}
 
 	return c.SendStatus(fiber.StatusAccepted)
+}
+
+func AllEndpoints() []endpoint.Endpoint {
+	endpoints := make([]endpoint.Endpoint, 0)
+
+	endpoints = append(endpoints, endpoint.Endpoint{Location: "/login", Handler: loginHandler, Type: fiber.MethodGet})
+	endpoints = append(endpoints, endpoint.Endpoint{Location: "/register", Handler: registerHandler, Type: fiber.MethodPost})
+
+	return endpoints
 }

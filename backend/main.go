@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"DevOps/database"
+	"DevOps/endpoint"
 	"DevOps/user"
 
 	"github.com/gofiber/fiber/v2"
@@ -150,8 +151,8 @@ func main() {
 		return c.SendStatus(fiber.StatusAccepted)
 	})
 
-	app.Post("/login", user.LoginHandler)
-	app.Post("/register", user.RegisterHandler)
+	// Link all the user-related endpoints
+	endpoint.Link(app, user.AllEndpoints()...)
 
 	log.Fatal(app.Listen(":4000"))
 }
