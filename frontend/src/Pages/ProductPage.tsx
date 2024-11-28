@@ -27,7 +27,7 @@ export default function ProductPage () {
     const loginDispatch = useLoginDispatch();
 
     useEffect(() => {
-        loginDispatch({ type: "toggleLogin", payload: {toggle: localStorage.getItem("loginStatus") === "true"}})
+        loginDispatch({ type: "toggleLogin", payload: {toggle: localStorage.getItem("loggedIn") === "true"}})
         loginDispatch({ type: "setUsername", payload: {username: localStorage.getItem("username")!}})
     }, []);
 
