@@ -72,6 +72,7 @@ func (d Chat) TableName() string {
 }
 
 type Bid struct {
+	Id           int       `db:"id" no-db:"insert"`
 	CreationTime time.Time `db:"creation_time"`
 	Amount       int       `db:"amount"`
 	Status       int       `db:"status"`
@@ -80,7 +81,7 @@ type Bid struct {
 }
 
 func (d Bid) TableName() string {
-	return "bid"
+	return "bids"
 }
 
 type Watchlist struct {

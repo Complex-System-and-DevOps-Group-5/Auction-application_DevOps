@@ -35,7 +35,7 @@ export function UpperMenu() {
 
             {loggedIn ? (
                     <div className="loggedIn">
-                        <button className="create-button" onClick={() => navigate('/createPost')}>Create</button>
+                        <button className="create-button" onClick={() => navigate('/create-post')}>Create</button>
                         
                         <DropDownMenu title="Notification"/>
                         

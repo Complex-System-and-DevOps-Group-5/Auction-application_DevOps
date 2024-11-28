@@ -141,5 +141,37 @@ func GetAmount[T DatabaseObject](amount int, offset int) ([]T, error) {
 }
 
 // Update
+func Update[T DatabaseObject](oldObject T, newObject T, condition Condition) error {
+	tableName := newObject.TableName()
 
-// Delete
+	columns := getColumnsOf(newObject, "insert")
+
+	namedColumns := make([]string, len(columns))
+	for i, column := range columns {
+		namedColumns[i] = ":" + column
+	}
+
+	queryString := fmt.Sprintf("UPDATE %s SET (%s) = (%s) WHERE %s", tableName, strings.Join(columns, ", "), strings.Join(namedColumns, ", "), condition.ToString())
+
+	_, err := db.NamedExec(queryString, newObject)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func Delete[T DatabaseObject](condition Condition) error {
+	// only used for getting the tablename
+	var a T
+	tableName := a.TableName()
+
+	queryString := fmt.Sprintf("DELETE FROM %s WHERE %s", tableName, condition.ToString())
+
+	_, err := db.Exec(queryString)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
