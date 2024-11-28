@@ -47,20 +47,30 @@ export async function postLoginRequest(url: string, user: User) : Promise<any> {
     }
 }
 
-export async function getSearchReqeuest(url: string) : Promise<any> {
+export async function getSearchRequest(url: string): Promise<any> {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        throw new Error("Authorization token is missing");
+    }
+
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                "Content-type": "application/json",
-                'Authorization': 'Bearer '+ localStorage.getItem("token")
-            }
+                'Authorization': `Bearer ${token}`,
+            },
         });
+
         if (!response.ok) {
-            throw new Error(response.statusText);
+            const errorDetails = await response.json();
+            throw new Error(
+                `HTTP ${response.status}: ${response.statusText} - ${JSON.stringify(errorDetails)}`
+            );
         }
+
         return await response.json();
-    } finally {
-        // catch later
+    } catch (error: any) {
+        console.error("Error in getSearchRequest:", error.message || error);
+        throw error; 
     }
 }
