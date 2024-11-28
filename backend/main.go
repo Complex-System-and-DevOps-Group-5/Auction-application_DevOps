@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io/fs"
 	"log"
 	"os"
@@ -130,22 +131,26 @@ func main() {
 	app.Post("/upload-image", func(c *fiber.Ctx) error {
 		err := os.WriteFile("/home/user/Auction-application_DevOps/images/temp.jpg", c.Body(), fs.FileMode(0644))
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
 		err = database.Insert(database.Image{Id: 1, Url: "temp"})
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
 		imgDb, err := database.GetSingle[database.Image](database.EqualityCondition("string_url", "temp"))
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
 		givenId := imgDb.Id
 		err = os.Rename("/home/user/Auction-application_DevOps/images/temp.jpg", "/home/user/Auction-application_DevOps/images/"+strconv.FormatInt(int64(givenId), 10)+".jpg")
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
@@ -156,6 +161,7 @@ func main() {
 
 		err = database.Update(*imgDb, fixed, database.EqualityCondition("id", imgDb.Id))
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
