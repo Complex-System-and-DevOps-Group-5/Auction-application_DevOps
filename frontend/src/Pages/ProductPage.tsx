@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useAuctionDispatch, useAuctionState} from "../Context/AuctionContext.tsx";
 import {Auction} from "../Interfaces/Auction.ts";
 import {fetchData} from "../Components/Fetch.ts";
-import {useLoginState} from "../Context/LoginContext.tsx";
+import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import Bid from "../Interfaces/Bid.ts";
 import {postBidRequest} from "../Components/Post.ts";
 import {useParams} from "react-router-dom";
@@ -24,6 +24,12 @@ export default function ProductPage () {
     const [submitError, setSubmitError] = useState(false);
 
     const dispatch = useAuctionDispatch();
+    const loginDispatch = useLoginDispatch();
+
+    useEffect(() => {
+        loginDispatch({ type: "toggleLogin", payload: {toggle: localStorage.getItem("loginStatus") === "true"}})
+        loginDispatch({ type: "setUsername", payload: {username: localStorage.getItem("username")!}})
+    }, []);
 
     useEffect(() => {
         fetchData(baseURL)
