@@ -2,11 +2,7 @@ package main
 
 import (
 	"errors"
-	"fmt"
-	"io/fs"
 	"log"
-	"os"
-	"strconv"
 	"time"
 
 	"DevOps/database"
@@ -120,49 +116,57 @@ func main() {
 		return c.Status(fiber.StatusOK).JSON("")
 	})
 
-	app.Get("/image/:id", func(c *fiber.Ctx) error {
-		id, err := c.ParamsInt("id", -1)
+	app.Post("/create-post", func(c *fiber.Ctx) error {
+		var createPost struct {
+			Username            string    `json:"username"`
+			Title               string    `json:"title"`
+			Description         string    `json:"description"`
+			Location            string    `json:"location"`
+			EndingTime          time.Time `json:"endingTime"`
+			InitalPrice         int       `json:"initialPrice"`
+			MinimumIncrement    int       `json:"minimumIncrement"`
+			AutoAcceptThreshold *int      `json:"autoAcceptThreshold"`
+			ImageUrl            string    `json:"imageUrl"`
+		}
+		err := c.BodyParser(&createPost)
 		if err != nil {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
-		return c.SendFile("/home/user/Auction-application_DevOps/images/" + strconv.FormatInt(int64(id), 10) + ".jpg")
-	})
 
-	app.Post("/upload-image", func(c *fiber.Ctx) error {
-		err := os.WriteFile("/home/user/Auction-application_DevOps/images/temp.jpg", c.Body(), fs.FileMode(0644))
+		seller, err := database.GetSingle[database.User](database.EqualityCondition("name", createPost.Username))
 		if err != nil {
-			fmt.Printf("Error: '%s'\n", err.Error())
-			return c.SendStatus(fiber.StatusInternalServerError)
+			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		err = database.Insert(database.Image{Id: 1, Url: "temp"})
+		database.Insert(database.Image{Id: -1, Url: createPost.ImageUrl})
+		imgDb, err := database.GetSingle[database.Image](database.EqualityCondition("string_url", createPost.ImageUrl))
 		if err != nil {
-			fmt.Printf("Error: '%s'\n", err.Error())
-			return c.SendStatus(fiber.StatusInternalServerError)
+			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		imgDb, err := database.GetSingle[database.Image](database.EqualityCondition("string_url", "temp"))
-		if err != nil {
-			fmt.Printf("Error: '%s'\n", err.Error())
-			return c.SendStatus(fiber.StatusInternalServerError)
+		autoAccept := 0
+		if createPost.AutoAcceptThreshold != nil {
+			autoAccept = *createPost.AutoAcceptThreshold
 		}
 
-		givenId := imgDb.Id
-		err = os.Rename("/home/user/Auction-application_DevOps/images/temp.jpg", "/home/user/Auction-application_DevOps/images/"+strconv.FormatInt(int64(givenId), 10)+".jpg")
+		err = database.Insert(database.Auction{
+			Id:                  -1,
+			Title:               createPost.Title,
+			Description:         createPost.Description,
+			Location:            createPost.Location,
+			CreationTime:        time.Now(),
+			EndingTime:          createPost.EndingTime,
+			ViewCount:           0,
+			InitialPrice:        createPost.InitalPrice,
+			MinimumBidIncrement: createPost.MinimumIncrement,
+			CurrentBid:          createPost.InitalPrice,
+			AutoAcceptThreshold: autoAccept,
+			CategoryId:          1,
+			SellerId:            seller.Id,
+			ImageId:             imgDb.Id,
+		})
 		if err != nil {
-			fmt.Printf("Error: '%s'\n", err.Error())
-			return c.SendStatus(fiber.StatusInternalServerError)
-		}
-
-		fixed := database.Image{
-			Id:  givenId,
-			Url: "http://130.225.170.52:10101/api/image/" + strconv.FormatInt(int64(givenId), 10),
-		}
-
-		err = database.Update(*imgDb, fixed, database.EqualityCondition("id", imgDb.Id))
-		if err != nil {
-			fmt.Printf("Error: '%s'\n", err.Error())
-			return c.SendStatus(fiber.StatusInternalServerError)
+			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
 		return c.SendStatus(fiber.StatusAccepted)

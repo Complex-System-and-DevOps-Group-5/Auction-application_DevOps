@@ -16,7 +16,7 @@ export default function CreatePost() {
     const [initialPrice, setInitialPrice] = useState(0)
     const [minimumIncrement, setMinimumIncrement] = useState(1)
     const [autoAcceptThreshold, setAcceptThreshold] = useState<number | undefined>()
-    const [image, setImage] = useState<File>()
+    const [imageUrl, setImage] = useState("")
 
     const [submitting, setSubmitting] = useState(false)
 
@@ -33,29 +33,20 @@ export default function CreatePost() {
             initialPrice: initialPrice,
             minimumIncrement: minimumIncrement,
             autoAcceptThreshold: autoAcceptThreshold,
-            imageId: -1, // TODO: do it
+            imageUrl: imageUrl,
         }
         
         return new Promise((resolve, reject): void => {
-            postUploadImage('api/upload-image', image!)
-                .then(response => {
-                    auctionData.imageId = response
-                    postCreateRequest('api/create-post', auctionData)
-                        .then(response => {
-                            resolve(response)
-                        })
-                        .catch(error =>{
-                            reject(error.message)
-                        })
-                })
-                .catch(error => {
-                    reject(error.message)
-                })
-                .finally(() => {
-                    setSubmitting(false)
-                })
-
-            
+            postCreateRequest('api/create-post', auctionData)
+            .then(response => {
+                resolve(response)
+            })
+            .catch(error =>{
+                reject(error.message)
+            })
+            .finally(() => {
+                setSubmitting(false)
+            })
         });
     }
 
@@ -123,9 +114,10 @@ export default function CreatePost() {
                     />
 
                     <h2>Product Image</h2>
-                    <input name= "image" type="file"
-                        placeholder="Auto Accept Threshold"
-                        onChange = {(event) => setImage(event.target.files!.item(0)!)}
+                    <input name= "image" type="text"
+                        value={imageUrl}
+                        placeholder="Image URL"
+                        onChange = {(event) => setImage(event.target.value)}
                     />
 
                     <input type="submit" />

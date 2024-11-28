@@ -7,5 +7,5 @@ export default interface CreateAuctionData {
     initialPrice: number,
     minimumIncrement: number,
     autoAcceptThreshold: number | undefined,
-    imageId: number | undefined,
+    imageUrl: string,
 }

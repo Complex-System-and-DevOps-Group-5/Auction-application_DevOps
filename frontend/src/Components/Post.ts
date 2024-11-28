@@ -61,7 +61,7 @@ export async function postCreateRequest(url: string, auctionData: CreateAuction)
                 initialPrice: auctionData.initialPrice,
                 minimumIncrement: auctionData.minimumIncrement,
                 autoAcceptThreshold: auctionData.autoAcceptThreshold,
-                imageId: auctionData.imageId
+                imageUrl: auctionData.imageUrl
             }),
             headers: {
                 "Content-type": "application/json",
