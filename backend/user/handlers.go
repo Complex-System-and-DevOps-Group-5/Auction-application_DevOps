@@ -46,7 +46,7 @@ func RegisterHandler(c *fiber.Ctx) error {
 		Email    string `json:"email"`
 	}
 	err := c.BodyParser(&newUserRequest)
-	if err != nil {
+	if err != nil || newUserRequest.Username == "" || newUserRequest.Email == "" || newUserRequest.Password == "" {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
