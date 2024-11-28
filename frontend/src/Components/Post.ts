@@ -19,7 +19,7 @@ export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
         if (!response.ok) {
             throw new Error(response.statusText);
         }
-        return await response.text();
+        return await response.json();
     } finally {
         // catch later
     }

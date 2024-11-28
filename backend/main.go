@@ -113,7 +113,7 @@ func main() {
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
-		return c.SendStatus(fiber.StatusOK)
+		return c.Status(fiber.StatusOK).JSON("")
 	})
 
 	log.Fatal(app.Listen(":4000"))
