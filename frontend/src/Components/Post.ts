@@ -48,7 +48,7 @@ export async function postLoginRequest(url: string, user: User) : Promise<any> {
 }
 
 export async function getSearchRequest(url: string): Promise<any> {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
     if (!token) {
         alert("You are not logged in. Please log in to continue.");
         throw new Error("Authorization token is missing");
