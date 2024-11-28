@@ -22,7 +22,7 @@ export const routes: RouteObject[] = [
                 element: <HomePage/>,
             },
             {
-                path: "/authentication",
+                path: "/login",
                 element: <AuthPage/>,
             },
             {
@@ -53,7 +53,7 @@ export const routes: RouteObject[] = [
                 element: <ProductPage />,
             },
             {
-                path: "createPost",
+                path: "create-post",
                 element: (
                     <ProtectedRoute>
                          <CreatePost/>
@@ -66,6 +66,6 @@ export const routes: RouteObject[] = [
 ];
 
 function ProtectedRoute({ children }: { children: JSX.Element }) {
-    const  hasLoggedin = useLoginState();
-    return hasLoggedin.loggedIn ? children : <Navigate to="/authentication" />;
+    const {loggedIn} = useLoginState();
+    return loggedIn ? children : <Navigate to="/login" />;
 }

@@ -2,7 +2,10 @@ package main
 
 import (
 	"errors"
+	"io/fs"
 	"log"
+	"os"
+	"strconv"
 	"time"
 
 	"DevOps/database"
@@ -114,6 +117,23 @@ func main() {
 		}
 
 		return c.Status(fiber.StatusOK).JSON("")
+	})
+
+	app.Get("/image/:id", func(c *fiber.Ctx) error {
+		id, err := c.ParamsInt("id", -1)
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+		return c.SendFile("/home/user/Auction-application_DevOps/images/" + strconv.FormatInt(int64(id), 10) + ".jpg")
+	})
+
+	app.Post("/upload-image", func(c *fiber.Ctx) error {
+		err := os.WriteFile("/home/user/Auction-application_DevOps/images/temp.jpg", c.Body(), fs.FileMode(0644))
+		if err != nil {
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+
+		return c.SendStatus(fiber.StatusAccepted)
 	})
 
 	log.Fatal(app.Listen(":4000"))
