@@ -9,6 +9,7 @@ import AboutPage from "./Pages/AboutPage.tsx";
 import ProductPage from "./Pages/ProductPage.tsx";
 import CreatePost from "./Pages/CreatePost.tsx";
 import { useLoginState } from "./Context/LoginContext.tsx"
+import RegisterPage from "./Pages/RegisterPage.tsx";
 
 
 
@@ -24,6 +25,10 @@ export const routes: RouteObject[] = [
             {
                 path: "/authentication",
                 element: <AuthPage/>,
+            },
+            {
+                path: "/register",
+                element: <RegisterPage/>,
             },
             {
                 path: "/ongoing",
