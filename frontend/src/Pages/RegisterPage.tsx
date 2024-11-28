@@ -1,6 +1,6 @@
 import "../Styling/AuthPage.css"
-import {useLoginState, useLoginDispatch} from "../Context/LoginContext.tsx";
-import {useEffect, useState} from "react";
+// import {useLoginDispatch} from "../Context/LoginContext.tsx";
+import {useState} from "react";
 //import {useNavigate} from "react-router-dom";
 import RegisterData from "../Interfaces/RegisterData.ts";
 import {postRegisterRequest} from "../Components/Post.ts";
@@ -18,7 +18,7 @@ export function RegisterPage() {
 
     const [submitting, setSubmitting] = useState(false);
 
-    const dispatch = useLoginDispatch()
+    // const dispatch = useLoginDispatch()
 
     //const navigate = useNavigate();
 
