@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Auction} from "../Interfaces/Auction.ts";
+import {Product} from "./Product.ts";
 
 
 export async function fetchData(url: string): Promise<any> {
@@ -37,4 +38,22 @@ export function useFetch(url: string): [Auction[], boolean, boolean] {
     }, [url]);
 
     return [data as Auction[], isLoading, hasError];
+}
+export function useProductFetch(url: string): [Product[], boolean, boolean] {
+    const [data, setData] = useState<Product[]>();
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasError, setHasError] = useState(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+        fetchData(url)
+            .then(fetchedData => {
+                setData(fetchedData)
+                setIsLoading(false);})
+            .catch(() =>
+                setHasError(true)
+            );
+    }, [url]);
+
+    return [data as Product[], isLoading, hasError];
 }
