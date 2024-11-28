@@ -154,7 +154,7 @@ func main() {
 			Url: "http://130.225.170.52:10101/api/image/" + strconv.FormatInt(int64(givenId), 10),
 		}
 
-		err = database.Update(imgDb, &fixed, database.EqualityCondition("id", imgDb.Id))
+		err = database.Update(*imgDb, fixed, database.EqualityCondition("id", imgDb.Id))
 		if err != nil {
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
