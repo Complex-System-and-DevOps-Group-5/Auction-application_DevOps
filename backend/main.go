@@ -139,7 +139,7 @@ func main() {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
-	app.Get("/api/search", searchAuctions)
+	app.Get("/search", searchAuctions)
 
 	log.Fatal(app.Listen(":4000"))
 }
