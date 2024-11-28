@@ -30,7 +30,6 @@ export function SearchComponent() {
                     onChange={(e) => setQuery(e.target.value)}
                     className="searchField"
                 />
-                <button >Search</button>
                 </form>
             </div>
             <div className="search-content">
