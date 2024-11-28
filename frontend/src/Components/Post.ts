@@ -13,7 +13,7 @@ export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
             }),
             headers: {
                 "Content-type": "application/json",
-                'Authorization': 'Bearer '+ localStorage.getItem("token")
+                'Authorization': 'Bearer '+ localStorage.getItem("authToken")
             }
         });
         if (!response.ok) {
@@ -35,7 +35,7 @@ export async function postLoginRequest(url: string, user: User) : Promise<any> {
             }),
             headers: {
                 "Content-type": "application/json",
-                'Authorization': 'Bearer '+ localStorage.getItem("token")
+                'Authorization': 'Bearer '+ localStorage.getItem("authToken")
             }
         });
         if (!response.ok) {

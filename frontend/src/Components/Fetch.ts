@@ -8,7 +8,7 @@ export async function fetchData(url: string): Promise<any> {
             mode: "cors",
             headers: {
                 'Access-Control-Allow-Origin':'*',
-                'Authorization': 'Bearer '+ localStorage.getItem("token")
+                'Authorization': 'Bearer '+ localStorage.getItem("authToken")
             }
         });
         if (!response.ok) {
