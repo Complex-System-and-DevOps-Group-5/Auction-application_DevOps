@@ -12,10 +12,9 @@ export interface Product {
     inwatchlist: boolean;*/
     id: number;
     title: string
-    imgUrl?: string;
+    imgUrl: string;
     price: number;
     views: number;
-    sold: boolean;
 }
 
 export interface ProductListProps {

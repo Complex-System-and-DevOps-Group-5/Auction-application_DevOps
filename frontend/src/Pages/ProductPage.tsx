@@ -37,7 +37,7 @@ export default function ProductPage () {
         }, [submitting]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setbidAmount(Number(event.target.value));  // Number() uhmm skriv bedre kode pls
+        setbidAmount(Number(event.target.valueAsNumber.toFixed()));  // Number() uhmm skriv bedre kode pls
     }
 
     async function handleBidSubmit(event: any) {
@@ -52,9 +52,9 @@ export default function ProductPage () {
     }
 
     async function submitBid(amount: number) {
-        //
+
         const submitData: Bid = {
-            auctionId: 1,
+            auctionId: Number(id),
             bidderUserName: username,
             amount: amount,
         }
@@ -64,6 +64,10 @@ export default function ProductPage () {
                 alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
                 setSubmitError(false)
                dispatch({type: "updateCurrentBid", payload: { amount: amount }})
+            } else {
+                const errorData = await response.json();
+                console.error('Bid submission failed:', errorData);
+                setSubmitError(true)
             }
         } catch (err){
             console.log(err)
