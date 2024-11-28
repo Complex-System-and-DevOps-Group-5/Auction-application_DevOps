@@ -2,6 +2,8 @@ package user
 
 import (
 	"DevOps/database"
+	"crypto/sha256"
+	"encoding/base64"
 	"errors"
 
 	"github.com/gofiber/fiber/v2"
@@ -57,11 +59,15 @@ func RegisterHandler(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusMethodNotAllowed).SendString("User already exists")
 	}
 
+	hasher := sha256.New()
+	hasher.Write([]byte(newUserRequest.Password))
+	hashedPassword := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+
 	newUser := database.User{
 		Id:           0, // automatically made by the database, so it doesn't matter
 		Name:         newUserRequest.Username,
 		Email:        newUserRequest.Email,
-		PasswordHash: newUserRequest.Password, // TODO: hash the password
+		PasswordHash: hashedPassword,
 		Role:         0,
 		Verified:     false,
 	}
