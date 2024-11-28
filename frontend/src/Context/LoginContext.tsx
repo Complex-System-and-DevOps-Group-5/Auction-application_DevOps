@@ -9,7 +9,7 @@ interface LoginState {
 }
 
 const initialLoginState: LoginState = {
-    loggedIn: true,
+    loggedIn: false,
     username: '',
     authToken: '',
     isUserLoading: true,
