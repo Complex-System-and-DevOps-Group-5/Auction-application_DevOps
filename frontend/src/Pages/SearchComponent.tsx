@@ -1,4 +1,3 @@
-import { SearchField } from "../Components/SearchField.tsx";
 import "../Styling/searchComponent.css"
 import { useState } from "react";
 
