@@ -82,7 +82,7 @@ func main() {
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
-		return c.Status(fiber.StatusOK).JSON("")
+		return c.Status(fiber.StatusOK).JSON(bidDb)
 	})
 
 	app.Post("/create-post", func(c *fiber.Ctx) error {
