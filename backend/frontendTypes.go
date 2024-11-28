@@ -62,7 +62,7 @@ func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
 		imageUrl := ""
 
 		image, err := database.GetSingle[database.Image](database.EqualityCondition("id", auction.ImageId))
-		if err != nil {
+		if err == nil {
 			imageUrl = image.Url
 		}
 
