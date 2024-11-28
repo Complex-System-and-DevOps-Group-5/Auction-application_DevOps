@@ -43,11 +43,7 @@ export default function ProductPage () {
     async function handleBidSubmit(event: any) {
         event.preventDefault();
         setSubmitting(true);
-        try {
-            await submitBid(bidAmount)
-        } catch (err) {
-            console.log(err)
-        }
+        await submitBid(bidAmount)
         setSubmitting(false);
     }
 
@@ -70,7 +66,7 @@ export default function ProductPage () {
                 setSubmitError(true)
             }
         } catch (err){
-            console.log(err)
+            console.log('setting error to true because of : ' + err)
             setSubmitError(true)
         }
     }
