@@ -133,6 +133,32 @@ func main() {
 			return c.SendStatus(fiber.StatusInternalServerError)
 		}
 
+		err = database.Insert(database.Image{Id: 1, Url: "temp"})
+		if err != nil {
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+
+		imgDb, err := database.GetSingle[database.Image](database.EqualityCondition("string_url", "temp"))
+		if err != nil {
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+
+		givenId := imgDb.Id
+		err = os.Rename("/home/user/Auction-application_DevOps/images/temp.jpg", "/home/user/Auction-application_DevOps/images/"+strconv.FormatInt(int64(givenId), 10)+".jpg")
+		if err != nil {
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+
+		fixed := database.Image{
+			Id:  givenId,
+			Url: "http://130.225.170.52:10101/api/image/" + strconv.FormatInt(int64(givenId), 10),
+		}
+
+		err = database.Update(imgDb, &fixed, database.EqualityCondition("id", imgDb.Id))
+		if err != nil {
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+
 		return c.SendStatus(fiber.StatusAccepted)
 	})
 
