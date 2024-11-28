@@ -1,32 +1,20 @@
-import {SearchField} from "./SearchField.tsx";
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import '../Styling/UpperMenu.css'
 import {Logo} from "./Logo.tsx";
 import {DropDownMenu} from "./DropDownMenu.tsx";
 import {useNavigate} from "react-router-dom";
-//import {useEffect} from "react";
-//import {fetchData} from "./Fetch.ts";
+import { SearchComponent } from "../Pages/SearchComponent.tsx";
 
 export function UpperMenu() {
     const { loggedIn, username } = useLoginState()
     const dispatch = useLoginDispatch()
 
     const navigate = useNavigate();
-    // useEffect(() => {
-    //     fetchData('')
-    //         .then(fetchedData => {
-    //             dispatch({ type: "toggleLogin", payload: { toggle: true }});
-    //             dispatch({ type: "setUsername", payload: { username: fetchedData.username }});
-    //         })
-    //         .catch(() =>
-    //             dispatch({ type: "setUserError", payload: { failed: true } })
-    //         );
-    // }, []);
     return(
 
         <div className="upper-menu">
             <div className="search-bar">
-                <SearchField/>
+                <SearchComponent/>
             </div>
 
             <div className="logo">
