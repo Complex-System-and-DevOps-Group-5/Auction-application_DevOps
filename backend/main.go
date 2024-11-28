@@ -21,7 +21,7 @@ func searchAuctions(c *fiber.Ctx) error {
 	}
 
 	condition := database.ILIKECondition(
-		"name",
+		"title",
 		searchQuery,
 	)
 
