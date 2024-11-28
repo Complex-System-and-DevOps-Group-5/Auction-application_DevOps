@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"time"
 
@@ -130,17 +131,25 @@ func main() {
 		}
 		err := c.BodyParser(&createPost)
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
 		seller, err := database.GetSingle[database.User](database.EqualityCondition("name", createPost.Username))
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		database.Insert(database.Image{Id: -1, Url: createPost.ImageUrl})
+		err = database.Insert(database.Image{Id: -1, Url: createPost.ImageUrl})
+		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
 		imgDb, err := database.GetSingle[database.Image](database.EqualityCondition("string_url", createPost.ImageUrl))
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
@@ -166,6 +175,7 @@ func main() {
 			ImageId:             imgDb.Id,
 		})
 		if err != nil {
+			fmt.Printf("Error: '%s'\n", err.Error())
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
