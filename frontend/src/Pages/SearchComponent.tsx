@@ -18,7 +18,7 @@ export function SearchComponent() {
     }
     async function submitSearch() {
         try {
-            const response = await getSearchRequest(`http://130.225.170.52:4000/api/search?q=` + query);
+            const response = await getSearchRequest(`http://localhost:4000/api/search?q=` + query);
             if (response.ok) {
                 const data = await response.json();
                 setResults(data);
