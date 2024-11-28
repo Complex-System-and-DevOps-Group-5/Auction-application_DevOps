@@ -1,5 +1,5 @@
-import "../Styling/searchComponent.css"
 import { useState } from "react";
+// comment to commit and push
 
 
 export function SearchComponent() {
