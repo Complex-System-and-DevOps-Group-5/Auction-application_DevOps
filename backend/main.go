@@ -36,21 +36,6 @@ func main() {
 		return c.Status(fiber.StatusAccepted).JSON(posts)
 	})
 
-	app.Get("/user/:id", func(c *fiber.Ctx) error {
-		id, err := c.ParamsInt("id", -1)
-		if err != nil {
-			return c.SendStatus(fiber.StatusBadRequest)
-		}
-
-		user, err := database.GetSingle[database.User](database.EqualityCondition("id", id))
-
-		if err != nil {
-			return c.SendStatus(fiber.StatusNotFound)
-		}
-
-		return c.Status(fiber.StatusAccepted).JSON(user)
-	})
-
 	app.Get("/frontpage", func(c *fiber.Ctx) error {
 		previews := GetFrontPageAuctions(16, 0)
 

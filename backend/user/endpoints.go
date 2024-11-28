@@ -10,6 +10,21 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+func userHandler(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	user, err := database.GetSingle[database.User](database.EqualityCondition("id", id))
+
+	if err != nil {
+		return c.SendStatus(fiber.StatusNotFound)
+	}
+
+	return c.Status(fiber.StatusAccepted).JSON(user)
+}
+
 func loginHandler(c *fiber.Ctx) error {
 	var login Login
 	err := c.BodyParser(&login)
@@ -84,6 +99,7 @@ func registerHandler(c *fiber.Ctx) error {
 func AllEndpoints() []endpoint.Endpoint {
 	endpoints := make([]endpoint.Endpoint, 0)
 
+	endpoints = append(endpoints, endpoint.Endpoint{Location: "/user/:id", Handler: userHandler, Type: fiber.MethodGet})
 	endpoints = append(endpoints, endpoint.Endpoint{Location: "/login", Handler: loginHandler, Type: fiber.MethodGet})
 	endpoints = append(endpoints, endpoint.Endpoint{Location: "/register", Handler: registerHandler, Type: fiber.MethodPost})
 
