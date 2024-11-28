@@ -61,7 +61,7 @@ export function UpperMenu() {
                 ) : (
                     <button className="login-button"
                         onClick={() => {
-                                navigate("/authentication");
+                                navigate("/login");
                             }
                         }
                     >Login

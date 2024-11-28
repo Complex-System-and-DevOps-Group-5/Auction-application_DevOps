@@ -130,6 +130,7 @@ export function RegisterPage() {
                     {loggedIn && <p>loggedIn is true and hello {username}</p>}
                     */}
                     {!submitting ? <button>Register</button> : <p>Registering...</p>}
+                    Login <a href="login">here</a>
                 </form>
             </div>
         );

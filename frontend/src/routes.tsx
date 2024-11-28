@@ -23,7 +23,7 @@ export const routes: RouteObject[] = [
                 element: <HomePage/>,
             },
             {
-                path: "/authentication",
+                path: "/login",
                 element: <AuthPage/>,
             },
             {
