@@ -1,8 +1,13 @@
-package main
+package user
 
 import (
 	"DevOps/database"
 )
+
+type Login struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
 
 type UserNotFound struct{}
 

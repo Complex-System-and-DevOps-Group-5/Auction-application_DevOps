@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"DevOps/database"
+	"DevOps/user"
 
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/lib/pq"
@@ -56,21 +57,21 @@ func main() {
 	})
 
 	app.Post("/login", func(c *fiber.Ctx) error {
-		var login Login
+		var login user.Login
 		err := c.BodyParser(&login)
 
 		if err != nil {
 			return c.SendStatus(fiber.StatusBadRequest)
 		}
 
-		token, err := AuthenticateLogin(login)
+		token, err := user.AuthenticateLogin(login)
 
 		if err != nil {
 			var errorStatus int
 
-			if errors.Is(err, UserNotFound{}) {
+			if errors.Is(err, user.UserNotFound{}) {
 				errorStatus = fiber.StatusNotFound
-			} else if errors.Is(err, InvalidPassword{}) {
+			} else if errors.Is(err, user.InvalidPassword{}) {
 				errorStatus = fiber.StatusForbidden
 			} else {
 				errorStatus = fiber.StatusInternalServerError
