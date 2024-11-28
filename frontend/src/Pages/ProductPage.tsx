@@ -15,6 +15,7 @@ export default function ProductPage () {
     console.log(baseURL)
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
+    //const [bidId, setbidId] = useState(0);
 
     // from backend:
     const { product, isProductLoading, productError } = useAuctionState();
@@ -52,10 +53,11 @@ export default function ProductPage () {
     }
 
     async function submitBid(amount: number) {
-        //
+        //setbidId(bidId + 1)
         const submitData: Bid = {
             auctionId: Number(id),
             bidderUserName: username,
+            //bidderUserName: username + bidId,
             amount: amount,
         }
         try {
