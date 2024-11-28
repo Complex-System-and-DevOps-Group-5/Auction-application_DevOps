@@ -12,7 +12,7 @@ import {useParams} from "react-router-dom";
 export default function ProductPage () {
     const {id} = useParams();
     const baseURL: string = 'http://130.225.170.52:10101/api/product/' + id
-    console.log(baseURL)
+
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
 
@@ -64,16 +64,10 @@ export default function ProductPage () {
         }
 
         try {
-           const response = await postBidRequest('/api/post', submitData)
-            if (response.ok) {
-                alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
-                setSubmitError(false)
-                setCurrentBid(amount)
-            } else {
-                const errorData = await response.json();
-                console.error('Bid submission failed:', errorData);
-                setSubmitError(true)
-            }
+            await postBidRequest('/api/post', submitData)
+            alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
+            setSubmitError(false)
+            setCurrentBid(amount)
         } catch (err){
             console.log('setting error to true because of : ' + err)
             setSubmitError(true)
