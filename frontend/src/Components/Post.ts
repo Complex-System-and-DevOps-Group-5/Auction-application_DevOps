@@ -1,7 +1,6 @@
 import Bid from "../Interfaces/Bid.ts";
 import User from "../Interfaces/User.ts";
 import CreateAuction from "../Interfaces/CreateAuction.ts";
-import { DessertIcon } from "lucide-react";
 
 
 export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
