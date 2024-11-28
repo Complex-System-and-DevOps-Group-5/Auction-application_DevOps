@@ -1,3 +1,5 @@
+import {Auction} from "../Interfaces/Auction.ts";
+
 export interface Product {
     /*id: string;
     title: string;
@@ -18,7 +20,7 @@ export interface Product {
     sold: boolean;
 }
 
-export interface ProductListProps {
-    products?: Product[];
-    product: Product;
+export interface AuctionListProps {
+    products?: Auction[];
+    product: Auction;
 }

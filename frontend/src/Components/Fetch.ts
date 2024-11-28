@@ -1,5 +1,5 @@
-import {Product} from "./Product.ts";
 import {useEffect, useState} from "react";
+import {Auction} from "../Interfaces/Auction.ts";
 
 
 export async function fetchData(url: string): Promise<any> {
@@ -20,8 +20,8 @@ export async function fetchData(url: string): Promise<any> {
     }
 }
 
-export function useFetch(url: string): [Product[], boolean, boolean] {
-    const [data, setData] = useState<Product[]>();
+export function useFetch(url: string): [Auction[], boolean, boolean] {
+    const [data, setData] = useState<Auction[]>();
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
 
@@ -36,5 +36,5 @@ export function useFetch(url: string): [Product[], boolean, boolean] {
         );
     }, [url]);
 
-    return [data as Product[], isLoading, hasError];
+    return [data as Auction[], isLoading, hasError];
 }
