@@ -56,6 +56,7 @@ export default function ProductPage () {
         }
         try {
            const response = await postBidRequest('/api/post', submitData)
+            console.log('the response inside submitBid: ' + response)
             if (response.ok) {
                 alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
                 setSubmitError(false)
