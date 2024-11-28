@@ -1,8 +1,6 @@
 package main
 
 import (
-	"time"
-
 	"DevOps/database"
 )
 
@@ -12,12 +10,6 @@ type Image = database.Image
 type Chat = database.Chat
 type WatchlistItem = database.Watchlist
 type ChatMessage = database.Message
-
-type Bid struct {
-	AuctionId      int    `json:"auctionId"`
-	BidderUsername string `json:"bidderUsername"`
-	Amount         int    `json:"amount"`
-}
 
 type User struct {
 	Id       int    `json:"id"`
@@ -76,55 +68,4 @@ func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
 	}
 
 	return previews
-}
-
-type AuctionPost struct {
-	Id                  int       `json:"id"`
-	Title               string    `json:"title"`
-	Description         string    `json:"description"`
-	Location            string    `json:"location"`
-	Status              int       `json:"status"` // TODO: should probably be a more human-friendly format
-	Sold                bool      `json:"sold"`
-	InWatchList         bool      `json:"inWatchList"`
-	CreationTime        time.Time `json:"creationTime"`
-	EndingTime          time.Time `json:"endingTime"`
-	ViewCount           int       `json:"viewCount"`
-	MinimumBidIncrement int       `json:"minimumBidIncrement"`
-	CurrentBid          int       `json:"currentBid"`
-	CategoryId          int       `json:"categoryId"`
-	SellerId            int       `json:"sellerId"`
-	ImageUrl            string    `json:"imgUrl"`
-}
-
-func GetPost(id int) *AuctionPost {
-	auction, err := database.GetSingle[database.Auction](database.EqualityCondition("id", id))
-
-	if err != nil {
-		return nil
-	}
-
-	imageUrl := ""
-
-	image, err := database.GetSingle[database.Image](database.EqualityCondition("id", auction.ImageId))
-	if err == nil {
-		imageUrl = image.Url
-	}
-
-	return &AuctionPost{
-		Id:                  auction.Id,
-		Title:               auction.Title,
-		Description:         auction.Description,
-		Location:            auction.Location,
-		Status:              auction.Status,
-		Sold:                (auction.Status%2 == 1),
-		InWatchList:         false, // TODO figure it out
-		CreationTime:        auction.CreationTime,
-		EndingTime:          auction.EndingTime,
-		ViewCount:           auction.ViewCount,
-		MinimumBidIncrement: auction.MinimumBidIncrement,
-		CurrentBid:          auction.CurrentBid,
-		CategoryId:          auction.CategoryId,
-		SellerId:            auction.SellerId,
-		ImageUrl:            imageUrl,
-	}
 }
