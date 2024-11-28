@@ -6,7 +6,8 @@ export function SearchComponent() {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState<any[]>([]);
 
-    const handleSearch = async () => {
+    async function handleSearch(event: any){
+        event.preventDefault();
         try {
             const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
             if (!response.ok) {
@@ -21,6 +22,7 @@ export function SearchComponent() {
     return (
         <div className="search-container">
             <div className="search-header">
+                <form onSubmit={handleSearch}>
                 <input
                     type="text"
                     placeholder="Search..."
@@ -28,7 +30,8 @@ export function SearchComponent() {
                     onChange={(e) => setQuery(e.target.value)}
                     className="searchField"
                 />
-                <button onClick={handleSearch}>Search</button>
+                <button >Search</button>
+                </form>
             </div>
             <div className="search-content">
                 {results.map((result, index) => (
