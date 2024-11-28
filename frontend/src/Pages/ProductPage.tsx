@@ -61,8 +61,6 @@ export default function ProductPage () {
                 setSubmitError(false)
                dispatch({type: "updateCurrentBid", payload: { amount: amount }})
             } else {
-                const errorData = await response.json();
-                console.error('Bid submission failed:', errorData);
                 setSubmitError(true)
             }
         } catch (err){
