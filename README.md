@@ -1,11 +1,13 @@
 # Auction-application_DevOps
 62582 Complex systems and devops
+To check out the full-stack application visit:
+http://130.225.170.52:10101
 
-# frontend
+navigate to login page and register or login using the following credentials:
 
-```bash
-npm install @test124124521/my-first-package
-```
+username: sommer
+passsword: 1234
+
 
 # Software
 
