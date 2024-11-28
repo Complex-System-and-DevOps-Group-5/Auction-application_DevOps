@@ -14,9 +14,9 @@ type WatchlistItem = database.Watchlist
 type ChatMessage = database.Message
 
 type Bid struct {
-	AuctionId      int     `json:"auctionId"`
-	BidderUsername string  `json:"bidderUsername"`
-	Amount         float64 `json:"amount"`
+	AuctionId      int    `json:"auctionId"`
+	BidderUsername string `json:"bidderUsername"`
+	Amount         int    `json:"amount"`
 }
 
 type User struct {
@@ -44,11 +44,11 @@ func GetUser(id int) *User {
 }
 
 type AuctionPreview struct {
-	Id        int     `json:"id"`
-	Title     string  `json:"title"`
-	ImageUrl  string  `json:"imgUrl"`
-	Price     float32 `json:"price"`
-	ViewCount int     `json:"views"`
+	Id        int    `json:"id"`
+	Title     string `json:"title"`
+	ImageUrl  string `json:"imgUrl"`
+	Price     int    `json:"price"`
+	ViewCount int    `json:"views"`
 }
 
 func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
@@ -70,7 +70,7 @@ func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
 			Id:        auction.Id,
 			Title:     auction.Title,
 			ImageUrl:  imageUrl,
-			Price:     float32(auction.CurrentBid) / 100,
+			Price:     auction.CurrentBid,
 			ViewCount: auction.ViewCount,
 		}
 	}
@@ -89,8 +89,8 @@ type AuctionPost struct {
 	CreationTime        time.Time `json:"creationTime"`
 	EndingTime          time.Time `json:"endingTime"`
 	ViewCount           int       `json:"viewCount"`
-	MinimumBidIncrement float64   `json:"minimumBidIncrement"`
-	CurrentBid          float64   `json:"currentBid"`
+	MinimumBidIncrement int       `json:"minimumBidIncrement"`
+	CurrentBid          int       `json:"currentBid"`
 	CategoryId          int       `json:"categoryId"`
 	SellerId            int       `json:"sellerId"`
 	ImageUrl            string    `json:"imgUrl"`
@@ -121,8 +121,8 @@ func GetPost(id int) *AuctionPost {
 		CreationTime:        auction.CreationTime,
 		EndingTime:          auction.EndingTime,
 		ViewCount:           auction.ViewCount,
-		MinimumBidIncrement: float64(auction.MinimumBidIncrement) / 100,
-		CurrentBid:          float64(auction.CurrentBid) / 100,
+		MinimumBidIncrement: auction.MinimumBidIncrement,
+		CurrentBid:          auction.CurrentBid,
 		CategoryId:          auction.CategoryId,
 		SellerId:            auction.SellerId,
 		ImageUrl:            imageUrl,

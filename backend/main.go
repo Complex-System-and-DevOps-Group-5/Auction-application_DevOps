@@ -102,7 +102,7 @@ func main() {
 
 		bidDb := database.Bid{
 			CreationTime: time.Now(),
-			Amount:       int(bid.Amount * 100),
+			Amount:       bid.Amount,
 			Status:       0,
 			AuctionId:    bid.AuctionId,
 			BuyerId:      bidder.Id,
