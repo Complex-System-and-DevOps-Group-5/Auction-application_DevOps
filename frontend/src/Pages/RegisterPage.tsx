@@ -1,16 +1,18 @@
+import React from 'react'
+import  { redirect } from 'react-router-dom'
 import "../Styling/AuthPage.css"
-// import {useLoginDispatch} from "../Context/LoginContext.tsx";
+import {useLoginDispatch} from "../Context/LoginContext.tsx";
 import {useState} from "react";
 //import {useNavigate} from "react-router-dom";
 import RegisterData from "../Interfaces/RegisterData.ts";
-import {postRegisterRequest} from "../Components/Post.ts";
+import UserData from "../Interfaces/User.ts";
+import {postLoginRequest, postRegisterRequest} from "../Components/Post.ts";
 
 export function RegisterPage() {
 
     //from backend
-    // const { loggedIn, authToken, userError } = useLoginState()
     //from DOM
-    const [username, setUsername] = useState('')
+    const [username, setUsernameInput] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
 
@@ -18,7 +20,7 @@ export function RegisterPage() {
 
     const [submitting, setSubmitting] = useState(false);
 
-    // const dispatch = useLoginDispatch()
+    const dispatch = useLoginDispatch()
 
     //const navigate = useNavigate();
 
@@ -33,10 +35,25 @@ export function RegisterPage() {
         return new Promise((resolve, reject): void => {
             postRegisterRequest('api/register', register)
                 .then(response => {
-                    /*dispatch({type: "setUsername", payload: {username: response.username}});
-                    dispatch({type: "setAuthToken", payload: {token: response.token}});
-                    dispatch({type: "toggleLogin", payload: {toggle: true}});
-                    dispatch({type: "setUserError", payload: {failed: response.message}});
+                    const user: UserData = {
+                        username: username,
+                        password: password,
+                    }
+                    postLoginRequest('api/login', user)
+                        .then(response => {
+                            dispatch({type: "setUsername", payload: {username: response.username}});
+                            dispatch({type: "setAuthToken", payload: {token: response.token}});
+                            dispatch({type: "toggleLogin", payload: {toggle: true}});
+                            dispatch({type: "setUserError", payload: {failed: response.message}});
+                            setSubmitting(false);
+                            console.log('resolving promise, the username is now: ' + username);
+                            resolve(response)
+                            redirect('')
+                        })
+                        .catch(error => {
+                            reject(error)
+                        })
+                    /*
                     */
                     console.log('Registered user');
                     setSubmitting(false);
@@ -56,7 +73,7 @@ export function RegisterPage() {
         setEmail(event.target.value);
     }
     const userNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(event.target.value);
+        setUsernameInput(event.target.value);
     }
     const userPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
@@ -87,35 +104,34 @@ export function RegisterPage() {
     return(
             <div className="authContainer">
                 <div className="authHeader">
-                    <h2> { "Register" } </h2>
+                    <h2>Register</h2>
                     <div id="line"/>
                 </div>
-                    <form onSubmit={handleRegisterSubmit} onKeyPress={handleKeyPress}>
-                        <input name= "email" type="text"
-                                value={email}
-                                placeholder="Email"
-                                onChange = {userEmailChange}
-                        />
-                        <input name= "username" type="text"
-                                value={username}
-                                placeholder="Username"
-                                onChange = {userNameChange}
-                        />
-                        <input name= "password" type="password"
-                                value={password}
-                                placeholder="Password"
-                                onChange = {userPasswordChange}
-                        />
-                        {/*
-                        {userError === 'NotFound' && <p>Username does not exist</p>}
-                        {userError === 'Forbidden' && <p>Username does not exist</p>}
-                        {userError === '' && <p> </p>}
-                        {loggedIn && <p>loggedIn is true and hello {username}</p>}
-                        */}
-                        {!submitting ? <button>Register</button> : <p>Registering...</p>}
-                    </form>
+                <form onSubmit={handleRegisterSubmit} onKeyPress={handleKeyPress}>
+                    <input name= "email" type="text"
+                            value={email}
+                            placeholder="Email"
+                            onChange = {userEmailChange}
+                    />
+                    <input name= "username" type="text"
+                            value={username}
+                            placeholder="Username"
+                            onChange = {userNameChange}
+                    />
+                    <input name= "password" type="password"
+                            value={password}
+                            placeholder="Password"
+                            onChange = {userPasswordChange}
+                    />
+                    {/*
+                    {userError === 'NotFound' && <p>Username does not exist</p>}
+                    {userError === 'Forbidden' && <p>Username does not exist</p>}
+                    {userError === '' && <p> </p>}
+                    {loggedIn && <p>loggedIn is true and hello {username}</p>}
+                    */}
+                    {!submitting ? <button>Register</button> : <p>Registering...</p>}
+                </form>
             </div>
-
         );
 }
 
