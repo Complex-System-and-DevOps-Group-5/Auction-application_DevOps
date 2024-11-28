@@ -1,28 +1,39 @@
 import { useState } from "react";
+import {getSearchReqeuest} from "../Components/Post.ts";
 // comment to commit and push
 
 
 export function SearchComponent() {
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState<any[]>([]);
+    const [results] = useState<any[]>([]);
 
-    async function handleSearch(event: any){
+    async function handleSubmitSearch(event: any) {
         event.preventDefault();
         try {
-            const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
-            }
-            const data = await response.json();
-            setResults(data);
-        } catch (error) {
-            console.error("Search failed: " + error);
+            const response = await submitSearch()
+            console.log(response)
+            //set results if successful
+        } catch (err) {
+            console.log(err)
         }
     }
+    async function submitSearch() {
+        //
+        try {
+            const response = await getSearchReqeuest('/api/post', query)
+            if (response.ok) {
+                alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
+            }
+        } catch (err){
+            console.log(err)
+        }
+    }
+
+
     return (
         <div className="search-container">
             <div className="search-header">
-                <form onSubmit={handleSearch}>
+                <form onSubmit={handleSubmitSearch}>
                 <input
                     type="text"
                     placeholder="Search..."
