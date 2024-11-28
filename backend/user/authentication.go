@@ -2,6 +2,8 @@ package user
 
 import (
 	"DevOps/database"
+	"crypto/sha256"
+	"encoding/base64"
 )
 
 type Login struct {
@@ -28,8 +30,10 @@ func AuthenticateLogin(login Login) (string, error) {
 		return "", UserNotFound{}
 	}
 
-	// TODO: Hash the password
-	hashed := login.Password
+	hasher := sha256.New()
+	hasher.Write([]byte(login.Password))
+	hashed := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+
 	if user.PasswordHash != hashed {
 		return "", InvalidPassword{}
 	}
