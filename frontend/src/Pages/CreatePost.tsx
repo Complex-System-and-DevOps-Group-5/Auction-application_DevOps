@@ -1,8 +1,6 @@
-import { InputField } from '../Components/InputField';
-import DefaultButton from '../Components/DefaultButton';
 import '../Styling/CreatePost.css'
 import { useState } from "react";
-import { useLoginState, useLoginDispatch } from "../Context/LoginContext.tsx";
+import { useLoginState } from "../Context/LoginContext.tsx";
 import { postCreateRequest, postUploadImage } from '../Components/Post.ts';
 import CreateAuctionData from "../Interfaces/CreateAuction.ts";
 
@@ -21,8 +19,6 @@ export default function CreatePost() {
     const [image, setImage] = useState<File>()
 
     const [submitting, setSubmitting] = useState(false)
-
-    const dispatch = useLoginDispatch()
 
     function handleCreatePost(event: any) {
         event.preventDefault();
