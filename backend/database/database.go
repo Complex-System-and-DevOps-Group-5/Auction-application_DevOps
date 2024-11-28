@@ -153,7 +153,7 @@ func Update[T DatabaseObject](oldObject T, newObject T, condition Condition) err
 
 	queryString := fmt.Sprintf("UPDATE %s SET (%s) = (%s) WHERE %s", tableName, strings.Join(columns, ", "), strings.Join(namedColumns, ", "), condition.ToString())
 
-	_, err := db.Exec(queryString)
+	_, err := db.NamedExec(queryString, newObject)
 	if err != nil {
 		return err
 	}
