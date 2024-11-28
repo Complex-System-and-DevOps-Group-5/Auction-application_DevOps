@@ -16,7 +16,7 @@ export function SearchComponent() {
             const data = await response.json();
             setResults(data);
         } catch (error) {
-            console.error("Search failed", error);
+            console.error("Search failed: " + error);
         }
     }
     return (
