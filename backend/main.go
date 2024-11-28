@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"log"
+	"net/http"
 	"time"
 
 	"DevOps/database"
@@ -10,6 +11,28 @@ import (
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/lib/pq"
 )
+
+func searchAuctions(c *fiber.Ctx) error {
+	searchQuery := c.Query("q")
+	if searchQuery == "" {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"error": "Search query is required",
+		})
+	}
+
+	condition := database.ILIKECondition(
+		"name",
+		searchQuery,
+	)
+
+	results, err := database.GetMultiple[database.Auction](condition)
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Error fetching results: " + err.Error(),
+		})
+	}
+	return c.Status(http.StatusOK).JSON(results)
+}
 
 func main() {
 	database.Connect()
@@ -115,6 +138,8 @@ func main() {
 
 		return c.SendStatus(fiber.StatusOK)
 	})
+
+	app.Get("/api/search", searchAuctions)
 
 	log.Fatal(app.Listen(":4000"))
 }
