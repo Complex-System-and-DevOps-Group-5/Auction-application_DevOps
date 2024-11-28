@@ -54,16 +54,13 @@ export default function ProductPage () {
             bidderUserName: username,
             amount: amount,
         }
+
         try {
            const response = await postBidRequest('/api/post', submitData)
             console.log('the response inside submitBid: ' + response)
-            if (response.ok) {
-                alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
-                setSubmitError(false)
-               dispatch({type: "updateCurrentBid", payload: { amount: amount }})
-            } else {
-                setSubmitError(true)
-            }
+            alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
+            setSubmitError(false)
+            dispatch({type: "updateCurrentBid", payload: { amount: amount }})
         } catch (err){
             console.log('setting error to true because of : ' + err)
             setSubmitError(true)
