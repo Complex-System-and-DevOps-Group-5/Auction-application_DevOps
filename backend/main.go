@@ -139,30 +139,7 @@ func main() {
 		return c.SendStatus(fiber.StatusOK)
 	})
 
-	app.Get("/api/search", func(c *fiber.Ctx) error {
-
-		query := c.Query("q")
-		if query == "" {
-
-			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "Search query is required",
-			})
-		}
-
-		conditions := database.MultiCondition(
-			database.ILIKECondition("title", query),
-		)
-
-		results, err := database.GetMultiple[database.Auction](conditions)
-		if err != nil {
-
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"error": "Error fetching results: " + err.Error(),
-			})
-		}
-
-		return c.Status(fiber.StatusOK).JSON(results)
-	})
+	app.Get("/api/search", searchAuctions)
 
 	log.Fatal(app.Listen(":4000"))
 }
