@@ -69,6 +69,17 @@ func bidHandler(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
 
+	//Get the auction inwhich the bid is located
+	auction, err := database.GetSingle[database.Auction](database.EqualityCondition("id", bid.AuctionId))
+	if err != nil {
+		return c.SendStatus(fiber.StatusNotFound)
+	}
+
+	//Validation for if the bid is valid
+	if bid.Amount < (auction.CurrentBid + auction.MinimumBidIncrement) {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
 	bidDb := database.Bid{
 		CreationTime: time.Now(),
 		Amount:       bid.Amount,
@@ -82,6 +93,13 @@ func bidHandler(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
+	updatedAuction := *auction
+	updatedAuction.CurrentBid = bid.Amount
+
+	err = database.Update(*auction, updatedAuction, database.EqualityCondition("id", bid.AuctionId))
+	if err != nil {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
 	return c.Status(fiber.StatusOK).JSON(bidDb)
 }
 
