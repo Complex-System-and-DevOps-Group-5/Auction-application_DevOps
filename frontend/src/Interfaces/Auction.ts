@@ -3,7 +3,7 @@ export interface Auction {
     title: string;
     minimumBidIncrement: number;
     currentBid: number;
-    amountOfBids: number,
+    bidCount: number;
     description: string;
     //currency: string;
     //quantity: number;
