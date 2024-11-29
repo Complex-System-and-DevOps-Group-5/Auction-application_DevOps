@@ -23,11 +23,17 @@ func getPost(id int) *AuctionPost {
 		imageUrl = image.Url
 	}
 
+	bids, err := database.GetMultiple[database.Bid](database.EqualityCondition("auction_id", id))
+	if err != nil {
+		return nil
+	}
+
 	return &AuctionPost{
 		Id:                  auction.Id,
 		Title:               auction.Title,
 		Description:         auction.Description,
 		Location:            auction.Location,
+		BidCount:            len(bids),
 		Status:              auction.Status,
 		Sold:                (auction.Status%2 == 1),
 		InWatchList:         false, // TODO figure it out

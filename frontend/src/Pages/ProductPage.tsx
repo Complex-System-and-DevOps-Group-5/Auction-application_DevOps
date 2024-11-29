@@ -16,8 +16,6 @@ export default function ProductPage () {
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
 
-    //const [currentBid, setCurrentBid] = useState<number | undefined>()
-
     // from backend:
     const { product, isProductLoading, productError } = useAuctionState();
     const { username, loggedIn } = useLoginState()
@@ -66,7 +64,6 @@ export default function ProductPage () {
             await postBidRequest('/api/post', submitData);
             alert('Your submit was successfully submitted, if you dont see your bid, reload the page');
             setSubmitError(false);
-            //setCurrentBid(amount);
             dispatch({type: "updateCurrentBid", payload: { amount: amount }});
         } catch (err){
             console.log('setting error to true because of : ' + err);
@@ -98,8 +95,7 @@ export default function ProductPage () {
             )
             }
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
-            {/*<p>$ {currentBid === undefined ? auction.currentBid : currentBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>*/}
-            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>
+            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}>{auction.amountOfBids}</span></p>
             {!loggedIn ? ( /* auction date time thing*/
                 <span style={{color: "red", display: "flex", paddingTop: 10}}>Login to submit a bit</span>
             ) : (

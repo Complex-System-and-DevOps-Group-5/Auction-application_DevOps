@@ -7,6 +7,7 @@ type AuctionPost struct {
 	Title               string    `json:"title"`
 	Description         string    `json:"description"`
 	Location            string    `json:"location"`
+	BidCount            int       `json:"bidCount"`
 	Status              int       `json:"status"` // TODO: should probably be a more human-friendly format
 	Sold                bool      `json:"sold"`
 	InWatchList         bool      `json:"inWatchList"`
