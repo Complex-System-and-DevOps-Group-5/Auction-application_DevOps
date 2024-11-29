@@ -26,3 +26,8 @@ type Bid struct {
 	BidderUsername string `json:"bidderUsername"`
 	Amount         int    `json:"amount"`
 }
+
+type Watchlist struct {
+	AuctionId int    `json:"auctionId"`
+	Username  string `json:"username"`
+}

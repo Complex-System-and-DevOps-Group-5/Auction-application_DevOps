@@ -174,12 +174,52 @@ func postCreationHandler(c *fiber.Ctx) error {
 	return c.SendStatus(fiber.StatusAccepted)
 }
 
+func watchlistHandler(c *fiber.Ctx) error {
+	var watchlist Watchlist
+	err := c.BodyParser(&watchlist)
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	// Get the user from database
+	user, err := database.GetSingle[database.User](database.EqualityCondition("name", watchlist.Username))
+	if err != nil {
+		return c.SendStatus(fiber.StatusUnauthorized)
+	}
+
+	// Validation for if the watchlist exists in database
+	_, err = database.GetSingle[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", watchlist.AuctionId), database.EqualityCondition("user_id", watchlist.AuctionId)))
+
+	// If the watchlist already exists remove it
+	if err == nil {
+		err = database.Delete[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", watchlist.AuctionId), database.EqualityCondition("auction_id", watchlist.AuctionId)))
+
+		if err != nil {
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+		return c.SendStatus(fiber.StatusOK)
+	}
+
+	watchlistDb := database.Watchlist{
+		AuctionId: watchlist.AuctionId,
+		UserId:    user.Id,
+	}
+	err = database.Insert(watchlistDb)
+
+	if err != nil {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	}
+
+	return c.Status(fiber.StatusOK).JSON(watchlistDb)
+}
+
 func AllEndpoints() []endpoint.Endpoint {
 	endpoints := make([]endpoint.Endpoint, 0)
 
 	endpoints = append(endpoints, endpoint.Endpoint{Location: "/product/:id", Handler: singleAuctionHandler, Type: fiber.MethodGet})
 	endpoints = append(endpoints, endpoint.Endpoint{Location: "/post", Handler: bidHandler, Type: fiber.MethodPost})
 	endpoints = append(endpoints, endpoint.Endpoint{Location: "/create-post", Handler: postCreationHandler, Type: fiber.MethodPost})
+	endpoints = append(endpoints, endpoint.Endpoint{Location: "/watchlist", Handler: watchlistHandler, Type: fiber.MethodPost})
 
 	return endpoints
 }
