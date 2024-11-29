@@ -19,12 +19,7 @@ export function SearchComponent() {
     async function submitSearch() {
         try {
             const response = await getSearchRequest(`http://130.225.170.52:10101/api/search?q=` + query);
-            if (response.ok) {
-                const data = await response.json();
-                setResults(data);
-            } else {
-                console.log("Error fetching search results");
-            }
+            setResults(response);
         } catch (err) {
             console.error("Search failed: ", err);
         }
