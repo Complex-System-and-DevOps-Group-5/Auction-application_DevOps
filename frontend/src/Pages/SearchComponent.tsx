@@ -11,13 +11,18 @@ export function SearchComponent() {
         event.preventDefault();
         setQuery(event.target.value)
         try {
-            const response = await submitSearch()
+            const response = await submitSearch(event.target.value)
             console.log(response)
         } catch (err) {
             console.log(err)
         }
     }
-    async function submitSearch() {
+    async function submitSearch(query: string) {
+        if (query === "") {
+            setResults([]) // no results
+            return // don't search on the empty query
+        }
+
         try {
             const response = await getSearchRequest(`http://130.225.170.52:10101/api/search?q=` + encodeURI(query));
             setResults(response);
