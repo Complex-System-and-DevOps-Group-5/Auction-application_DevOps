@@ -18,7 +18,7 @@ export function SearchComponent() {
     }
     async function submitSearch() {
         try {
-            const response = await getSearchRequest(`http://130.225.170.52:10101/api/search?q=` + query);
+            const response = await getSearchRequest(`http://130.225.170.52:10101/api/search?q=` + encodeURI(query));
             setResults(response);
         } catch (err) {
             console.error("Search failed: ", err);
@@ -39,10 +39,10 @@ export function SearchComponent() {
                 />
                 </form>
             </div>
-            <div className="search-content">
+            <div className="search-content" >
                 {results.map((result, index) => (
-                    <div key={index} className="search-result">
-                        <a href={"/product/" + result.id}>{result.title}</a>
+                    <div key={index} className="search-result" style={{background: "#fff"}}>
+                        <a href={"/product/" + result.id} style={{color: "#000"}}>{result.title}</a>
                     </div>
                 ))}
             </div>
