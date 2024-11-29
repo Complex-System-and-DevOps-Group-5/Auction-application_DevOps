@@ -16,8 +16,3 @@ export interface Product {
     price: number;
     views: number;
 }
-
-export interface ProductListProps {
-    products?: Product[];
-    product: Product;
-}
