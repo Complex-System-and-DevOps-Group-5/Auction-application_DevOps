@@ -1,8 +1,6 @@
 package main
 
 import (
-	"time"
-
 	"DevOps/database"
 )
 
@@ -12,12 +10,6 @@ type Image = database.Image
 type Chat = database.Chat
 type WatchlistItem = database.Watchlist
 type ChatMessage = database.Message
-
-type Bid struct {
-	AuctionId      int     `json:"auctionId"`
-	BidderUsername string  `json:"bidderUsername"`
-	Amount         float64 `json:"amount"`
-}
 
 type User struct {
 	Id       int    `json:"id"`
@@ -44,11 +36,11 @@ func GetUser(id int) *User {
 }
 
 type AuctionPreview struct {
-	Id        int     `json:"id"`
-	Title     string  `json:"title"`
-	ImageUrl  string  `json:"imgUrl"`
-	Price     float32 `json:"price"`
-	ViewCount int     `json:"views"`
+	Id        int    `json:"id"`
+	Title     string `json:"title"`
+	ImageUrl  string `json:"imgUrl"`
+	Price     int    `json:"price"`
+	ViewCount int    `json:"views"`
 }
 
 func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
@@ -62,7 +54,7 @@ func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
 		imageUrl := ""
 
 		image, err := database.GetSingle[database.Image](database.EqualityCondition("id", auction.ImageId))
-		if err != nil {
+		if err == nil {
 			imageUrl = image.Url
 		}
 
@@ -70,66 +62,10 @@ func GetFrontPageAuctions(amount int, offset int) []AuctionPreview {
 			Id:        auction.Id,
 			Title:     auction.Title,
 			ImageUrl:  imageUrl,
-			Price:     float32(auction.CurrentBid) / 100,
+			Price:     auction.CurrentBid,
 			ViewCount: auction.ViewCount,
 		}
 	}
 
 	return previews
-}
-
-type AuctionPost struct {
-	Id                  int       `json:"id"`
-	Title               string    `json:"title"`
-	Description         string    `json:"description"`
-	Location            string    `json:"location"`
-	Status              int       `json:"status"` // TODO: should probably be a more human-friendly format
-	Sold                bool      `json:"sold"`
-	InWatchList         bool      `json:"inWatchList"`
-	CreationTime        time.Time `json:"creationTime"`
-	EndingTime          time.Time `json:"endingTime"`
-	ViewCount           int       `json:"viewCount"`
-	MinimumBidIncrement float64   `json:"minimumBidIncrement"`
-	CurrentBid          float64   `json:"currentBid"`
-	CategoryId          int       `json:"categoryId"`
-	SellerId            int       `json:"sellerId"`
-	ImageUrl            string    `json:"imgUrl"`
-}
-
-func GetPost(id int) *AuctionPost {
-	auction, err := database.GetSingle[database.Auction](database.EqualityCondition("id", id))
-
-	if err != nil {
-		return nil
-	}
-
-	imageUrl := ""
-
-	image, err := database.GetSingle[database.Image](database.EqualityCondition("id", auction.ImageId))
-	if err == nil {
-		imageUrl = image.Url
-	}
-
-	return &AuctionPost{
-		Id:                  auction.Id,
-		Title:               auction.Title,
-		Description:         auction.Description,
-		Location:            auction.Location,
-		Status:              auction.Status,
-		Sold:                (auction.Status%2 == 1),
-		InWatchList:         false, // TODO figure it out
-		CreationTime:        auction.CreationTime,
-		EndingTime:          auction.EndingTime,
-		ViewCount:           auction.ViewCount,
-		MinimumBidIncrement: float64(auction.MinimumBidIncrement) / 100,
-		CurrentBid:          float64(auction.CurrentBid) / 100,
-		CategoryId:          auction.CategoryId,
-		SellerId:            auction.SellerId,
-		ImageUrl:            imageUrl,
-	}
-}
-
-type Login struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
 }

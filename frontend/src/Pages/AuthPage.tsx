@@ -60,6 +60,7 @@ export function AuthPage() {
         // might be a bit overkill
         localStorage.setItem("username", username);
         localStorage.setItem("authToken", authToken);
+        localStorage.setItem("loggedIn", loggedIn.toString());
     }, [username, authToken]);
 
     const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -101,6 +102,7 @@ export function AuthPage() {
                             {userError === '' && <p> </p>}
                             {loggedIn && <p>loggedIn is true and hello {username}</p>}
                             {!submitting ? <button>Enter</button> : <p>Login in...</p>}
+                            Register <a href="register">here</a>
                         </form>
                 }
             </div>

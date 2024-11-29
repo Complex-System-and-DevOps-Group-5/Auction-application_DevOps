@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useAuctionDispatch, useAuctionState} from "../Context/AuctionContext.tsx";
 import {Auction} from "../Interfaces/Auction.ts";
 import {fetchData} from "../Components/Fetch.ts";
-import {useLoginState} from "../Context/LoginContext.tsx";
+import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import Bid from "../Interfaces/Bid.ts";
 import {postBidRequest} from "../Components/Post.ts";
 import {useParams} from "react-router-dom";
@@ -12,9 +12,11 @@ import {useParams} from "react-router-dom";
 export default function ProductPage () {
     const {id} = useParams();
     const baseURL: string = 'http://130.225.170.52:10101/api/product/' + id
-    console.log(baseURL)
+
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
+
+    const [currentBid, setCurrentBid] = useState<number | undefined>()
 
     // from backend:
     const { product, isProductLoading, productError } = useAuctionState();
@@ -24,6 +26,12 @@ export default function ProductPage () {
     const [submitError, setSubmitError] = useState(false);
 
     const dispatch = useAuctionDispatch();
+    const loginDispatch = useLoginDispatch();
+
+    useEffect(() => {
+        loginDispatch({ type: "toggleLogin", payload: {toggle: localStorage.getItem("loggedIn") === "true"}})
+        loginDispatch({ type: "setUsername", payload: {username: localStorage.getItem("username")!}})
+    }, []);
 
     useEffect(() => {
         fetchData(baseURL)
@@ -37,36 +45,31 @@ export default function ProductPage () {
         }, [submitting]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setbidAmount(Number(event.target.value));  // Number() uhmm skriv bedre kode pls
+        setbidAmount(Number(event.target.valueAsNumber.toFixed()));  // Number() uhmm skriv bedre kode pls
     }
 
     async function handleBidSubmit(event: any) {
         event.preventDefault();
         setSubmitting(true);
-        try {
-            await submitBid(bidAmount)
-        } catch (err) {
-            console.log(err)
-        }
+        await submitBid(bidAmount)
         setSubmitting(false);
     }
 
     async function submitBid(amount: number) {
-        //
+
         const submitData: Bid = {
-            auctionId: 1,
+            auctionId: Number(id),
             bidderUserName: username,
             amount: amount,
         }
+
         try {
-           const response = await postBidRequest('/api/post', submitData)
-            if (response.ok) {
-                alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
-                setSubmitError(false)
-               dispatch({type: "updateCurrentBid", payload: { amount: amount }})
-            }
+            await postBidRequest('/api/post', submitData)
+            alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
+            setSubmitError(false)
+            setCurrentBid(amount)
         } catch (err){
-            console.log(err)
+            console.log('setting error to true because of : ' + err)
             setSubmitError(true)
         }
     }
@@ -95,7 +98,7 @@ export default function ProductPage () {
             )
             }
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
-            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>
+            <p>$ {currentBid === undefined ? auction.currentBid : currentBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>
             { !loggedIn ? ( /* auction date time thing*/
                 <span style={{color: "red", display: "flex", paddingTop: 10}}>Login to submit a bit</span>
             ) : (

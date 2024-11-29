@@ -1,5 +1,5 @@
-import {Product} from "./Product.ts";
 import {useEffect, useState} from "react";
+import {Product} from "./Product.ts";
 
 
 export async function fetchData(url: string): Promise<any> {
@@ -20,7 +20,7 @@ export async function fetchData(url: string): Promise<any> {
     }
 }
 
-export function useFetch(url: string): [Product[], boolean, boolean] {
+export function useProductFetch(url: string): [Product[], boolean, boolean] {
     const [data, setData] = useState<Product[]>();
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
@@ -32,8 +32,8 @@ export function useFetch(url: string): [Product[], boolean, boolean] {
                 setData(fetchedData)
                 setIsLoading(false);})
             .catch(() =>
-            setHasError(true)
-        );
+                setHasError(true)
+            );
     }, [url]);
 
     return [data as Product[], isLoading, hasError];
