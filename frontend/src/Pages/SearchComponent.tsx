@@ -9,6 +9,7 @@ export function SearchComponent() {
 
     async function handleSubmitSearch(event: any) {
         event.preventDefault();
+        setQuery(event.target.value)
         try {
             const response = await submitSearch()
             console.log(response)
@@ -29,15 +30,13 @@ export function SearchComponent() {
     return (
         <div className="search-container">
             <div className="search-header">
-                <form onSubmit={handleSubmitSearch}>
                 <input
                     type="text"
                     placeholder="Search..."
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    onChange={(e) => handleSubmitSearch(e)}
                     className="searchField"
                 />
-                </form>
             </div>
             <div className="search-content" >
                 {results.map((result, index) => (
