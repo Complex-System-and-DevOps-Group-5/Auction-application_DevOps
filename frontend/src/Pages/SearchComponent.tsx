@@ -42,8 +42,7 @@ export function SearchComponent() {
             <div className="search-content">
                 {results.map((result, index) => (
                     <div key={index} className="search-result">
-                        <h3>{result.name}</h3>
-                        <p>{result.description}</p>
+                        <a href={"/product/" + result.id}>{result.title}</a>
                     </div>
                 ))}
             </div>
