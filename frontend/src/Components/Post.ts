@@ -15,7 +15,7 @@ export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
             }),
             headers: {
                 "Content-type": "application/json",
-                'Authorization': 'Bearer '+ localStorage.getItem("token")
+                'Authorization': 'Bearer '+ localStorage.getItem("authToken")
             }
         });
         if (!response.ok) {
@@ -39,7 +39,7 @@ export async function postLoginRequest(url: string, user: User) : Promise<any> {
             }),
             headers: {
                 "Content-type": "application/json",
-                'Authorization': 'Bearer '+ localStorage.getItem("token")
+                'Authorization': 'Bearer '+ localStorage.getItem("authToken")
             }
         });
         if (!response.ok) {
@@ -48,6 +48,26 @@ export async function postLoginRequest(url: string, user: User) : Promise<any> {
         return await response.json();
     } finally {
         // catch later
+    }
+}
+
+export async function getSearchRequest(url: string): Promise<any> {
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.statusText}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error in getSearchRequest:", error);
+        throw error;
     }
 }
 

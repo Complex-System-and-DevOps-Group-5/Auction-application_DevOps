@@ -5,6 +5,7 @@ import (
 
 	"DevOps/auctions"
 	"DevOps/database"
+	"DevOps/search"
 	"DevOps/endpoint"
 	"DevOps/user"
 
@@ -32,6 +33,8 @@ func main() {
 
 	// Link all the auction-related endpoints
 	endpoint.Link(app, auctions.AllEndpoints()...)
+
+	app.Get("/search", search.SearchAuctions)
 
 	log.Fatal(app.Listen(":4000"))
 }
