@@ -28,6 +28,18 @@ func getPost(id int) *AuctionPost {
 		return nil
 	}
 
+	/*TODO: USE the users id and not the sellers*/
+	userId, err := database.GetSingle[database.User](database.EqualityCondition("id", auction.SellerId))
+	if err != nil {
+		return nil
+	}
+	inWatchlist := false
+
+	_, err = database.GetSingle[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", id), database.EqualityCondition("user_id", userId)))
+	if err == nil {
+		inWatchlist = true
+	}
+
 	return &AuctionPost{
 		Id:                  auction.Id,
 		Title:               auction.Title,
@@ -36,7 +48,7 @@ func getPost(id int) *AuctionPost {
 		BidCount:            len(bids),
 		Status:              auction.Status,
 		Sold:                (auction.Status%2 == 1),
-		InWatchList:         false, // TODO figure it out
+		InWatchList:         inWatchlist,
 		CreationTime:        auction.CreationTime,
 		EndingTime:          auction.EndingTime,
 		ViewCount:           auction.ViewCount,
@@ -188,11 +200,11 @@ func watchlistHandler(c *fiber.Ctx) error {
 	}
 
 	// Validation for if the watchlist exists in database
-	_, err = database.GetSingle[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", watchlist.AuctionId), database.EqualityCondition("user_id", watchlist.AuctionId)))
+	_, err = database.GetSingle[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", watchlist.AuctionId), database.EqualityCondition("user_id", user.Id)))
 
 	// If the watchlist already exists remove it
 	if err == nil {
-		err = database.Delete[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", watchlist.AuctionId), database.EqualityCondition("auction_id", watchlist.AuctionId)))
+		err = database.Delete[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", watchlist.AuctionId), database.EqualityCondition("user_id", user.Id)))
 
 		if err != nil {
 			return c.SendStatus(fiber.StatusInternalServerError)
