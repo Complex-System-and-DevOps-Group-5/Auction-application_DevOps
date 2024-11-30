@@ -191,7 +191,10 @@ func postCreationHandler(c *fiber.Ctx) error {
 }
 
 func watchlistHandler(c *fiber.Ctx) error {
-	var watchlist Watchlist
+	var watchlist struct {
+		AuctionId int    `json:"auctionId"`
+		Username  string `json:"username"`
+	}
 	err := c.BodyParser(&watchlist)
 	if err != nil {
 		return c.SendStatus(fiber.StatusBadRequest)
