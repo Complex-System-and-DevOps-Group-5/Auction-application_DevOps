@@ -2,6 +2,7 @@ import Bid from "../Interfaces/Bid.ts";
 import User from "../Interfaces/User.ts";
 import CreateAuction from "../Interfaces/CreateAuction.ts";
 import RegisterData from "../Interfaces/RegisterData.ts";
+import WatchlistData from "../Interfaces/Watchlist.ts";
 
 
 export async function postBidRequest(url: string, bid: Bid) : Promise<any> {
@@ -88,6 +89,28 @@ export async function postRegisterRequest(url: string, register: RegisterData) :
                 email: register.email,
                 username: register.username,
                 password: register.password,
+            }),
+            headers: {
+                "Content-type": "application/json",
+                'Authorization': 'Bearer '+ localStorage.getItem("token")
+            }
+        });
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        return await response.json();
+    } finally {
+        // catch later
+    }
+}
+
+export async function postWatchlistRequest(url: string, watchlist: WatchlistData) : Promise<any> {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                auctionId: watchlist.auctionId,
+                username: watchlist.userName
             }),
             headers: {
                 "Content-type": "application/json",
