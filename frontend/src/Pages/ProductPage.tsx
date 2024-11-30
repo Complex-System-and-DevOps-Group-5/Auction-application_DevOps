@@ -6,8 +6,9 @@ import {Auction} from "../Interfaces/Auction.ts";
 import {fetchData} from "../Components/Fetch.ts";
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import Bid from "../Interfaces/Bid.ts";
-import {postBidRequest} from "../Components/Post.ts";
+import {postBidRequest, postWatchlistRequest} from "../Components/Post.ts";
 import {useParams} from "react-router-dom";
+import WatchlistData from "../Interfaces/Watchlist.ts";
 
 export default function ProductPage () {
     const {id} = useParams();
@@ -32,7 +33,7 @@ export default function ProductPage () {
     }, []);
 
     useEffect(() => {
-        fetchData(baseURL)
+        fetchData(baseURL + "?username=" + username)
             .then(fetchedData => {
                 dispatch({ type: "fetchedAuction", payload: { product: fetchedData }});
                 dispatch({ type: "auctionError", payload: { failed: false } })
@@ -76,24 +77,42 @@ export default function ProductPage () {
         }
     }
 
+    async function handleWatchlist(event: any){
+        event.preventDefault();
+        const submitData: WatchlistData = {
+            auctionId: Number(id),
+            userName: username,
+        }
+        try {
+            await postWatchlistRequest('/api/watchlist', submitData);
+            alert('Auction added to your watchlist');
+
+        } catch (err){
+            alert('Error: Auction added to your watchlist');
+            console.log('setting error to true because of : ' + err);
+        }
+    }
+
     /*I'm not proud of the way I access the product and or auction info
     * I will find a better way for a ProductPage, however this method will be quite useful
     * on the front page*/
     const InfoBox = product.map((auction:Auction) => (
         <div className="productInfo">
             <h2>{auction.title}</h2>
-            {auction.inWatchlist ? (
-                <p>
-                    <img className="watchList" src={watchList} alt="watch list icon"/>
-                    Add to watchlist
-                </p>
-            ) : (
-                <p>
-                    <img className="watchList" src={watchList} alt="watch list icon"/>
-                    Added to watchlist
-                </p>
-            )
-            }
+            <div onClick={handleWatchlist}>
+                {auction.inWatchlist ? (
+                    <p>
+                        <img className="watchList" src={watchList} alt="watch list icon"/>
+                        Add to watchlist
+                    </p>
+                ) : (
+                    <p>
+                        <img className="watchList" src={watchList} alt="watch list icon"/>
+                        Added to watchlist
+                    </p>
+                )
+                }
+            </div>
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
             <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}>{auction.bidCount} Amount of Bids</span></p>
             {!loggedIn ? ( /* auction date time thing*/
