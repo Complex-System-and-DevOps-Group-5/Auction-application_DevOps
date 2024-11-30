@@ -27,6 +27,19 @@ func main() {
 
 		return c.JSON(previews)
 	})
+	app.Get("/product/:id", func(c *fiber.Ctx) error {
+		id, err := c.ParamsInt("id", -1)
+		if err != nil {
+			return c.SendStatus(fiber.StatusBadRequest)
+		}
+
+		post := GetPost(id)
+
+		posts := make([]AuctionPost, 1)
+		posts[0] = *post
+
+		return c.Status(fiber.StatusAccepted).JSON(posts)
+	})
 
 	// Link all the user-related endpoints
 	endpoint.Link(app, user.AllEndpoints()...)
