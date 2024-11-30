@@ -85,10 +85,10 @@ export default function ProductPage () {
         }
         try {
             await postWatchlistRequest('/api/watchlist', submitData);
-            alert('Auction added to your watchlist');
+            alert('Added auction to your watchlist');
 
         } catch (err){
-            alert('Error: Auction added to your watchlist');
+            alert('Removed auction from your watchlist');
             console.log('setting error to true because of : ' + err);
         }
     }
