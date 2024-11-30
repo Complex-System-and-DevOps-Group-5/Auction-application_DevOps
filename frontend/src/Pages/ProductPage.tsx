@@ -42,7 +42,7 @@ export default function ProductPage () {
             .catch(() =>
                 dispatch({ type: "auctionError", payload: { failed: true } })
             );
-        }, [submitting]);
+        }, [bidAmount]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setbidAmount(Number(event.target.valueAsNumber.toFixed()));  // Number() uhmm skriv bedre kode pls
