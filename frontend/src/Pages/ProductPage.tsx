@@ -85,11 +85,12 @@ export default function ProductPage () {
         }
         try {
             await postWatchlistRequest('/api/watchlist', submitData);
+            dispatch({type: "updateInWatchlist", payload: { toggle: true}});
             alert('Added auction to your watchlist');
 
         } catch (err){
+            dispatch({type: "updateInWatchlist", payload: { toggle: false}});
             alert('Removed auction from your watchlist');
-            console.log('setting error to true because of : ' + err);
         }
     }
 
