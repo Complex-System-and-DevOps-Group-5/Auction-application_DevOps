@@ -114,7 +114,7 @@ export default function ProductPage () {
                 }
             </div>
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
-            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}>{auction.bidCount} Amount of Bids</span></p>
+            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}>{auction.bidCount == 0? "" : "Amount of Bids"}</span></p>
             {!loggedIn ? ( /* auction date time thing*/
                 <span style={{color: "red", display: "flex", paddingTop: 10}}>Login to submit a bit</span>
             ) : (
