@@ -24,6 +24,8 @@ export default function ProductPage () {
     const [submitting, setSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState(false);
 
+    const [inwatchlisting, setInWatchlisting] = useState(false);
+
     const dispatch = useAuctionDispatch();
     const loginDispatch = useLoginDispatch();
 
@@ -41,7 +43,7 @@ export default function ProductPage () {
             .catch(() =>
                 dispatch({ type: "auctionError", payload: { failed: true } })
             );
-        }, [submitting]);
+        }, [submitting,inwatchlisting]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setbidAmount(Number(event.target.valueAsNumber.toFixed()));  // Number() uhmm skriv bedre kode pls
@@ -79,6 +81,7 @@ export default function ProductPage () {
 
     async function handleWatchlist(event: any){
         event.preventDefault();
+        setInWatchlisting(true);
         const submitData: WatchlistData = {
             auctionId: Number(id),
             userName: username,
@@ -92,6 +95,7 @@ export default function ProductPage () {
             dispatch({type: "updateInWatchlist", payload: { toggle: false}});
             alert('Removed auction from your watchlist');
         }
+        setInWatchlisting(false);
     }
 
     /*I'm not proud of the way I access the product and or auction info
