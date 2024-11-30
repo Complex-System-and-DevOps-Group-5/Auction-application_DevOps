@@ -42,7 +42,7 @@ export default function ProductPage () {
             .catch(() =>
                 dispatch({ type: "auctionError", payload: { failed: true } })
             );
-        }, [bidAmount]);
+        }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setbidAmount(Number(event.target.valueAsNumber.toFixed()));  // Number() uhmm skriv bedre kode pls
@@ -53,6 +53,14 @@ export default function ProductPage () {
         setSubmitting(true);
         await submitBid(bidAmount)
         setSubmitting(false);
+        fetchData(baseURL)
+            .then(fetchedData => {
+                dispatch({ type: "fetchedAuction", payload: { product: fetchedData }});
+                dispatch({ type: "auctionError", payload: { failed: false } })
+            })
+            .catch(() =>
+                dispatch({ type: "auctionError", payload: { failed: true } })
+            );
     }
 
     async function submitBid(amount: number) {
