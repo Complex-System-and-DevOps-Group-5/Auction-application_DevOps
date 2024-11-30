@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func getPost(id int) *AuctionPost {
+func getPost(id int, username string) *AuctionPost {
 	auction, err := database.GetSingle[database.Auction](database.EqualityCondition("id", id))
 
 	if err != nil {
@@ -29,13 +29,13 @@ func getPost(id int) *AuctionPost {
 	}
 
 	/*TODO: USE the users id and not the sellers*/
-	userId, err := database.GetSingle[database.User](database.EqualityCondition("id", auction.SellerId))
+	user, err := database.GetSingle[database.User](database.EqualityCondition("name", username))
 	if err != nil {
 		return nil
 	}
 	inWatchlist := false
 
-	_, err = database.GetSingle[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", id), database.EqualityCondition("user_id", userId)))
+	_, err = database.GetSingle[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", id), database.EqualityCondition("user_id", user.Id)))
 	if err == nil {
 		inWatchlist = true
 	}
@@ -65,8 +65,12 @@ func singleAuctionHandler(c *fiber.Ctx) error {
 	if err != nil {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
+	username := c.Query("username")
+	if username == "" {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
 
-	post := getPost(id)
+	post := getPost(id, username)
 
 	posts := make([]AuctionPost, 1)
 	posts[0] = *post
