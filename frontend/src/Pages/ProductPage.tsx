@@ -24,7 +24,7 @@ export default function ProductPage () {
     const [submitting, setSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState(false);
 
-    const [inwatchlisting, setInWatchlisting] = useState(false);
+    //const [inwatchlisting, setInWatchlisting] = useState(false);
 
     const dispatch = useAuctionDispatch();
     const loginDispatch = useLoginDispatch();
@@ -87,7 +87,7 @@ export default function ProductPage () {
 
     async function handleWatchlist(event: any){
         event.preventDefault();
-        setInWatchlisting(true);
+        //setInWatchlisting(true);
         const submitData: WatchlistData = {
             auctionId: Number(id),
             userName: username,
@@ -107,7 +107,7 @@ export default function ProductPage () {
 
             alert('Removed auction from your watchlist');
         }
-        setInWatchlisting(false);
+        //setInWatchlisting(false);
     }
 
     /*I'm not proud of the way I access the product and or auction info
