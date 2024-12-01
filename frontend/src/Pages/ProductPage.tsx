@@ -2,6 +2,7 @@ import '../Styling/ProductPage.css'
 import watchList from "../assets/watchlist-icon.png"
 import {useEffect, useState} from "react";
 import {useAuctionDispatch, useAuctionState} from "../Context/AuctionContext.tsx";
+import {Auction} from "../Interfaces/Auction.ts";
 import {fetchData} from "../Components/Fetch.ts";
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import Bid from "../Interfaces/Bid.ts";
@@ -78,76 +79,70 @@ export default function ProductPage () {
     /*I'm not proud of the way I access the product and or auction info
     * I will find a better way for a ProductPage, however this method will be quite useful
     * on the front page*/
-    const InfoBox = () => {
-        const auction = product[0]; // Assuming product is an array with one item
-        return (
-            <div className="productInfo">
-                <h2>{auction.title}</h2>
-                {auction.inWatchlist ? (
-                    <p>
-                        <img className="watchList" src={watchList} alt="watch list icon"/>
-                        Add to watchlist
-                    </p>
-                ) : (
-                    <p>
-                        <img className="watchList" src={watchList} alt="watch list icon"/>
-                        Added to watchlist
-                    </p>
-                )}
-                <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
-                <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}>{auction.bidCount} Amount of Bids</span></p>
-                {!loggedIn ? (
-                    <span style={{color: "red", display: "flex", paddingTop: 10}}>Login to submit a bit</span>
-                ) : (
-                    <div className="bidSection">
-                        <form onSubmit={handleBidSubmit} onKeyDown={handleKeyPress}>
-                            <input
-                                name="amount"
-                                type="number"
-                                min={(auction.minimumBidIncrement).toString()}
-                                pattern="[0-9]"
-                                className="bidInput"
-                                onChange={handleChange}
-                            />
-                            {!submitting ? <button>Submit</button> : (
-                                <div className="lds-ring">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                            )}
-                            {submitError && <p>Error submitting bid</p>}
-                        </form>
+    const InfoBox = product.map((auction:Auction) => (
+        <div className="productInfo">
+            <h2>{auction.title}</h2>
+            {auction.inWatchlist ? (
+                <p>
+                    <img className="watchList" src={watchList} alt="watch list icon"/>
+                    Add to watchlist
+                </p>
+            ) : (
+                <p>
+                    <img className="watchList" src={watchList} alt="watch list icon"/>
+                    Added to watchlist
+                </p>
+            )
+            }
+            <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
+            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}>{auction.bidCount} Amount of Bids</span></p>
+            {!loggedIn ? ( /* auction date time thing*/
+                <span style={{color: "red", display: "flex", paddingTop: 10}}>Login to submit a bit</span>
+            ) : (
+                <div className="bidSection">
+                    <form onSubmit={handleBidSubmit} onKeyDown={handleKeyPress}>
+                        <input name="amount" type="number"
+                               min={(auction.minimumBidIncrement).toString()}
+                               pattern="[0-9]"
+                               className="bidInput"
+                               onChange={handleChange}
+                        />
+                        {!submitting ? <button>Submit</button> : (
+                            <div className="lds-ring">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        )}
+                        {submitError && <p>Error submitting bid</p>}
+                    </form>
+                </div>
+            )}
+        </div>
+    ));
+    const imageBox = product.map((auction: Auction) => (
+
+        <div className="container">
+            <div className="images">
+                    <img src={auction.imgUrl}
+                         role="presentation"/>
+                    <div className="sub-imgs">
+                        {/*TODO*/}
+                        <img src={auction.imgUrl} alt="small"/>
+                        <img src={auction.imgUrl} alt="small"/>
+                        <div className="more-imgs">+14 Photos</div>
                     </div>
-                )}
-            </div>
-        );
-    };
-    const imageBox = () => {
-        const auction = product[0];
-        return (
-            <div className="container">
-                <div className="images">
-                        <img src={auction.imgUrl}
-                             role="presentation"/>
-                        <div className="sub-imgs">
-                            {/*TODO*/}
-                            <img src={auction.imgUrl} alt="small"/>
-                            <img src={auction.imgUrl} alt="small"/>
-                            <div className="more-imgs">+14 Photos</div>
-                        </div>
                 </div>
             </div>
-
-        );};
+    ))
 
     return (
         <>
         { !isProductLoading && !productError? (
                 <div className="container">
-                    {imageBox()}
-                    {InfoBox()}
+                    {imageBox}
+                    {InfoBox}
                 </div>
         ) : (
             <div className="container">
