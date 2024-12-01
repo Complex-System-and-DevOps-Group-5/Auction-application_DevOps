@@ -49,8 +49,18 @@ export default function ProductPage () {
     async function handleBidSubmit(event: any) {
         event.preventDefault();
         setSubmitting(true);
-        await submitBid(bidAmount)
-        setSubmitting(false);
+        try {
+            await submitBid(bidAmount);
+
+            const updatedProduct = await fetchData(baseURL);
+            dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
+            setSubmitError(false);
+        } catch (err) {
+            console.log('Error submitting bid: ', err);
+            setSubmitError(true);
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     async function submitBid(amount: number) {
@@ -60,15 +70,7 @@ export default function ProductPage () {
             bidderUserName: username,
             amount: amount,
         }
-        try {
-            await postBidRequest('/api/post', submitData);
-            alert('Your submit was successfully submitted, if you dont see your bid, reload the page');
-            setSubmitError(false);
-            dispatch({type: "updateCurrentBid", payload: { amount: amount }});
-        } catch (err){
-            console.log('setting error to true because of : ' + err);
-            setSubmitError(true);
-        }
+        return await postBidRequest('/api/post', submitData);
     }
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.keyCode === 13){
