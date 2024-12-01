@@ -65,14 +65,20 @@ export default function ProductPage () {
         }
         try {
             await postBidRequest('/api/post', submitData);
+
+            //fetch the  updated product form database
+            const updatedProduct = await fetchData(baseURL);
+            dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
+
             alert('Your submit was successfully submitted, if you dont see your bid, reload the page');
             setSubmitError(false);
-            dispatch({type: "updateCurrentBid", payload: { amount: amount }});
+
         } catch (err){
             console.log('setting error to true because of : ' + err);
             setSubmitError(true);
         }
     }
+
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.keyCode === 13){
             event.preventDefault();
@@ -88,11 +94,17 @@ export default function ProductPage () {
         }
         try {
             await postWatchlistRequest('/api/watchlist', submitData);
-            dispatch({type: "updateInWatchlist", payload: { toggle: true}});
+
+            //fetch the  updated product form database
+            const updatedProduct = await fetchData(baseURL);
+            dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
             alert('Added auction to your watchlist');
 
         } catch (err){
-            dispatch({type: "updateInWatchlist", payload: { toggle: false}});
+            //fetch the  updated product form database
+            const updatedProduct = await fetchData(baseURL);
+            dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
+
             alert('Removed auction from your watchlist');
         }
         setInWatchlisting(false);
