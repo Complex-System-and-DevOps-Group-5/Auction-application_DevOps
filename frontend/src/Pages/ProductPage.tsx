@@ -61,10 +61,12 @@ export default function ProductPage () {
             amount: amount,
         }
         try {
-            await postBidRequest('/api/post', submitData);
+            const updatedAuction = await postBidRequest('/api/post', submitData);
+
+            //dispatch({type: "updateCurrentBid", payload: { amount: amount }});
+            dispatch({type: "fetchedAuction", payload: { product: [updatedAuction] }});
             alert('Your submit was successfully submitted, if you dont see your bid, reload the page');
             setSubmitError(false);
-            dispatch({type: "updateCurrentBid", payload: { amount: amount }});
         } catch (err){
             console.log('setting error to true because of : ' + err);
             setSubmitError(true);
