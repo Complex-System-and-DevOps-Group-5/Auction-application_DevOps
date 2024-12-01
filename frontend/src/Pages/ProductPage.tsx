@@ -117,21 +117,16 @@ export default function ProductPage () {
         <div className="productInfo">
             <h2>{auction.title}</h2>
             <div onClick={handleWatchlist}>
-                {!auction.inWatchlist ? (
+                <div onClick={handleWatchlist}>
                     <p>
                         <img className="watchList" src={watchList} alt="watch list icon"/>
-                        Add to watchlist
+                        {auction.inWatchlist ? "Added to watchlist" : "Add to watchlist"}
                     </p>
-                ) : (
-                    <p>
-                        <img className="watchList" src={watchList} alt="watch list icon"/>
-                        Added to watchlist
-                    </p>
-                )
-                }
+                </div>
             </div>
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
-            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}>{auction.bidCount == 0? "" : auction.bidCount + " Amount of Bids"}</span></p>
+            <p>$ {auction.currentBid}&nbsp;<span
+                style={{color: "gray"}}>{auction.bidCount == 0 ? "" : auction.bidCount + " Amount of Bids"}</span></p>
             {!loggedIn ? ( /* auction date time thing*/
                 <span style={{color: "red", display: "flex", paddingTop: 10}}>Login to submit a bit</span>
             ) : (
