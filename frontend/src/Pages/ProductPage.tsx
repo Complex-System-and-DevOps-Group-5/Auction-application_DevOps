@@ -43,7 +43,7 @@ export default function ProductPage () {
             .catch(() =>
                 dispatch({ type: "auctionError", payload: { failed: true } })
             );
-        }, [submitting,inwatchlisting]);
+        }, [bidAmount]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setbidAmount(Number(event.target.valueAsNumber.toFixed()));  // Number() uhmm skriv bedre kode pls
@@ -96,13 +96,13 @@ export default function ProductPage () {
             await postWatchlistRequest('/api/watchlist', submitData);
 
             //fetch the  updated product form database
-            const updatedProduct = await fetchData(baseURL);
+            const updatedProduct = await fetchData(baseURL + "?username=" + username);
             dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
             alert('Added auction to your watchlist');
 
         } catch (err){
             //fetch the  updated product form database
-            const updatedProduct = await fetchData(baseURL);
+            const updatedProduct = await fetchData(baseURL + "?username=" + username);
             dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
 
             alert('Removed auction from your watchlist');
@@ -157,6 +157,7 @@ export default function ProductPage () {
             )}
         </div>
     ));
+
     const imageBox = product.map((auction: Auction) => (
 
         <div className="container">
