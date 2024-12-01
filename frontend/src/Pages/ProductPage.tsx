@@ -2,7 +2,6 @@ import '../Styling/ProductPage.css'
 import watchList from "../assets/watchlist-icon.png"
 import {useEffect, useState} from "react";
 import {useAuctionDispatch, useAuctionState} from "../Context/AuctionContext.tsx";
-import {Auction} from "../Interfaces/Auction.ts";
 import {fetchData} from "../Components/Fetch.ts";
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import Bid from "../Interfaces/Bid.ts";
