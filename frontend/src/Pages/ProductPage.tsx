@@ -36,7 +36,7 @@ export default function ProductPage () {
 
     useEffect(() => {
         if(!submitting){
-            if(logged){
+            if(loggedIn){
                 baseURL = baseURL + "?username=" + username;
             }
          fetchData(baseURL)
