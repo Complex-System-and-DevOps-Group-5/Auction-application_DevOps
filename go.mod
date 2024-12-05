@@ -1,10 +1,14 @@
-module github.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps
+module DevOps
 
 go 1.19
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.5 // direct
 	github.com/golang-jwt/jwt v3.2.2+incompatible // direct
+)
+
+require (
+	github.com/jmoiron/sqlx v1.4.0
 	github.com/lib/pq v1.10.9
 )
 
