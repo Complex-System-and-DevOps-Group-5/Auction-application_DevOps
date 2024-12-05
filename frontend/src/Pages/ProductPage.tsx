@@ -120,6 +120,7 @@ export default function ProductPage () {
             <div onClick={handleWatchlist}>
                 <p>
                     <img className="watchList" src={watchList} alt="watch list icon"/>
+                    {auction.inWatchlist}
                     {auction.inWatchlist ? "Added to watchlist" : "Add to watchlist"}
                 </p>
             </div>
