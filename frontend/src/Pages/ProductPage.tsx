@@ -12,7 +12,7 @@ import WatchlistData from "../Interfaces/Watchlist.ts";
 
 export default function ProductPage () {
     const {id} = useParams();
-    const baseURL: string = 'http://130.225.170.52:10101/api/product/' + id
+    let baseURL: string = 'http://130.225.170.52:10101/api/product/' + id
 
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
@@ -35,15 +35,20 @@ export default function ProductPage () {
     }, []);
 
     useEffect(() => {
-        fetchData(baseURL)
-            .then(fetchedData => {
-                dispatch({ type: "fetchedAuction", payload: { product: fetchedData }});
-                dispatch({ type: "auctionError", payload: { failed: false } })
-            })
-            .catch(() =>
-                dispatch({ type: "auctionError", payload: { failed: true } })
-            );
-        }, [bidAmount]);
+        if(!submitting){
+            if(logged){
+                baseURL = baseURL + "?username=" + username;
+            }
+         fetchData(baseURL)
+                .then(fetchedData => {
+                    dispatch({ type: "fetchedAuction", payload: { product: fetchedData }});
+                    dispatch({ type: "auctionError", payload: { failed: false } })
+                })
+                .catch(() =>
+                    dispatch({ type: "auctionError", payload: { failed: true } })
+                );
+            }
+        }, [submitting]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setbidAmount(Number(event.target.valueAsNumber.toFixed()));  // Number() uhmm skriv bedre kode pls
