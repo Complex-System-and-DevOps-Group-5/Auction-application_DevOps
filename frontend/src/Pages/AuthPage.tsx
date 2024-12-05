@@ -1,104 +1,115 @@
 import "../Styling/AuthPage.css"
-import InputField from "../Components/InputField.tsx";
-import DefaultButton from "../Components/DefaultButton.tsx";
-import {useLoginDispatch} from "../Context/LoginContext.tsx";
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import InputFieldToken from "../Components/InputField_Token.tsx";
+import {useLoginState, useLoginDispatch} from "../Context/LoginContext.tsx";
+import {useEffect, useState} from "react";
+//import {useNavigate} from "react-router-dom";
+import UserData from "../Interfaces/User.ts";
+import {postLoginRequest} from "../Components/Post.ts";
 
 export function AuthPage() {
-    const dispatch = useLoginDispatch()
-    const [isLoginPage, setIsLoginPage] = useState(true);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
 
-    const handleLogin = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch("http://localhost:4000/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username: email, password: password }),
-            });
-            setLoading(false);
-            if (response.ok) {
-                const token = await response.text(); // Assuming backend returns JWT token as plain text
-                localStorage.setItem("authToken", token); // Store token in localStorage
-                dispatch({ type: "toggleLogin", payload: { toggle: true } });
-                navigate("/"); // Redirect to homepage or another protected route
-            } else {
-                setError("Invalid credentials. Please try again.");
-            }
-        } catch (err) {
-            setLoading(false);
-            setError("Something went wrong. Please try again.");
+    //from backend
+    const { loggedIn, username, authToken, userError } = useLoginState()
+    //from DOM
+    const [input1, setInput1] = useState('')
+    const [input2, setInput2] = useState('')
+
+    //const [email, setEmail] = useState("");
+
+    const [submitting, setSubmitting] = useState(false);
+
+    const dispatch = useLoginDispatch()
+
+    //const navigate = useNavigate();
+
+    function handleLoginSubmit(event: any) {
+        event.preventDefault();
+        setSubmitting(true);
+        const user: UserData = {
+            username: input1.trim(),
+            password: input2.trim(), // here we can also hash
         }
-    };
+        return new Promise((resolve, reject): void => {
+            postLoginRequest('api/login', user)
+                .then(response => {
+                    dispatch({type: "setUsername", payload: {username: response.username}});
+                    dispatch({type: "setAuthToken", payload: {token: response.token}});
+                    dispatch({type: "toggleLogin", payload: {toggle: true}});
+                    dispatch({type: "setUserError", payload: {failed: response.message}});
+                    setSubmitting(false);
+                    console.log('resolving promise, the username is now: ' + username);
+                    resolve(response)
+                })
+                .catch(error =>{
+                    console.log('error name that will be used for css class: ' + error.message.replace(/\s/g,''))
+                    dispatch({type: "setUserError", payload: {failed: error.message.replace(/\s/g,'')}});
+                    setSubmitting(false);
+                    reject(error.message);
+                }
+                );
+        });
+    }
+
+    const userNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInput1(event.target.value);
+    }
+    const userPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInput2(event.target.value);
+    }
+    useEffect(() => {
+        // storing username in localstorage because to keep it as session state if context state fails
+        // might be a bit overkill
+        localStorage.setItem("username", username);
+        localStorage.setItem("authToken", authToken);
+        localStorage.setItem("loggedIn", loggedIn.toString());
+    }, [username, authToken]);
+
+    const handleKeyPress = (event: React.KeyboardEvent) => {
+        if (submitting){
+            event.preventDefault();
+        }
+    }
+    /*
+    TODO
+    Hide password input
+    Hide form after successful login
+    Make custom error css based on server response
+        - if username/password pair is wrong  --> 404 not found
+        - if username is correct but incorrect password --> 403 forbidden
+     */
 
     return(
-        <div className="authContainer">
-            <div className="authHeader">
-                <h2>{ isLoginPage ? "Login" : "Signup"}</h2>
-                <div id="line"/>
+            <div className="authContainer">
+                <div className="authHeader">
+                    <h2> {loggedIn ? "Welcome " + username : "Login" } </h2>
+                    <div id="line"/>
+                </div>
+                <div className="authSubContainer">
+                { !loggedIn &&
+                        <form onSubmit={handleLoginSubmit} onKeyPress={handleKeyPress}>
+                            <input name= "username" type="text"
+                                   value={input1}
+                                   placeholder="Username"
+                                   onChange = {userNameChange}
+                                   className= {userError}
+                           />
+                            <input name= "password" type="password"
+                                   value={input2}
+                                   placeholder="Password"
+                                   onChange = {userPasswordChange}
+                                   className= {userError}
+                            />
+                            {userError === 'NotFound' && <p>Username does not exist</p>}
+                            {userError === 'Forbidden' && <p>Username does not exist</p>}
+                            {userError === '' && <p> </p>}
+                            {loggedIn && <p>loggedIn is true and hello {username}</p>}
+                            {!submitting ? <button className="button-placement">Login</button> : <p>Login in...</p>}
+                            Register <a href="register">here</a>
+                        </form>
+                }
+                </div>
             </div>
-            {isLoginPage ? (
-                // Login form
-                <>
-                    <div className={"input-field-placement"}>
-                        {/* TODO : Use another component for input fields to use value and onChange*/}
-                        <InputFieldToken name="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <InputFieldToken name="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                    </div>
-                    <div className="button-placement">
-                        <DefaultButton
-                            onClick={() => {
-                                dispatch({type: "toggleLogin", payload: {toggle: true}})
-                                navigate("/");
-                            }
-                            }
-                            text="Login"
-                            color="#4E73F6"
-                        />
-                    </div>
-                    {error && <p className="error">{error}</p>}
-                    <p className="switchAuthType">
-                        Don't have an account? <span onClick={() => setIsLoginPage(false)}>Sign up</span>
-                    </p>
-                </>
-            ) : (
-                // Signup form
-                <>
-                <div className={"input-field-placement"}>
-                    <InputField name="userName" type="text" placeholder="User Name"/>
-                    <InputField name="email" type="email" placeholder="Email"/>
-                    <InputField name="password" type="password" placeholder="Password"/>
-                    <InputField
-                        name="repeatPassword"
-                        type="password"
-                        placeholder="Repeat Password"
-                    />
-                </div>
-                    <div className="button-placement">
-                        <DefaultButton
-                            onClick={() => {
-                                //TODO: ADD the account to database
-                            }}
-                            text="Signup"
-                            color="#4E73F6"
-                        />
-                    </div>
-                    <div className="switchAuthType">
-                        Already have an account? <span onClick={() => setIsLoginPage(true)}>Login</span>
-                    </div>
-                </>
-                )}
-                </div>
-            );
-            }
 
-            export default AuthPage;
+        );
+}
+
+export default AuthPage;

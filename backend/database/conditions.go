@@ -1,4 +1,4 @@
-package main
+package database
 
 import (
 	"fmt"
@@ -42,6 +42,11 @@ type inCondition struct {
 
 type multiCondition struct {
 	Conditions []Condition
+}
+
+type ilikeCondition struct {
+	Column string
+	Value  string
 }
 
 func (c equalityCondition[T]) ToString() string {
@@ -90,6 +95,10 @@ func (c multiCondition) ToString() string {
 	return sb.String()
 }
 
+func (c ilikeCondition) ToString() string {
+	return fmt.Sprintf("%s ILIKE '%%%s%%'", c.Column, c.Value)
+}
+
 // === CONSTRUCTORS ===
 func EqualityCondition[T any](column string, value T) Condition {
 	return equalityCondition[T]{Column: column, Value: value}
@@ -117,4 +126,8 @@ func InCondition[T any](column string, possibilities ...string) Condition {
 
 func MultiCondition(conditions ...Condition) Condition {
 	return multiCondition{Conditions: conditions}
+}
+
+func ILIKECondition(column string, value string) Condition {
+	return ilikeCondition{Column: column, Value: value}
 }

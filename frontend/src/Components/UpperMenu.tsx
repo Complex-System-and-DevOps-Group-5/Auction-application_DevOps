@@ -1,31 +1,29 @@
-import {SearchField} from "./SearchField.tsx";
 import {useLoginDispatch, useLoginState} from "../Context/LoginContext.tsx";
 import '../Styling/UpperMenu.css'
 import {Logo} from "./Logo.tsx";
 import {DropDownMenu} from "./DropDownMenu.tsx";
 import {useNavigate} from "react-router-dom";
+import { SearchComponent } from "../Pages/SearchComponent.tsx";
 
 export function UpperMenu() {
-    const loggedIn = useLoginState()
+    const { loggedIn, username } = useLoginState()
     const dispatch = useLoginDispatch()
 
     const navigate = useNavigate();
-
-    let username: string = "AM";
     return(
 
         <div className="upper-menu">
             <div className="search-bar">
-                <SearchField/>
+                <SearchComponent/>
             </div>
 
             <div className="logo">
                 <Logo/>
             </div>
 
-            {loggedIn.loggedIn == true ? (
+            {loggedIn ? (
                     <div className="loggedIn">
-                        <button className="create-button" onClick={() => navigate('/createPost')}>Create</button>
+                        <button className="create-button" onClick={() => navigate('/create-post')}>Create</button>
                         
                         <DropDownMenu title="Notification"/>
                         
@@ -51,7 +49,7 @@ export function UpperMenu() {
                 ) : (
                     <button className="login-button"
                         onClick={() => {
-                                navigate("/authentication");
+                                navigate("/login");
                             }
                         }
                     >Login

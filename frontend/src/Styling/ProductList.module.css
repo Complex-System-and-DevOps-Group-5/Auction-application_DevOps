@@ -6,7 +6,7 @@
 .productGrid {
     display:flex;
     flex-wrap: wrap;
-    background-color: #d4d4d4;
+    /*background-color: #d4d4d4;*/
     gap: 5%;
 }
 
