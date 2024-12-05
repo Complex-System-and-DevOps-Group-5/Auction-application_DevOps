@@ -16,8 +16,6 @@ export default function ProductPage () {
     // from DOM:
     const [bidAmount, setbidAmount] = useState(0);
 
-    const [currentBid, setCurrentBid] = useState<number | undefined>()
-
     // from backend:
     const { product, isProductLoading, productError } = useAuctionState();
     const { username, loggedIn } = useLoginState()
@@ -51,7 +49,9 @@ export default function ProductPage () {
     async function handleBidSubmit(event: any) {
         event.preventDefault();
         setSubmitting(true);
-        await submitBid(bidAmount)
+
+        await submitBid(bidAmount);
+
         setSubmitting(false);
     }
 
@@ -62,15 +62,19 @@ export default function ProductPage () {
             bidderUserName: username,
             amount: amount,
         }
-
         try {
-            await postBidRequest('/api/post', submitData)
-            alert('Your submit was successfully submitted, if you dont see your bid, reload the page')
-            setSubmitError(false)
-            setCurrentBid(amount)
+            await postBidRequest('/api/post', submitData);
+
+            //fetch the  updated product form database
+            const updatedProduct = await fetchData(baseURL);
+            dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
+
+            alert('Your submit was successfully submitted, if you dont see your bid, reload the page');
+            setSubmitError(false);
+
         } catch (err){
-            console.log('setting error to true because of : ' + err)
-            setSubmitError(true)
+            console.log('setting error to true because of : ' + err);
+            setSubmitError(true);
         }
     }
     const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -98,8 +102,8 @@ export default function ProductPage () {
             )
             }
             <p> {auction.sold ? "SOLD" : "CURRENT BID"}</p>
-            <p>$ {currentBid === undefined ? auction.currentBid : currentBid}&nbsp;<span style={{color: "gray"}}> Placeholder for amount bids</span></p>
-            { !loggedIn ? ( /* auction date time thing*/
+            <p>$ {auction.currentBid}&nbsp;<span style={{color: "gray"}}>{auction.bidCount} Amount of Bids</span></p>
+            {!loggedIn ? ( /* auction date time thing*/
                 <span style={{color: "red", display: "flex", paddingTop: 10}}>Login to submit a bit</span>
             ) : (
                 <div className="bidSection">
@@ -112,10 +116,10 @@ export default function ProductPage () {
                         />
                         {!submitting ? <button>Submit</button> : (
                             <div className="lds-ring">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
                             </div>
                         )}
                         {submitError && <p>Error submitting bid</p>}
@@ -124,10 +128,10 @@ export default function ProductPage () {
             )}
         </div>
     ));
-    const imageBox = product.map((auction:Auction) => (
+    const imageBox = product.map((auction: Auction) => (
 
-            <div className="container">
-                <div className="images">
+        <div className="container">
+            <div className="images">
                     <img src={auction.imgUrl}
                          role="presentation"/>
                     <div className="sub-imgs">

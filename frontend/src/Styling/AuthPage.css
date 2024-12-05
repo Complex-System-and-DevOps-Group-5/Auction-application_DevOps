@@ -1,5 +1,5 @@
 .authContainer {
-    background-color: #e0e0e0;
+    background-color: #F8F9FA;
     border-radius: 10px;
     width: 300px;
     /*height: 400px;*/
@@ -9,19 +9,24 @@
     display: grid;
     grid-template-rows: auto auto auto auto;
 }
+.authSubContainer {
+    padding: 2%;
+}
 
 .authHeader {
     text-align: center;
     font-size: 20px;
     font-weight: bold;
-    background: linear-gradient(to left, #2e2e2e, #7a7a7a);
+    padding: 0px;
+    background: linear-gradient(to right, #131921, #1F2A37);
     color: #fff;
     border-radius: 10px 10px 0 0;
 }
-h2{
-    margin-top: 1px;
-    margin-bottom: 5px;
 
+h2{
+    margin: 0.5% auto;
+    text-align: center;
+    justify-content: center;
 }
 
 .input-field-placement {
@@ -42,17 +47,19 @@ h2{
 }
 
 .button-placement{
-    margin: 5%;
+    background-color: #4395ed;
+    margin-top: 5%;
     grid-row: 3;
 }
 input[type=text]:focus :user-invalid {
     border: 3px solid #555;
-    background-color: darkgray;
+    background-color: #e3e3e3;
     width: 90%;
+
 }
 input[type=password]:focus :user-invalid{
     border: 3px solid #555;
-    background-color: darkgray;
+    background-color: #e3e3e3;
     width: 90%;
 }
 .NotFound{

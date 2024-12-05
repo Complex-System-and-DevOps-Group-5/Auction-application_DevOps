@@ -100,7 +100,7 @@ func AllEndpoints() []endpoint.Endpoint {
 	endpoints := make([]endpoint.Endpoint, 0)
 
 	endpoints = append(endpoints, endpoint.Endpoint{Location: "/user/:id", Handler: userHandler, Type: fiber.MethodGet})
-	endpoints = append(endpoints, endpoint.Endpoint{Location: "/login", Handler: loginHandler, Type: fiber.MethodGet})
+	endpoints = append(endpoints, endpoint.Endpoint{Location: "/login", Handler: loginHandler, Type: fiber.MethodPost})
 	endpoints = append(endpoints, endpoint.Endpoint{Location: "/register", Handler: registerHandler, Type: fiber.MethodPost})
 
 	return endpoints
