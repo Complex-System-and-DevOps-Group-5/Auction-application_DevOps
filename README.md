@@ -1,6 +1,12 @@
 # Auction-application_DevOps
 62582 Complex systems and devops
+To check out the full-stack application visit:
+http://130.225.170.52:10101
 
+navigate to login page and register or login using the following credentials:
+
+username: sommer
+passsword: 1234
 
 
 # Software
