@@ -28,7 +28,6 @@ func getPost(id int, username string) *AuctionPost {
 		return nil
 	}
 
-	/*TODO: USE the users id and not the sellers*/
 	user, err := database.GetSingle[database.User](database.EqualityCondition("name", username))
 	if err != nil {
 		return nil

@@ -35,7 +35,7 @@ export default function ProductPage () {
     }, []);
 
     useEffect(() => {
-        fetchData(baseURL + "?username=" + username)
+        fetchData(baseURL)
             .then(fetchedData => {
                 dispatch({ type: "fetchedAuction", payload: { product: fetchedData }});
                 dispatch({ type: "auctionError", payload: { failed: false } })
@@ -95,13 +95,14 @@ export default function ProductPage () {
         try {
             await postWatchlistRequest('/api/watchlist', submitData);
 
-            //fetch the  updated product form database
+            //fetch the updated product form database
             const updatedProduct = await fetchData(baseURL + "?username=" + username);
             dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
+            console.log(updatedProduct);
             alert('Added auction to your watchlist');
 
         } catch (err){
-            //fetch the  updated product form database
+            //fetch the updated product form database
             const updatedProduct = await fetchData(baseURL + "?username=" + username);
             dispatch({ type: "fetchedAuction", payload: { product: updatedProduct }});
 
