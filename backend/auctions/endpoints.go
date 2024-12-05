@@ -28,15 +28,17 @@ func getPost(id int, username string) *AuctionPost {
 		return nil
 	}
 
-	user, err := database.GetSingle[database.User](database.EqualityCondition("name", username))
-	if err != nil {
-		return nil
-	}
 	inWatchlist := false
+	if username != "" {
+		user, err := database.GetSingle[database.User](database.EqualityCondition("name", username))
+		if err != nil {
+			return nil
+		}
 
-	_, err = database.GetSingle[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", id), database.EqualityCondition("user_id", user.Id)))
-	if err == nil {
-		inWatchlist = true
+		_, err = database.GetSingle[database.Watchlist](database.MultiCondition(database.EqualityCondition("auction_id", id), database.EqualityCondition("user_id", user.Id)))
+		if err == nil {
+			inWatchlist = true
+		}
 	}
 
 	return &AuctionPost{
@@ -65,10 +67,7 @@ func singleAuctionHandler(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 	username := c.Query("username")
-	if username == "" {
-		return c.SendStatus(fiber.StatusBadRequest)
-	}
-
+	
 	post := getPost(id, username)
 
 	posts := make([]AuctionPost, 1)
