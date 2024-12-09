@@ -4,7 +4,7 @@ import { Product, ProductListProps } from "../Components/Product.ts";
 import {useProductFetch} from "../Components/Fetch.ts";
 
 export default function TrendingPage() {
-    const productsUrl: string = 'https://raw.githubusercontent.com/Complex-System-and-DevOps-Group-5/Auction-application_DevOps/refs/heads/mock-data/frontend/src/MockData/ProductListItems.json';
+    const productsUrl: string = 'http://130.225.170.52:10101/api/frontpage';
     const [products, isLoading, hasError] = useProductFetch(productsUrl);
 
     //First Sort for views and get the top 10 and then map products
