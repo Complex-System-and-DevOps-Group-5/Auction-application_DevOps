@@ -9,7 +9,7 @@ export default function TrendingPage() {
 
     //First Sort for views and get the top 10 and then map products
     const trendingProducts = products && products
-        .sort((a: Product, b: Product) => b.views - a.views)
+        .sort((a: Product, b: Product) => b.price - a.price)
         .slice(0, 10)
         .map((product: Product) => (
             <ProductItem key={product.id} product={product}/>
